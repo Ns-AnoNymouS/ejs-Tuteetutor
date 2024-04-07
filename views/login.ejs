@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <%- include("partials/header.ejs") %>
+</head>
+
+    <body>
+        <%- include("partials/loading.ejs") %>
+            <div class="main">
+                <div class="login">
+                    <img src="/images/you.png" alt="teacher" width="800" height="500" id="sideImage">
+                    <div class="bgcontainer">
+                        <div class="container">
+                            <form class="form" method="POST" style="display:flex; flex-direction:column; align-items:center">
+                                <div class="input-container logo">
+                                    <img src="/images/logo.png" alt="TuteeTutor" height="50px" width="50px"
+                                        style="border-radius: 10px;">
+                                    <h2 id="title">TuteeTutor</h2>
+                                </div>
+                                <% if (error) { %>
+                                    <div class="messageBlock">
+                                        <p id="message"><%= error %></p>
+                                    </div>
+                                <% } %>
+                                <div class="middle">
+                                    <div class="input-container inputs username">
+                                        <div class="inline">
+                                            <i class="fa-solid fa-user" style="color: #000000;"></i>
+                                            <label for="username">Username</label>
+                                        </div>
+                                        <div class="holder-container" id="username-container">
+                                            <input type="text" class="holder" id="username" name="username"
+                                                placeholder="Your username here" required autocomplete="name">
+                                        </div>
+                                    </div>
+                                    <div class="input-container inputs password">
+                                        <div class="inline">
+                                            <i class="fa-solid fa-lock" style="color: #000000;"></i>
+                                            <label for="password">Password</label>
+                                        </div>
+                                        <div class="holder-container" id="password-container">
+                                            <input type="password" class="holder password" id="password" name="password"
+                                                placeholder="*********" required>
+                                            <div id="eyecont"><i class="fa-solid fa-eye" id="eye"></i>
+                                            </div>
+                                        </div>
+                                        <div class="forgotPassword">
+                                            <a href="/forgotPassword">Forgot Password?</a>
+                                        </div>
+                                    </div>
+                                    <div class="input-container">
+                                        <button id="submit" type="submit">Login</button>
+                                    </div>
+                                    <div class="signup">
+                                        <p>Don't have an account yet?</p>
+                                        <a href="signup">Create an account</a>
+                                    </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script src="javascripts/visibility.js" type="module"></script>
+    </body>
+</html>
