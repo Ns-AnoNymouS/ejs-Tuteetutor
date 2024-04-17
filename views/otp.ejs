@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <link rel="stylesheet" href="stylesheets/style.css">
+    <link rel="stylesheet" href="stylesheets/otpCheck.css">
+    <%- include("partials/header.ejs") %>
+</head>
+
+<body>
+    <%- include("partials/loading.ejs") %>
+    </div>
+    <div class="main">
+        <div class="container">
+            <div class="input-container logo">
+                <img src="images/logo.png" alt="TuteeTutor" height="50px" width="50px" style="border-radius: 10px;">
+                <h2 id="title">TuteeTutor</h2>
+            </div>
+            <div class="messageBlock">
+                <p id="message"></p>
+            </div>
+            <br>
+            <h2>OTP Verification</h2>
+            <p>Enter Verification code sent to<br>
+            <div class="mail"></div>
+            </p>
+            <p>The OTP will expire in <span id="expire">300</span>s</p>
+            <div class="row">
+                <input type="number">
+                <input type="number" disabled>
+                <input type="number" disabled>
+                <input type="number" disabled>
+            </div>
+            <div class="input-container">
+                <button type="submit">Verify OTP</button>
+                <!-- <button type="button">Verify OTP</button> -->
+            </div>
+            <p>Didn't receive code? <div id="resend" style="color: blue; font-size: unset; cursor: pointer;">RESEND OTP</div></p>
+        </div>
+    </div>
+    <script src="javascripts/otpCheck.js" type="module"></script>
+</body>
+
+</html>

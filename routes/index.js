@@ -2,10 +2,10 @@ var express = require('express');
 var router = express.Router();
 
 const UserModel = require('../models/user')
-/* GET home page. */
-// router.get('/', function(req, res, next) {
-//     res.render('index', { title: 'Express' });
-// });
+
+router.get("/", (req, res) => {
+    res.render("about");
+});
 
 router.get('/login', function (req, res) {
     res.render('login', { 'error': '' });
@@ -32,10 +32,10 @@ router.post('/signup', async function (req, res) {
     if (addUser == 'true') {
         res.redirect('home')
     }
-    else if (addUser == 'OTP') {
-        res.session.email = email
-        res.session.username = username
-        res.redirect('OTP')
+    else if (addUser == 'otp') {
+        req.session.email = email
+        req.session.username = username
+        res.redirect('otp')
     }
     else {
         res.render('signup', { error: addUser })
@@ -48,11 +48,11 @@ router.get("/home", (req, res) => {
 
 
 router.get("/almanacPDF", (req, res) => {
-    res.render("/almanac.pdf");
+    res.render("almanac");
 });
 
 router.get("/timeTablePDF", (req, res) => {
-    res.render("/TimeTableS2024.pdf");
+    res.render("timetable");
 });
 
 router.get("/otp", (req, res) => {

@@ -1,5 +1,4 @@
 const { MongoClient } = require('mongodb');
-const uri = "mongodb+srv://curious_me:iYH7e5WDKS2WzlX5@cluster0.4zzhqjl.mongodb.net/?retryWrites=true&w=majority";
 const db_name = "TuteeTutor";
 
 class Database {
@@ -149,5 +148,5 @@ class Database {
     }
 }
 
-const db = new Database(uri);
+const db = new Database(process.env.DATABASE);
 module.exports = db;

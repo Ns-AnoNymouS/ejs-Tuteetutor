@@ -48,7 +48,7 @@ class User {
                 return "Username already exists";
             }
             else {
-                return "OTP";
+                return "otp";
             }
         }
     }
