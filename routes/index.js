@@ -47,11 +47,11 @@ router.get("/home", (req, res) => {
 });
 
 
-router.get("/almanacPDF", (req, res) => {
+router.get("/almanac", (req, res) => {
     res.render("almanac");
 });
 
-router.get("/timeTablePDF", (req, res) => {
+router.get("/timetable", (req, res) => {
     res.render("timetable");
 });
 
@@ -75,16 +75,20 @@ router.get('/coursesECE', (req, res) => {
     res.render("course2")
 })
 
-router.get('/almanac', (req, res) => {
-    res.render("almanac")
-})
-
-router.get('/timeTable', (req, res) => {
-    res.render("timetable")
-})
-
 router.get('/forgotPassword', (req, res) => {
-    res.render("forgotPassword")
+    res.render("forgotPassword", {'error': ''})
+})
+
+router.post('/forgotPassword', async function (req, res){
+    const { email } = req.body;
+    const check = await UserModel.checkEmail(email);
+    console.log(check)
+    if(check != "Exists"){
+        res.render('forgotPassword', {error: check});
+    }else{
+        req.session.email = email
+        res.redirect('otp')
+    }
 })
 
 router.get('/updatePassword', (req, res) => {

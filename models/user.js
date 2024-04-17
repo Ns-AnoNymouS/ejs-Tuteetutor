@@ -52,5 +52,20 @@ class User {
             }
         }
     }
+
+    async checkEmail(email){
+        email = email.toLowerCase();
+        if (email == null || email.trim() === "") {
+            return "Enter email";
+        }
+        let sts = await db.isEmailSignedIn(email)
+        if (sts) {
+            return "Exists";
+        }
+        else{
+            print('afdsa');
+            return "Doesn't Exists";
+        }
+    }
 }
 module.exports = new User()
