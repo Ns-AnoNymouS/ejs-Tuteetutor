@@ -63,7 +63,6 @@ class User {
             return "Exists";
         }
         else{
-            print('afdsa');
             return "Doesn't Exists";
         }
     }

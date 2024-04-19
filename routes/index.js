@@ -82,7 +82,6 @@ router.get('/forgotPassword', (req, res) => {
 router.post('/forgotPassword', async function (req, res){
     const { email } = req.body;
     const check = await UserModel.checkEmail(email);
-    console.log(check)
     if(check != "Exists"){
         res.render('forgotPassword', {error: check});
     }else{
