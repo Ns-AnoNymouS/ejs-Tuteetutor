@@ -50,8 +50,8 @@ router.post('/signup', async function (req, res) {
 
 router.get("/home", async (req, res) => {
     const classes = await UserModel.fetchClasses()
-    console.log(classes)
-    res.render('home',{'username': req.session.username, 'email': req.session.email, 'classes': classes});
+    const holidays = await UserModel.fetchHolidays();
+    res.render('home',{'username': req.session.username, 'email': req.session.email, 'classes': classes, 'holidays': holidays});
 });
 
 router.get("/almanac", (req, res) => {

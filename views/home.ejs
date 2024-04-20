@@ -130,6 +130,16 @@
                         </h3>
                     </div>
                     <div class="holidays-content">
+                        <% if(holidays == "No More Holidays!!"){ %> 
+                            <h1><%= holidays %></h1>
+                        <% } else { %>
+                            <% for (var i=0; i < holidays.length;i++) {%>
+                                <div class="holiday-card" style="border-radius: 2vh;">
+                                    <h3 style="text-align: center; font-size: 3.5vh;"><%= holidays[i].holiday %></h3>
+                                    <p style="text-align: center; margin-bottom: 10px; font-size: 1.2rem;"><%= holidays[i].date + '-' + holidays[i].month + '-' + holidays[i].year %></p>
+                                </div>
+                                <% } %>
+                            <% } %>
                     </div>
                 </div>
                 <div class="grid-item item4">
@@ -140,7 +150,7 @@
                     </div>
                     <div class="classes-content">
                         <% if(classes=="No Classes Today!!" ) { %>
-                            <h1><%= classes %></h1>
+                            <h1 style="background-color:white; padding: 2rem 2rem; margin:1rem 0rem; border-radius: 1rem;"><%= classes %></h1>
                             <% } else { %>
                                 <% for (var i=0; i < classes.length; i++) { %>
                                     <div class="classes-card" style="text-align: center; margin: 10px;">

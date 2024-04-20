@@ -84,7 +84,6 @@ class User {
         let date = new Date();
         let day = date.getDay();
         var formatedStart, formatedEnd, time;
-        day = 2;
         if (date.getHours() > 12) {
             time = new Time(date.getHours() - 12, date.getMinutes(), 'PM')
         }
@@ -115,11 +114,17 @@ class User {
                     upcoming = true;
                     element.upcoming = true;
                 }
-                console.log(element.formatedStart)
                 element.time = `${this.formatTime(element.startTime)} - ${this.formatTime(element.endTime)}` 
             })
             return classes;
         }
+    }
+
+    async fetchHolidays(){
+        var date = new Date()
+        var holidays = await db.getHolidays(date.getDate(),date.getMonth(),date.getYear());
+        if(holidays.length == 0) return "No More Holidays!!";
+        return holidays;
     }
 }
 module.exports = new User()
