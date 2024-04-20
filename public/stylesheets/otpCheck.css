@@ -77,7 +77,6 @@ button{
 }
 
 .messageBlock{
-    display: none;
     height: 30px;
     width: 250px;
     background-color: rgb(255, 223, 223);

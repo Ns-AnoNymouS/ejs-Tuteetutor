@@ -7,4 +7,4 @@ function encrypt(string) {
     return hash.digest('hex');
 }
 
-module.exports = { encrypt };
+module.exports = encrypt;

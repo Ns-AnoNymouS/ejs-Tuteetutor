@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 
 const UserModel = require('../models/user')
+const OtpModel = require('../models/sendOTP')
+const encrypt = require('../models/encryption')
 
 router.get("/", (req, res) => {
     res.render("about");
@@ -15,6 +17,8 @@ router.post('/login', async function (req, res) {
     const { username, password } = req.body;
     const isValidCredentials = await UserModel.checkCredentials(username, password)
     if (isValidCredentials == 'true') {
+        req.session.username = username;
+
         res.redirect('home')
     }
     else {
@@ -33,19 +37,22 @@ router.post('/signup', async function (req, res) {
         res.redirect('home')
     }
     else if (addUser == 'otp') {
-        req.session.email = email
-        req.session.username = username
-        res.redirect('otp')
+        req.session.email = email;
+        req.session.username = username;
+        req.session.password = encrypt(password);
+        await OtpModel.sendOTP(email);
+        res.redirect('otp');
     }
     else {
-        res.render('signup', { error: addUser })
+        res.render('signup', { 'error': addUser })
     }
 })
 
-router.get("/home", (req, res) => {
-    res.render('home');
+router.get("/home", async (req, res) => {
+    const classes = await UserModel.fetchClasses()
+    console.log(classes)
+    res.render('home',{'username': req.session.username, 'email': req.session.email, 'classes': classes});
 });
-
 
 router.get("/almanac", (req, res) => {
     res.render("almanac");
@@ -56,7 +63,27 @@ router.get("/timetable", (req, res) => {
 });
 
 router.get("/otp", (req, res) => {
-    res.render("otp");
+    res.render("otp", {'error': ''});
+});
+
+router.post("/otp", async (req, res) => {
+    let email = req.session.email
+    let username = req.session.username
+    let password = req.session.password
+    if (!email || !username || !password){
+        res.redirect('/signup')
+    }
+    else {
+        const { num1, num2, num3, num4 } = req.body;
+        let otp = num1 + num2 + num3 + num4
+        sts = await OtpModel.checkOTP(email, username, password, otp)
+        if (sts == 'true'){
+            res.redirect("home");
+        }
+        else {
+            res.render('otp', {'error': sts})
+        }
+    }
 });
 
 router.get("/settings", (req, res) => {

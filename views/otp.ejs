@@ -17,8 +17,12 @@
                 <img src="images/logo.png" alt="TuteeTutor" height="50px" width="50px" style="border-radius: 10px;">
                 <h2 id="title">TuteeTutor</h2>
             </div>
-            <div class="messageBlock">
-                <p id="message"></p>
+            <div id="error">
+                <% if (error) { %>
+                    <div class="messageBlock">
+                        <p id="message"><%= error %></p>
+                    </div>
+                <% } %>
             </div>
             <br>
             <h2>OTP Verification</h2>
@@ -26,16 +30,17 @@
             <div class="mail"></div>
             </p>
             <p>The OTP will expire in <span id="expire">300</span>s</p>
-            <div class="row">
-                <input type="number">
-                <input type="number" disabled>
-                <input type="number" disabled>
-                <input type="number" disabled>
-            </div>
-            <div class="input-container">
-                <button type="submit">Verify OTP</button>
-                <!-- <button type="button">Verify OTP</button> -->
-            </div>
+            <form method="post" action="">
+                <div class="row">
+                    <input name="num1" type="number">
+                    <input name="num2" type="number" disabled>
+                    <input name="num3" type="number" disabled>
+                    <input name="num4" type="number" disabled>
+                </div>
+                <div class="input-container">
+                    <button class="submit" type="submit">Verify OTP</button>
+                </div>
+            </form>
             <p>Didn't receive code? <div id="resend" style="color: blue; font-size: unset; cursor: pointer;">RESEND OTP</div></p>
         </div>
     </div>

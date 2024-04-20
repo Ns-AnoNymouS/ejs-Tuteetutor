@@ -4,12 +4,9 @@ document.addEventListener("DOMContentLoaded", function () {
     var expire = document.getElementById("expire");
     var container = document.querySelector(".container");
     var messageBlock = document.querySelector(".messageBlock");
-    var message = document.getElementById("message");
-    
-    const email = sessionStorage.getItem("email");
-    const expire_time = sessionStorage.getItem("expire_time");
+    const expire_time = 300// sessionStorage.getItem("expire_time");
 
-    document.querySelector(".mail").textContent = email.substring(0, 2) + "******@iiits.in";
+    document.querySelector(".mail").textContent = "******@iiits.in";
     let OTP = "", expireInterval = "";
     inputs[0].focus();
     function generateOTPs() {
@@ -24,9 +21,18 @@ document.addEventListener("DOMContentLoaded", function () {
             sessionStorage.setItem('expire_time', expire.innerText);
             if (expire.innerText <= 0) {
                 clearInterval(expireInterval);
+                if (!messageBlock){
+                    messageBlock = document.createElement('div');
+                    messageBlock.className = 'messageBlock';
+                    var errorMessage = document.createElement('p');
+                    errorMessage.id = 'message';
+                    errorMessage.textContent = "OTP Expired";
+                    messageBlock.appendChild(errorMessage);
+                    document.body.appendChild(messageBlock);
+                    document.getElementById("error").appendChild(messageBlock);
+                }
                 container.style.height = "550px";
                 messageBlock.style.display = "block";
-                message.textContent = "OTP Expired";
                 inputs.forEach((input, index) => {
                     input.setAttribute("disabled", true);
                 })
@@ -82,11 +88,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 document.cookie = `username=${encodeURIComponent(username)}; expires=${expirationDate.toUTCString()}`;
                 document.cookie = `token=${encodeURIComponent(password)}; expires=${expirationDate.toUTCString()}`;
                 window.location.href = "courses";
-                sessionStorage.removeItem("email");
-                sessionStorage.removeItem("username");
-                sessionStorage.removeItem("password");
-                sessionStorage.removeItem("expire_time");
-                sessionStorage.removeItem("signup");
 
             }
             else if (data == "Wrong OTP") {

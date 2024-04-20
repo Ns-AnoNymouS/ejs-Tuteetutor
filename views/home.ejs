@@ -1,201 +1,218 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <link rel="stylesheet" href="/stylesheets/home.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <%- include("partials/header.ejs") %>
 </head>
 
 <body>
     <%- include("partials/loading.ejs") %>
-    <div class="sidebar" id="side">
-        <div class="top">
-            <ul>
-                <div>
-                    <li>
-                        <a href="#">
-                            <img src="images/user-profile.webp" alt="user" height="20px" width="20px"
-                                style="padding: 15px;">
-                            <span class="nav-item">Username</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/home">
-                            <i class="fa-regular fa-user icon"></i>
-                            <span class="nav-item">Dashboard</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/timeTable" target="_blank">
-                            <i class="fa-solid fa-list icon"></i>
-                            <span class="nav-item">TimeTable</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/almanac" target="_blank">
-                            <i class="fa-regular fa-calendar icon"></i>
-                            <span class="nav-item">Almanac</span>
-                        </a>
-                    </li>
-                </div>
-                <div>
-                    <li>
-                        <a href="/settings">
-                            <i class="fa-solid fa-gear icon"></i>
-                            <span class="nav-item">Settings</span>
-                        </a>
-                    </li>
-                </div>
-            </ul>
-        </div>
-        <div class="user"></div>
-    </div>
-    <div class="main">
-        <nav>
-            <div class="rightnav">
-                <div class="container-logo">
-                    <img src="images/logo.png" alt="TuteeTutor" height="35px" width="35px" style="border-radius: 50%;">
-                    <h2 id="logo-heading">TuteeTutor</h2>
-                </div>
-            </div>
-            <div class="leftnav">
-                <div class="search-container">
-                    <button class="icon-button">
-                        <i class="fa-solid fa-magnifying-glass" style="color: #000000;"></i>
-                    </button>
-                    <input type="search" placeholder="Search">
-                </div>
-                <div class="user-profile"
-                    style="color: white; display: flex; align-items: center; justify-content: left; width: 200px; border-left: 1px solid grey;">
-                    <img src="images/profile-img.png" alt="profile-pic" height="50px" width="50px"
-                        style="padding: 0px; border: 1px white solid; border-radius: 10px; margin: 0px 10px;">
+        <div class="sidebar" id="side">
+            <div class="top">
+                <ul>
                     <div>
-                        <p id="profile-name"></p>
-                        <p style="font-family: Arial, Helvetica, sans-serif; font-size: .8rem;" id="profile-email"></p>
-                    </div>
-                </div>
-                <div id="profile-menu">
-                    <ul>
                         <li>
-                            <i class="fa-regular fa-circle-question"></i>
-                            <span class="nav-item">Help</span>
+                            <a href="#">
+                                <img src="images/user-profile.webp" alt="user" height="20px" width="20px"
+                                    style="padding: 15px;">
+                                <span class="nav-item">Username</span>
+                            </a>
                         </li>
-                        <a href="/settings">
-                            <li>
+                        <li>
+                            <a href="/home">
+                                <i class="fa-regular fa-user icon"></i>
+                                <span class="nav-item">Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/timeTable" target="_blank">
+                                <i class="fa-solid fa-list icon"></i>
+                                <span class="nav-item">TimeTable</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/almanac" target="_blank">
+                                <i class="fa-regular fa-calendar icon"></i>
+                                <span class="nav-item">Almanac</span>
+                            </a>
+                        </li>
+                    </div>
+                    <div>
+                        <li>
+                            <a href="/settings">
                                 <i class="fa-solid fa-gear icon"></i>
                                 <span class="nav-item">Settings</span>
-                            </li>
-                        </a>
-                        <hr>
-                        <li>
-                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                            <span class="nav-item">Logout</span>
+                            </a>
                         </li>
-                    </ul>
-                </div>
+                    </div>
+                </ul>
             </div>
-        </nav>
-        <div class="grid-container">
-            <div class="grid-item item1">
-                <div class="small-card card1">
-                    <h3 class="tot-assignments-heading">
-                        Total Assignments
-                    </h3>
-                </div>
-                <div class="small-card grid-item card2">
-                    <h3 class="tot-assignments-heading">
-                        Marks
-                    </h3>
-                </div>
-                <div class="small-card grid-item card3">
-                    <h3 class="todolist-heading">
-                        To-do List
-                    </h3>
-                </div>
-            </div>
-            <div class="grid-item item2">
-                <!-- <img src="../img/graph.jpg" alt=""> -->
-                <canvas id="myChart" style="width:100%;max-width:800px; height: 100%; max-height: 500px;"></canvas>
-
-            </div>
-            <div class="grid-item item3">
-                <div class="header">
-                    <h3 class="heading">
-                        Upcoming Holidays
-                    </h3>
-                </div>
-                <div class="holidays-content">
-                </div>
-            </div>
-            <div class="grid-item item4">
-                <div class="header">
-                    <h3 class="heading">
-                        Classes Schedule
-                    </h3>
-                </div>
-                <div class="classes-content">
-                </div>
-            </div>
-
+            <div class="user"></div>
         </div>
-    </div>
+        <div class="main">
+            <nav>
+                <div class="rightnav">
+                    <div class="container-logo">
+                        <img src="images/logo.png" alt="TuteeTutor" height="35px" width="35px"
+                            style="border-radius: 50%;">
+                        <h2 id="logo-heading">TuteeTutor</h2>
+                    </div>
+                </div>
+                <div class="leftnav">
+                    <div class="search-container">
+                        <button class="icon-button">
+                            <i class="fa-solid fa-magnifying-glass" style="color: #000000;"></i>
+                        </button>
+                        <input type="search" placeholder="Search">
+                    </div>
+                    <div class="user-profile"
+                        style="color: white; display: flex; align-items: center; justify-content: left; width: 200px; border-left: 1px solid grey;">
+                        <img src="images/profile-img.png" alt="profile-pic" height="50px" width="50px"
+                            style="padding: 0px; border: 1px white solid; border-radius: 10px; margin: 0px 10px;">
+                        <div>
+                            <p id="profile-name">
+                                <%= username %>
+                            </p>
+                            <p style="font-family: Arial, Helvetica, sans-serif; font-size: .8rem;" id="profile-email">
+                                <%= email %>
+                            </p>
+                        </div>
+                    </div>
+                    <div id="profile-menu">
+                        <ul>
+                            <li>
+                                <i class="fa-regular fa-circle-question"></i>
+                                <span class="nav-item">Help</span>
+                            </li>
+                            <a href="/settings">
+                                <li>
+                                    <i class="fa-solid fa-gear icon"></i>
+                                    <span class="nav-item">Settings</span>
+                                </li>
+                            </a>
+                            <hr>
+                            <li>
+                                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                                <span class="nav-item">Logout</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="grid-container">
+                <div class="grid-item item1">
+                    <div class="small-card card1">
+                        <h3 class="tot-assignments-heading">
+                            Total Assignments
+                        </h3>
+                    </div>
+                    <div class="small-card grid-item card2">
+                        <h3 class="tot-assignments-heading">
+                            Marks
+                        </h3>
+                    </div>
+                    <div class="small-card grid-item card3">
+                        <h3 class="todolist-heading">
+                            To-do List
+                        </h3>
+                    </div>
+                </div>
+                <div class="grid-item item2">
+                    <canvas id="myChart" style="width:100%;max-width:800px; height: 100%; max-height: 500px;"></canvas>
 
-    <script>
-        var xValues = ["AI", "CCN", "FFSD", "TOC"];
-        var yValues = [10, 85, 10, 80];
-        var barColors = ["rgb(50,205,50,0.5)", "rgb(50,205,50,0.5)", "rgb(50,205,50,0.5)", "rgb(50,205,50,0.5)"];
+                </div>
+                <div class="grid-item item3">
+                    <div class="header">
+                        <h3 class="heading">
+                            Upcoming Holidays
+                        </h3>
+                    </div>
+                    <div class="holidays-content">
+                    </div>
+                </div>
+                <div class="grid-item item4">
+                    <div class="header">
+                        <h3 class="heading">
+                            Classes Schedule
+                        </h3>
+                    </div>
+                    <div class="classes-content">
+                        <% if(classes=="No Classes Today!!" ) { %>
+                            <h1><%= classes %></h1>
+                            <% } else { %>
+                                <% for (var i=0; i < classes.length; i++) { %>
+                                    <div class="classes-card" style="text-align: center; margin: 10px;">
+                                        <p style="font-size: larger;">Room no: <%= classes[i].room %></p>
+                                        <h3 style="font-size: x-large; margin: 10px;"><%= classes[i].class %></h3>
+                                        <p><%= classes[i].time %></p>
+                                    </div>
+                                    <% } %>
+                                <% } %>
+                    </div>
+                </div>
 
-        new Chart("myChart", {
-            type: "bar",
-            data: {
-                labels: xValues,
-                datasets: [{
-                    label: "present",
-                    borderRadius: 5,
-                    backgroundColor: barColors,
-                    borderColor: [
-                        'rgb(50,205,50,1)',
-                        'rgb(50,205,50,1)',
-                        'rgb(50,205,50,1)',
-                        'rgb(50,205,50,1)',
-                    ],
-                    borderWidth: 1,
-                    data: yValues
-                }, {
-                    label: "absent",
-                    borderRadius: 5,
-                    backgroundColor: ["rgba(255,0,0, 0.5)", "rgba(255,0,0, 0.5)", "rgba(255,0,0, 0.5)", "rgba(255,0,0, 0.5)"],
-                    borderColor: [
-                        'rgb(255,0,0)',
-                        'rgb(255,0,0)',
-                        'rgb(255,0,0)',
-                        'rgb(255,0,0)',
-                    ],
-                    borderWidth: 1,
-                    data: [10, 25, 0, 12]
-                }],
+            </div>
+        </div>
 
-            },
-            options: {
-                scales: {
-                    // x: {
-                    //     stacked: true
-                    // },
-                    y: {
-                        beginAtZero: true,
-                        max: 100
-                    }
+        <script>
+            var xValues = ["AI", "CCN", "FFSD", "TOC"];
+            var yValues = [10, 85, 10, 80];
+            var barColors = ["rgb(50,205,50,0.5)", "rgb(50,205,50,0.5)", "rgb(50,205,50,0.5)", "rgb(50,205,50,0.5)"];
+
+            new Chart("myChart", {
+                type: "bar",
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                        label: "present",
+                        borderRadius: 5,
+                        backgroundColor: barColors,
+                        borderColor: [
+                            'rgb(50,205,50,1)',
+                            'rgb(50,205,50,1)',
+                            'rgb(50,205,50,1)',
+                            'rgb(50,205,50,1)',
+                        ],
+                        borderWidth: 1,
+                        data: yValues
+                    }, {
+                        label: "absent",
+                        borderRadius: 5,
+                        backgroundColor: ["rgba(255,0,0, 0.5)", "rgba(255,0,0, 0.5)", "rgba(255,0,0, 0.5)", "rgba(255,0,0, 0.5)"],
+                        borderColor: [
+                            'rgb(255,0,0)',
+                            'rgb(255,0,0)',
+                            'rgb(255,0,0)',
+                            'rgb(255,0,0)',
+                        ],
+                        borderWidth: 1,
+                        data: [10, 25, 0, 12]
+                    }],
+
                 },
-                plugins: {
-                    legend: { display: true, position: 'right' },
-                    title: {
-                        display: true,
-                        text: "Attendance"
+                options: {
+                    scales: {
+                        // x: {
+                        //     stacked: true
+                        // },
+                        y: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    },
+                    plugins: {
+                        legend: { display: true, position: 'right' },
+                        title: {
+                            display: true,
+                            text: "Attendance"
+                        }
                     }
                 }
-            }
-        });
-    </script>
-    <script src="javascripts/home.js" type="module"></script>
+            });
+        </script>
+        <script src="javascripts/home.js" type="module"></script>
 </body>
 
 </html>

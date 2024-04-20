@@ -23,27 +23,27 @@ let name = document.getElementById("profile-name")
 let email = document.getElementById("profile-email")
 
 function fetchData() {
-    const username = window.cookies.username;
-    const password = window.cookies.token;
-    fetch(`${baseUrl}/getEmail?username=${username}&password=${password}`).then((response)=>{
-        if (!response.ok) {
-            throw new Error(`HTTP ERROR! Status : ${response.status}`);
-        }
-        return response.text();
-    }).then(sts => {
-        if (sts == "User not Found" || sts == "Wrong Password"){
-            document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-            document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-            window.location.href = "/login"
-            return;
-        }
-        else {
-            email.innerText = sts;
-            name.innerText = username;
-        }
-    })
-    fetchClasses();
-    fetchHolidays();
+    // const username = window.cookies.username;
+    // const password = window.cookies.token;
+    // fetch(`${baseUrl}/getEmail?username=${username}&password=${password}`).then((response)=>{
+    //     if (!response.ok) {
+    //         throw new Error(`HTTP ERROR! Status : ${response.status}`);
+    //     }
+    //     return response.text();
+    // }).then(sts => {
+    //     if (sts == "User not Found" || sts == "Wrong Password"){
+    //         document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    //         document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    //         window.location.href = "/login"
+    //         return;
+    //     }
+    //     else {
+    //         email.innerText = sts;
+    //         name.innerText = username;
+    //     }
+    // })
+    // fetchClasses();
+    // fetchHolidays();
 }
 
 function formatTime(time) {
@@ -186,24 +186,3 @@ function fetchHolidays() {
 
 window.onload = fetchData;
 
-var xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
-var yValues = [55, 49, 44, 24, 15];
-var barColors = ["red", "green","blue","orange","brown"];
-
-new Chart("myChart", {
-  type: "bar",
-  data: {
-    labels: xValues,
-    datasets: [{
-      backgroundColor: barColors,
-      data: yValues
-    }]
-  },
-  options: {
-    legend: {display: false},
-    title: {
-      display: true,
-      text: "World Wine Production 2018"
-    }
-  }
-});
