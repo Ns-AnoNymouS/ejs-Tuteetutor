@@ -62,7 +62,7 @@
             </div>
             <div class="user"></div>
         </div>
-        <div class="main">
+        <div class="main" id="main">
             <nav>
                 <div class="rightnav">
                     <div class="container-logo">
@@ -114,19 +114,19 @@
             </nav>
             <div class="grid-container">
                 <div class="grid-item item1">
-                    <div class="small-card card1">
-                        <h3 class="tot-assignments-heading">
+                    <div class="small-card card1" id="card1">
+                        <h3 class="assignments-heading">
                             Total Assignments
                         </h3>
                     </div>
                     <div class="small-card grid-item card2">
-                        <h3 class="tot-assignments-heading">
-                            Marks
+                        <h3 class="evaluation-heading">
+                            Evaluation Points
                         </h3>
                     </div>
                     <div class="small-card grid-item card3">
-                        <h3 class="todolist-heading">
-                            To-do List
+                        <h3 class="announcement-heading">
+                            Announcements
                         </h3>
                     </div>
                 </div>
@@ -141,16 +141,22 @@
                         </h3>
                     </div>
                     <div class="holidays-content">
-                        <% if(typeof holidays === 'string'){ %> 
-                            <h1><%= holidays %></h1>
-                        <% } else { %>
-                            <% for (var i=0; i < holidays.length;i++) {%>
-                                <div class="holiday-card" style="border-radius: 2vh;">
-                                    <h3 style="text-align: center; font-size: 3.5vh;"><%= holidays[i].holiday %></h3>
-                                    <p style="text-align: center; margin-bottom: 10px; font-size: 1.2rem;"><%= holidays[i].date + '-' + holidays[i].month + '-' + holidays[i].year %></p>
-                                </div>
-                                <% } %>
-                            <% } %>
+                        <% if(typeof holidays==='string' ){ %>
+                            <h1>
+                                <%= holidays %>
+                            </h1>
+                            <% } else { %>
+                                <% for (var i=0; i < holidays.length;i++) {%>
+                                    <div class="holiday-card" style="border-radius: 2vh;">
+                                        <h3 style="text-align: center; font-size: 3.5vh;">
+                                            <%= holidays[i].holiday %>
+                                        </h3>
+                                        <p style="text-align: center; margin-bottom: 10px; font-size: 1.2rem;">
+                                            <%= holidays[i].date + '-' + holidays[i].month + '-' + holidays[i].year %>
+                                        </p>
+                                    </div>
+                                    <% } %>
+                                        <% } %>
                     </div>
                 </div>
                 <div class="grid-item item4">
@@ -161,27 +167,69 @@
                     </div>
                     <div class="classes-content">
                         <% if(classes=="No Classes Today!!" ) { %>
-                            <h1 style="background-color:white; display: flex; justify-content: center; align-items: center; width: 90%; height: 90%; margin:1rem 0rem; border-radius: 1rem;"><%= classes %></h1>
+                            <h1
+                                style="background-color:white; display: flex; justify-content: center; align-items: center; width: 90%; height: 90%; margin:1rem 0rem; border-radius: 1rem;">
+                                <%= classes %>
+                            </h1>
                             <% } else { %>
                                 <% for (var i=0; i < classes.length; i++) { %>
-                                    <% var id = '' %>
-                                    <% if (classes[i].present) {%>
-                                        <% id = "present-classes-card"%>
-                                    <% } %>
-                                    <% if (classes[i].upcoming) {%>
-                                        <% id = "upcomming-classes-card" %>
-                                    <% } %>
-                                    <div class="classes-card" id="<%= id %>" style="text-align: center; margin: 10px;">
-                                        <p style="font-size: larger;">Room no: <%= classes[i].room %></p>
-                                        <h3 style="font-size: x-large; margin: 10px;"><%= classes[i].class %></h3>
-                                        <p><%= classes[i].time %></p>
-                                    </div>
-                                    <% } %>
-                                <% } %>
+                                    <% var id='' %>
+                                        <% if (classes[i].present) {%>
+                                            <% id="present-classes-card" %>
+                                                <% } %>
+                                                    <% if (classes[i].upcoming) {%>
+                                                        <% id="upcomming-classes-card" %>
+                                                            <% } %>
+                                                                <div class="classes-card" id="<%= id %>"
+                                                                    style="text-align: center; margin: 10px;">
+                                                                    <p style="font-size: larger;">Room no: <%=
+                                                                            classes[i].room %>
+                                                                    </p>
+                                                                    <h3 style="font-size: x-large; margin: 10px;">
+                                                                        <%= classes[i].class %>
+                                                                    </h3>
+                                                                    <p>
+                                                                        <%= classes[i].time %>
+                                                                    </p>
+                                                                </div>
+                                                                <% } %>
+                                                                    <% } %>
                     </div>
                 </div>
 
             </div>
+        </div>
+        <div class="assignments" id="assignments">
+            <h1>Assignments</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Assignment</th>
+                        <th>Course</th>
+                        <th>Deadline</th>
+                        <th>Grades</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Assignment-1</td>
+                        <td>FFSD</td>
+                        <td>30-1-2024</td>
+                        <td>Not graded</td>
+                    </tr>
+                    <tr>
+                        <td>Assignment-1</td>
+                        <td>FFSD</td>
+                        <td>30-1-2024</td>
+                        <td>9/15</td>
+                    </tr>
+                    <tr>
+                        <td>Bob</td>
+                        <td>Jones</td>
+                        <td>35</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
         <script>
@@ -235,6 +283,19 @@
                         }
                     }
                 }
+            });
+
+            var hoverTrigger = document.getElementById('card1');
+            var hovered = document.getElementById('main');
+            var table = document.getElementById('assignments');
+            hoverTrigger.addEventListener('mouseenter', () => {
+                hovered.style.display = 'none';
+                table.style.display = 'block';
+            });
+
+            table.addEventListener('mouseleave', () => {
+                hovered.style.display = 'block';
+                table.style.display = 'none';
             });
         </script>
         <script src="javascripts/home.js" type="module"></script>
