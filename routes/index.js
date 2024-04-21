@@ -13,6 +13,15 @@ router.get('/login', function (req, res) {
     res.render('login', { 'error': '' });
 })
 
+router.get('/logout', function (req, res) {
+    req.session.destroy((err) => {
+        if (err) {
+            console.error('Error destroying session:', err);
+            return res.status(500).send('Error destroying session');
+        }
+    });
+})
+
 router.post('/login', async function (req, res) {
     const { username, password } = req.body;
     const isValidCredentials = await UserModel.checkCredentials(username, password)
@@ -52,7 +61,7 @@ router.post('/signup', async function (req, res) {
 router.get("/home", async (req, res) => {
     const classes = await UserModel.fetchClasses()
     const holidays = await UserModel.fetchHolidays();
-    res.render('home',{'username': req.session.username, 'email': req.session.email, 'classes': classes, 'holidays': holidays});
+    res.render('home', { 'username': req.session.username, 'email': req.session.email, 'classes': classes, 'holidays': holidays });
 });
 
 router.get("/almanac", (req, res) => {
@@ -64,25 +73,25 @@ router.get("/timetable", (req, res) => {
 });
 
 router.get("/otp", (req, res) => {
-    res.render("otp", {'error': ''});
+    res.render("otp", { 'error': '' });
 });
 
 router.post("/otp", async (req, res) => {
     let email = req.session.email
     let username = req.session.username
     let password = req.session.password
-    if (!email || !username || !password){
+    if (!email || !username || !password) {
         res.redirect('/signup')
     }
     else {
         const { num1, num2, num3, num4 } = req.body;
         let otp = num1 + num2 + num3 + num4
         sts = await OtpModel.checkOTP(email, username, password, otp)
-        if (sts == 'true'){
+        if (sts == 'true') {
             res.redirect("home");
         }
         else {
-            res.render('otp', {'error': sts})
+            res.render('otp', { 'error': sts })
         }
     }
 });
@@ -104,15 +113,15 @@ router.get('/coursesECE', (req, res) => {
 })
 
 router.get('/forgotPassword', (req, res) => {
-    res.render("forgotPassword", {'error': ''})
+    res.render("forgotPassword", { 'error': '' })
 })
 
-router.post('/forgotPassword', async function (req, res){
+router.post('/forgotPassword', async function (req, res) {
     const { email } = req.body;
     const check = await UserModel.checkEmail(email);
-    if(check != "Exists"){
-        res.render('forgotPassword', {error: check});
-    }else{
+    if (check != "Exists") {
+        res.render('forgotPassword', { error: check });
+    } else {
         req.session.email = email
         res.redirect('otp')
     }

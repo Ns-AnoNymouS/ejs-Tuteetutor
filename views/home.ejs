@@ -9,6 +9,17 @@
 
 <body>
     <%- include("partials/loading.ejs") %>
+        <div class="full">
+        </div>
+        <div class="confirmation">
+            <div class="buttons">
+                Are you sure you wanna Logout?
+            </div>
+            <div class="buttons">
+                <div class="yes">Yes</div>
+                <dv class="no">No</div>
+            </div>
+        </div>
         <div class="sidebar" id="side">
             <div class="top">
                 <ul>
@@ -93,7 +104,7 @@
                                 </li>
                             </a>
                             <hr>
-                            <li>
+                            <li id="logout">
                                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
                                 <span class="nav-item">Logout</span>
                             </li>
@@ -211,9 +222,6 @@
                 },
                 options: {
                     scales: {
-                        // x: {
-                        //     stacked: true
-                        // },
                         y: {
                             beginAtZero: true,
                             max: 100

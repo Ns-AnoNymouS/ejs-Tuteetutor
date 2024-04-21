@@ -22,6 +22,27 @@ function scrollClasses() {
     }
 }
 
+var blurContainer = document.querySelector('.full')
+var container = document.querySelector('.confirmation')
+
+function showLogout(){
+    blurContainer.style.display = 'flex'
+    container.style.display = 'flex'
+}
+
+function diableLogout(){
+    blurContainer.style.display = 'none'
+    container.style.display = 'none'
+}
+
+document.querySelector(".yes").addEventListener('click', ()=> {
+    fetch("/logout")
+    window.location.href = '/login'
+})
+
 window.onload = () => {
+    document.querySelector('.full').onclick = diableLogout;
+    document.querySelector('.no').onclick = diableLogout;
+    document.getElementById('logout').onclick = showLogout;
     scrollClasses();
 };
