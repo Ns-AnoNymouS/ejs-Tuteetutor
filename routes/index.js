@@ -16,9 +16,10 @@ router.get('/login', function (req, res) {
 router.post('/login', async function (req, res) {
     const { username, password } = req.body;
     const isValidCredentials = await UserModel.checkCredentials(username, password)
+    const email = await UserModel.getEmail(username)
     if (isValidCredentials == 'true') {
         req.session.username = username;
-
+        req.session.email = email;
         res.redirect('home')
     }
     else {

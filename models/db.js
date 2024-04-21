@@ -58,15 +58,15 @@ class Database {
         await this.time_table.insertOne(data)
     }
 
-    async insertHolidayData(data){
+    async insertHolidayData(data) {
         await this.holidays.insertOne(data)
     }
 
-    async insertBreaksData(data){
+    async insertBreaksData(data) {
         await this.breaks.insertOne(data)
     }
 
-    async insertChangesData(data){
+    async insertChangesData(data) {
         await this.changes.insertOne(data)
     }
 
@@ -75,24 +75,18 @@ class Database {
             startTime: { $lt: time },
             endTime: { $gt: time }
         };
-        var res = await this.time_table.findOne({day: day} && condition) || await this.breaks.findOne(condition)
+        var res = await this.time_table.findOne({ day: day } && condition) || await this.breaks.findOne(condition)
         return res
     }
 
-    async getEmail(username, password) {
+    async getEmail(username) {
         try {
-            const user = await this.student_collection.findOne({username: username});
-            if (!user){
+            const user = await this.student_collection.findOne({ username: username });
+            if (!user) {
                 return "User not Found"
             }
             else {
-                if (password != user.password){
-                    return "Wrong Password"
-                }
-                else {
-                    return user.email
-                }
-
+                return user.email
             }
         }
         catch (error) {
@@ -102,7 +96,7 @@ class Database {
 
     async getAllClasses(day) {
         try {
-            const sortedData = await this.time_table.find({day: day}).toArray();
+            const sortedData = await this.time_table.find({ day: day }).toArray();
             return sortedData
         }
         catch (error) {
@@ -110,25 +104,25 @@ class Database {
         }
     }
 
-    async getHolidays(date,month,year){
-        try{
-            const holidays = await this.holidays.find({date: { $gte: date}, month:{ $gte: month}, year:{$gte: year}}).toArray()
+    async getHolidays(date, month, year) {
+        try {
+            const holidays = await this.holidays.find({ date: { $gte: date }, month: { $gte: month }, year: { $gte: year } }).toArray()
             return holidays
         }
-        catch(error){
+        catch (error) {
             console.log(error)
         }
     }
 
-    async updatePassword(email,username,password){
-        try{
-            const data = await this.student_collection.findOne({username: username})
-            if (data != null){
+    async updatePassword(email, username, password) {
+        try {
+            const data = await this.student_collection.findOne({ username: username })
+            if (data != null) {
 
-                await this.student_collection.updateOne({email:email}, {$set: {username: username, password: password}})
+                await this.student_collection.updateOne({ email: email }, { $set: { username: username, password: password } })
             }
         }
-        catch(error){
+        catch (error) {
             console.log(error)
         }
     }

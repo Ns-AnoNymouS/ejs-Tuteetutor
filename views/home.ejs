@@ -130,7 +130,7 @@
                         </h3>
                     </div>
                     <div class="holidays-content">
-                        <% if(holidays == "No More Holidays!!"){ %> 
+                        <% if(typeof holidays === 'string'){ %> 
                             <h1><%= holidays %></h1>
                         <% } else { %>
                             <% for (var i=0; i < holidays.length;i++) {%>
@@ -153,7 +153,14 @@
                             <h1 style="background-color:white; padding: 2rem 2rem; margin:1rem 0rem; border-radius: 1rem;"><%= classes %></h1>
                             <% } else { %>
                                 <% for (var i=0; i < classes.length; i++) { %>
-                                    <div class="classes-card" style="text-align: center; margin: 10px;">
+                                    <% var id = '' %>
+                                    <% if (classes[i].present) {%>
+                                        <% id = "present-classes-card"%>
+                                    <% } %>
+                                    <% if (classes[i].upcoming) {%>
+                                        <% id = "upcomming-classes-card" %>
+                                    <% } %>
+                                    <div class="classes-card" id="<%= id %>" style="text-align: center; margin: 10px;">
                                         <p style="font-size: larger;">Room no: <%= classes[i].room %></p>
                                         <h3 style="font-size: x-large; margin: 10px;"><%= classes[i].class %></h3>
                                         <p><%= classes[i].time %></p>

@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+var MongoStore = require('connect-mongo');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
@@ -16,6 +17,9 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
+  store: MongoStore.create({
+    mongoUrl: process.env.DATABASE
+  })
 }))
 
 app.use(logger('dev'));

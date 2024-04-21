@@ -54,7 +54,11 @@ class User {
         }
     }
 
-    async checkEmail(email){
+    async getEmail(username) {
+        return await db.getEmail(username)
+    }
+
+    async checkEmail(email) {
         email = email.toLowerCase();
         if (email == null || email.trim() === "") {
             return "Enter email";
@@ -63,7 +67,7 @@ class User {
         if (sts) {
             return "Exists";
         }
-        else{
+        else {
             return "Doesn't Exists";
         }
     }
@@ -80,7 +84,7 @@ class User {
         return `${hours}:${minutes} ${time.part}`;
     }
 
-    async fetchClasses(){
+    async fetchClasses() {
         let date = new Date();
         let day = date.getDay();
         var formatedStart, formatedEnd, time;
@@ -91,39 +95,39 @@ class User {
             time = new Time(date.getHours(), date.getMinutes(), 'AM')
         }
         var classes = await db.getAllClasses(day);
-        if(classes.length == 0){
+        if (classes.length == 0) {
             return "No Classes Today!!"
-        }else{
-            classes.forEach(function(element){
+        } else {
+            classes.forEach(function (element) {
                 element.present = false;
-                formatedStart = new Time(element.startTime.hours,element.startTime.minutes,element.startTime.part)
-                formatedEnd = new Time(element.endTime.hours,element.endTime.minutes,element.endTime.part)
+                formatedStart = new Time(element.startTime.hours, element.startTime.minutes, element.startTime.part)
+                formatedEnd = new Time(element.endTime.hours, element.endTime.minutes, element.endTime.part)
                 element.startTime = formatedStart
                 element.endTime = formatedEnd
-                if(formatedStart <= time && formatedEnd >= time){
+                if (formatedStart <= time && formatedEnd >= time) {
                     element.present = true;
                 }
             })
-            classes.sort((a,b) => a.startTime - b.startTime)
+            classes.sort((a, b) => a.startTime - b.startTime)
 
             let upcoming = false
-            classes.forEach((element)=>{
-                formatedStart = new Time(element.startTime.hours,element.startTime.minutes,element.startTime.part)
-                formatedEnd = new Time(element.endTime.hours,element.endTime.minutes,element.endTime.part)
-                if(formatedStart >= time && !element.present && upcoming){
+            classes.forEach((element) => {
+                formatedStart = new Time(element.startTime.hours, element.startTime.minutes, element.startTime.part)
+                formatedEnd = new Time(element.endTime.hours, element.endTime.minutes, element.endTime.part)
+                if (formatedStart >= time && !element.present && !upcoming) {
                     upcoming = true;
                     element.upcoming = true;
                 }
-                element.time = `${this.formatTime(element.startTime)} - ${this.formatTime(element.endTime)}` 
+                element.time = `${this.formatTime(element.startTime)} - ${this.formatTime(element.endTime)}`
             })
             return classes;
         }
     }
 
-    async fetchHolidays(){
+    async fetchHolidays() {
         var date = new Date()
-        var holidays = await db.getHolidays(date.getDate(),date.getMonth(),date.getYear());
-        if(holidays.length == 0) return "No More Holidays!!";
+        var holidays = await db.getHolidays(date.getDate(), date.getMonth(), date.getYear());
+        if (holidays.length == 0) return "No More Holidays!!";
         return holidays;
     }
 }
