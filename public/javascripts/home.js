@@ -1,18 +1,14 @@
-document.getElementById('side').addEventListener("mouseover", (event) => {
-    event.preventDefault();
-    let btn = document.querySelector('#side');
+document.getElementById('side').addEventListener("mouseover", () => {
     let sidebar = document.querySelector('.sidebar');
+    sidebar.classList.add('active');
+});
 
-    btn.onmouseover = function () {
-        sidebar.classList.toggle('active')
-    };
+document.getElementById('side').addEventListener("mouseout", () => {
+    let sidebar = document.querySelector('.sidebar');
+    sidebar.classList.remove('active');
+});
 
-    btn.addEventListener("mouseout", () => {
-        sidebar.classList.remove('active');
-    });
-})
-
-let classesDetails = document.querySelector('.classes-content')
+let classesDetails = document.querySelector('.classes-content');
 
 function scrollClasses() {
     var element = document.getElementById('present-classes-card');
@@ -20,12 +16,12 @@ function scrollClasses() {
     if (element) {
         const targetOffset = element.offsetTop - classesDetails.offsetTop;
         classesDetails.scrollTop = targetOffset;
-    }
-    else if (upcomming) {
+    } else if (upcomming) {
         const targetOffset = upcomming.offsetTop - classesDetails.offsetTop;
         classesDetails.scrollTop = targetOffset;
     }
 }
 
-
-window.onload = scrollClasses;
+window.onload = () => {
+    scrollClasses();
+};
