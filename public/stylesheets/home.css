@@ -626,27 +626,47 @@ input[type="search"] {
     padding: 5px;
 }
 
-.assignments{
-    display: none;
-    background-color: aliceblue;
-    height: 90%;
-    width: 90%;
-    border-radius: 5rem;
+.ass-cont{
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+}
+
+.assignments{
+    margin-top: 10%;
+    background-color: whitesmoke;
+    border-radius: 20px;
+    color: rgb(0, 22, 69);
+    width: 48%;
+    height: 50vh;
+    margin-bottom: 6rem;
+    margin-right: 3rem;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px;
 }
 
 .assignments h1{
-    margin: 1rem;
     text-align: center;
+    font-size: 40px;
+    margin: 10px;
+    border-bottom: 2px solid rgb(0, 22, 69);
 }
 
 table {
     border-collapse: collapse; 
     width: 90%; 
+    /* background-color: #35D6ED; */
+    margin-top: 1.5rem;
+    margin-left: 3.5rem;
 }
 th, td {
     padding: 8px; 
     text-align: left; 
 }
+
+table th:not(:last-child), table td:not(:last-child) {
+    border-right: 2px solid black;
+}
+
+
+
