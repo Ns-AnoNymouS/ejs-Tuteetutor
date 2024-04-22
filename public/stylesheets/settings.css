@@ -335,7 +335,7 @@ input[type="search"] {
 }
 
 .box{
-    background-image: url("../img/home_bg.jpg");
+    background-image: url("../images/home_bg.jpg");
     background-size: cover;
     display: flex;
     flex-direction: column;
