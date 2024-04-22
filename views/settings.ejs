@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stylesheets/settings.css">
+    <link rel="shortcut icon" href="favicon_io/favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Agbalumo&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Madimi+One&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <title>Settings</title>
+</head>
+
+<body>
+    <div class="sidebar" id="side">
+        <div class="top">
+            <ul>
+                <div>
+                    <li>
+                        <a href="#">
+                            <img src="img/user-profile.webp" alt="user" height="20px" width="20px"
+                                style="padding: 15px;">
+                            <span class="nav-item">Username</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/home">
+                            <i class="fa-regular fa-user icon"></i>
+                            <span class="nav-item">Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/timeTable" target="_blank">
+                            <i class="fa-solid fa-list icon"></i>
+                            <span class="nav-item">TimeTable</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/almanac" target="_blank">
+                            <i class="fa-regular fa-calendar icon"></i>
+                            <span class="nav-item">Almanac</span>
+                        </a>
+                    </li>
+                </div>
+            </ul>
+        </div>
+        <div class="user"></div>
+    </div>
+    <div class="main">
+        <nav>
+            <div class="rightnav">
+                <div class="container-logo">
+                    <img src="img/logo.png" alt="TuteeTutor" height="35px" width="35px" style="border-radius: 50%;">
+                    <h2 id="logo-heading">TuteeTutor</h2>
+                </div>
+            </div>
+            <div class="leftnav">
+                <div class="search-container">
+                    <button class="icon-button">
+                        <i class="fa-solid fa-magnifying-glass" style="color: #000000;"></i>
+                    </button>
+                    <input type="search" placeholder="Search">
+                </div>
+                <div class="user-profile"
+                    style="color: white; display: flex; align-items: center; justify-content: left; width: 200px; border-left: 1px solid grey;">
+                    <img src="img/profile-img.png" alt="profile-pic" height="50px" width="50px"
+                        style="padding: 0px; border: 1px white solid; border-radius: 10px; margin: 0px 10px;">
+                    <div>
+                        <p id="profile-name"></p>
+                        <p style="font-family: Arial, Helvetica, sans-serif; font-size: .8rem;" id="profile-email"></p>
+                    </div>
+                </div>
+                <div id="profile-menu">
+                    <ul>
+                        <li>
+                            <i class="fa-regular fa-circle-question"></i>
+                            <span class="nav-item">Help</span>
+                        </li>
+                        <a href="/settings">
+                            <li>
+                                <i class="fa-solid fa-gear icon"></i>
+                                <span class="nav-item">Settings</span>
+                            </li>
+                        </a>
+                        <hr>
+                        <li>
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                            <span class="nav-item">Logout</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="box">
+            <h1 class="main-heading">Settings</h1>
+            <div class="main-container">
+                <div class="setting-option">
+                    <h2 class="heading">Edit Profile</h2>
+                    <p class="content">Update your personal information:</p>
+                    <div class="profile">
+                        <p class="profile-heading">Profile:</p>
+                        <div class="pic">.</div>
+                        <p>Click on the image to update</p>
+                    </div>
+                    <form id="update">
+                        <div class="update-container">
+                            <div class="cont">
+                                <label for="Username">Username:</label>
+                                <input type="text" id="username" name="username">
+                            </div>
+                            <div class="cont">
+                                <label for="password">Password:</label>
+                                <input type="password" id="password" name="password">
+                            </div>
+                            <div class="cont1">
+                                <label for="confimpass">Confirm Password:</label>
+                                <input type="confimpass" id="confimpass" name="confimpass">
+                            </div>
+                            <div class="btn-submit">Submit</div>
+                        </div>
+                    </form>
+                </div>
+                <div class="setting-option-2">
+                    <div class="courses">
+                        <h2 class="heading">Edit Courses</h2>
+                        <p class="content">Manage your enrolled courses:</p>
+                        <div class="box1">
+                            <div><img src="../img/Online-courses.jpg" alt="Edit courses" class="coursesimg"></div>
+                            <div class="btn-submit">Edit Courses<i class="fa-solid fa-diamond-turn-right"></i></div>
+                        </div>
+                    </div>
+                    <div class="logout">
+                        <h2 class="heading">Logout</h2>
+                        <p class="content">Sign out of your account:</p>
+                        <div class="box2">
+                            <div class="profile1">
+                                <div class="pic">.</div>
+                                <p>Username</p>
+                            </div>
+                            <div class="btn-submit">Logout<i class="fa-solid fa-right-from-bracket"></i></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="settings.js"></script>
+</body>
+
+</html>
