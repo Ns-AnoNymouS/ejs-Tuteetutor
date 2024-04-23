@@ -34,18 +34,16 @@ body {
 }
 
 .confirmation {
-    display: none;
-    z-index: 4;
-    position: absolute;
-    left: calc(50vw - 125px);
-    top: calc(50vh - 75px);
+    display: flex;
+    overflow: hidden;
+    transition: all 0.1s ease-in;
     flex-direction: column;
     justify-content: center;
     background-color: black;
     color: white;
     text-align: center;
-    width: 350px;
-    height: 150px;
+    width: 0;
+    height: 0;
     border-radius: 5px;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
@@ -634,6 +632,7 @@ input[type="search"] {
 }
 
 .assignments{
+    display: none;
     margin-top: 10%;
     background-color: whitesmoke;
     border-radius: 20px;
