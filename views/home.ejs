@@ -119,12 +119,12 @@
                             Total Assignments
                         </h3>
                     </div>
-                    <div class="small-card grid-item card2">
+                    <div class="small-card grid-item card2" id="card2">
                         <h3 class="evaluation-heading">
                             Evaluation Points
                         </h3>
                     </div>
-                    <div class="small-card grid-item card3">
+                    <div class="small-card grid-item card3" id="card3">
                         <h3 class="announcement-heading">
                             Announcements
                         </h3>
@@ -199,8 +199,8 @@
 
             </div>
         </div>
-        <div class="ass-cont">
-            <div class="assignments" id="assignments">
+        <div class="hover-cont" id="assignments-cont">
+            <div class="hover-table" id="assignments">
                 <h1>Assignments</h1>
                 <div class="table">
                     <table>
@@ -232,6 +232,42 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+        <div class="hover-cont" id="points-cont">
+            <div class="hover-table" id="courses">
+                <h1>Course Evaluation Points</h1>
+                <div class="table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Course</th>
+                                <th>Uploaded on</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>AI</td>
+                                <td>30-1-2024</td>
+                            </tr>
+                            <tr>
+                                <td>FFSD</td>
+                                <td>30-1-2024</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="hover-cont" id="announcements-cont">
+            <div class="hover-table" id="announcements">
+                <h1>Announcements</h1>
+                <div class="block">
+                    <div class="Heading">
+                        <h3>Change in Timings</h3>
+                        <p>FFSD class is postponed to 9.45AM</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -289,21 +325,68 @@
                 }
             });
 
-            var hoverTrigger = document.getElementById('card1');
-            var hovered = document.getElementById('main');
-            var table = document.getElementById('assignments');
-            hoverTrigger.addEventListener('mouseover', () => {
-                hovered.style.display = 'none';
-                table.style.display = 'block';
+            var side = document.getElementById('side')
+            var hoverTrigger1 = document.getElementById('card1');
+            var main = document.getElementById('main');
+            var assignments = document.getElementById('assignments-cont');
+            var hoverTrigger2 = document.getElementById('card2');
+            var evaluation = document.getElementById('points-cont');
+            var hoverTrigger3 = document.getElementById('card3');
+            var announcements = document.getElementById('announcements-cont');
+
+
+            hoverTrigger1.addEventListener('mouseover', () => {
+                assignments.style.display = 'block';
+                main.style.display = 'none';
                 document.body.style.backgroundImage = 'url("../images/assignment.jpg")';
                 document.body.style.background = 'cover';
+                side.style.display = 'none';
             });
 
-            table.addEventListener('mouseout', () => {
-                hovered.style.display = 'block';
-                table.style.display = 'none';
+            /*
+            hoverOut.addEventListener('mouseout', () => {
+                main.style.display = 'block';
+                assignments.style.display = 'none';
                 document.body.style.backgroundImage = 'none';
+                side.style.display = 'block';
             });
+            */
+
+
+            hoverTrigger2.addEventListener('mouseover', () => {
+                evaluation.style.display = 'block';
+                main.style.display = 'none';
+                document.body.style.backgroundImage = 'url("../images/assignment.jpg")';
+                document.body.style.background = 'cover';
+                side.style.display = 'none';
+            });
+
+            /*
+            hoverOut.addEventListener('mouseout', () => {
+                main.style.display = 'block';
+                evaluation.style.display = 'none';
+                document.body.style.backgroundImage = 'none';
+                side.style.display = 'block';
+            });
+            */
+
+            hoverTrigger3.addEventListener('mouseover', () => {
+                announcements.style.display = 'block';
+                main.style.display = 'none';
+                document.body.style.backgroundImage = 'url("../images/assignment.jpg")';
+                document.body.style.background = 'cover';
+                side.style.display = 'none';
+            });
+
+            /*
+            hoverOut.addEventListener('mouseout', () => {
+                main.style.display = 'block';
+                announcements.style.display = 'none';
+                document.body.style.backgroundImage = 'none';
+                side.style.display = 'block';
+            });
+            */
+
 
         </script>
         <script src="javascripts/home.js" type="module"></script>
