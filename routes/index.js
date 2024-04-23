@@ -61,7 +61,8 @@ router.post('/signup', async function (req, res) {
 router.get("/home", async (req, res) => {
     const classes = await UserModel.fetchClasses()
     const holidays = await UserModel.fetchHolidays();
-    res.render('home', { 'username': req.session.username, 'email': req.session.email, 'classes': classes, 'holidays': holidays });
+    const assignments = await UserModel.fetchAssignments();
+    res.render('home', { 'username': req.session.username, 'email': req.session.email, 'classes': classes, 'holidays': holidays, 'assignments': assignments });
 });
 
 router.get("/almanac", (req, res) => {

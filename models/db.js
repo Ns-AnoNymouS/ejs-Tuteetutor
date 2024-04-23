@@ -9,6 +9,7 @@ class Database {
         this.holidays = null;
         this.breaks = null;
         this.changes = null;
+        this.assignments = null;
     }
 
     async insertData(email, username, password) {
@@ -118,12 +119,24 @@ class Database {
         try {
             const data = await this.student_collection.findOne({ username: username })
             if (data != null) {
-
                 await this.student_collection.updateOne({ email: email }, { $set: { username: username, password: password } })
             }
         }
         catch (error) {
             console.log(error)
+        }
+    }
+
+    async getAssignments(course, section){
+        const condition = {
+            course: { course },
+            section: { section }
+        };
+        try{
+            const data = await this.assignments.find(condition).toArray();
+            return data;
+        }catch(error){
+            console.log(error);
         }
     }
 
@@ -136,6 +149,7 @@ class Database {
             this.holidays = database.collection('holidays')
             this.changes = database.collection('changes')
             this.breaks = database.collection('breaks')
+            this.assignments = database.collection('assignments')
         } catch (error) {
             console.log(error);
         }

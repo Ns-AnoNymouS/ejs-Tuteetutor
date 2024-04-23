@@ -130,5 +130,11 @@ class User {
         if (holidays.length == 0) return "No More Holidays!!";
         return holidays;
     }
+
+    async fetchAssignments(course, section){
+        var assignments = await db.getAssignments(course,section);
+        if(assignments.length == 0) return 'No Assignments';
+        return assignments;
+    }
 }
 module.exports = new User()
