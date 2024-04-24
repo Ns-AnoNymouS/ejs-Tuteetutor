@@ -136,5 +136,17 @@ class User {
         if(assignments.length == 0) return 'No Assignments';
         return assignments;
     }
+
+    async fetchEvaluation(course){
+        var evaluationPoints = await db.getEvaluation(course);
+        if(evaluationPoints.length == 0) return 'None uploaded yet';
+        return evaluationPoints;
+    }
+
+    async fetchAnnouncements(course, section){
+        var announcements = await db.getAnnouncements(course,section);
+        if(announcements.length == 0) return 'No Announcements';
+        return announcements;
+    }
 }
 module.exports = new User()

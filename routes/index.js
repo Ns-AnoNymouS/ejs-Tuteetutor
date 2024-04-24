@@ -59,10 +59,14 @@ router.post('/signup', async function (req, res) {
 })
 
 router.get("/home", async (req, res) => {
+    var course = 'AI';
+    var section = 2;
     const classes = await UserModel.fetchClasses()
     const holidays = await UserModel.fetchHolidays();
-    const assignments = await UserModel.fetchAssignments();
-    res.render('home', { 'username': req.session.username, 'email': req.session.email, 'classes': classes, 'holidays': holidays, 'assignments': assignments });
+    const assignments = await UserModel.fetchAssignments(course, section);
+    const evaluationPoints = await UserModel.fetchEvaluation(course);
+    const announcements = await UserModel.fetchAnnouncements(course, section);
+    res.render('home', { 'username': req.session.username, 'email': req.session.email, 'classes': classes, 'holidays': holidays, 'assignments': assignments, 'evaluationPoints': evaluationPoints, 'announcements': announcements });
 });
 
 router.get("/almanac", (req, res) => {

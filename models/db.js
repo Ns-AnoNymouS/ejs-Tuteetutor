@@ -10,6 +10,8 @@ class Database {
         this.breaks = null;
         this.changes = null;
         this.assignments = null;
+        this.evaluation = null;
+        this.announcements = null;
     }
 
     async insertData(email, username, password) {
@@ -140,6 +142,33 @@ class Database {
         }
     }
 
+    async getEvaluation(course){
+        const condition = {
+            course: {course}
+        }
+        try{
+            const data = await this.evaluation.find(condition).toArray();
+            return data;
+        }
+        catch(error){
+            console.log(error)
+        }
+    }
+
+    async getAnnouncements(course, section){
+        const condition = {
+            course: { course },
+            section: { section }
+        };
+        try{
+            const data = await this.announcements.find(condition).toArray();
+            return data;
+        }
+        catch(error){
+            console.log(error)
+        }
+    }
+
     async connect() {
         try {
             await this.client.connect();
@@ -150,6 +179,8 @@ class Database {
             this.changes = database.collection('changes')
             this.breaks = database.collection('breaks')
             this.assignments = database.collection('assignments')
+            this.evaluation = database.collection('evaluation')
+            this.announcements = database.collection('announcements')
         } catch (error) {
             console.log(error);
         }
