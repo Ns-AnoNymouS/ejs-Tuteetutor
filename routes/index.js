@@ -4,6 +4,7 @@ var router = express.Router();
 const UserModel = require('../models/user')
 const OtpModel = require('../models/sendOTP')
 const encrypt = require('../models/encryption')
+const AdminModel = require('../models/admin')
 
 router.get("/", (req, res) => {
     res.render("about");
@@ -136,8 +137,10 @@ router.get('/updatePassword', (req, res) => {
     res.render("updatePassword")
 })
 
-router.get('/admin',(req,res)=>{
-    res.render("admin")
+router.get('/admin', async (req,res)=>{
+    var collections = await AdminModel.fetchCollections();
+    console.log(collections)
+    res.render("admin",{ 'collections': collections})
 })
 
 module.exports = router;

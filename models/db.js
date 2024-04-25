@@ -169,6 +169,18 @@ class Database {
         }
     }
 
+    async getCollections(){
+        try {
+            await this.connect(); // Ensure the connection is established
+            const database = this.client.db(db_name);
+            const collections = await database.listCollections().toArray();
+            return collections;
+        } catch (error) {
+            console.error(error);
+            throw new Error("Failed to fetch collections.");
+        }
+    }
+
     async connect() {
         try {
             await this.client.connect();
