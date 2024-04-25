@@ -136,4 +136,8 @@ router.get('/updatePassword', (req, res) => {
     res.render("updatePassword")
 })
 
+router.get('/admin',(req,res)=>{
+    res.render("admin")
+})
+
 module.exports = router;

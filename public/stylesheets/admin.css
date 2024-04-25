@@ -1,0 +1,133 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+  }
+
+  a{
+    color: white;
+    text-decoration: none;
+  }
+
+  a:hover{
+    text-decoration: underline;
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 5rem;
+    background-color: rgba(37, 41, 143, 1);
+    color: #fff;
+    padding: 0 1.5rem;
+  }
+
+  .brand {
+    font-size: 2rem;
+    font-weight: 500;
+  }
+
+  .nav-action {
+    margin-right: 0.3rem;
+    padding: 0.5rem 0.3rem;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  .main {
+    padding: 2rem;
+  }
+
+  .layout{
+    display: grid;
+    grid-template-columns: 4fr 1fr 1fr;
+  }
+  
+  .heading{
+    font-size: 2rem;
+    font-family: 'Times New Roman', Times, serif;
+  }
+
+  .AA{
+    font-size: 1.3rem;
+    background-color: rgb(64, 64, 240);
+    width: 90%;
+    padding: 0.5rem 1rem;
+  }
+
+  .links{
+    display: flex;
+    justify-content: space-between;
+    background-color: rgba(37, 41, 143, 1);
+  }
+
+  .actions {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .action {
+    padding: 0.5rem 1rem;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  .administration,
+  .management,
+  .recent-actions,
+  .notifications {
+    margin-bottom: 2rem;
+  }
+  
+  .administration h1,
+  .management h2,
+  .notifications h2 {
+    margin-bottom: 1rem;
+  }
+
+  .management-links {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 90%;
+    margin-bottom: 2rem;
+  }
+  
+  .link {
+    padding: 0.5rem 1rem;
+    background-color: rgba(37, 41, 143, 1);
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .recent-actions{
+    background-color: rgba(149, 140, 140, 1);
+  }
+
+  .recent-actions h2{
+    padding: 0.5rem 1rem;
+  }
+
+  .action-heading{
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+  }
+
+  .recent-action {
+    padding: 0.5rem 1rem;
+    color: #5d4b4b;
+    cursor: pointer;
+  }
+  
+  .notification {
+    padding: 0.5rem 1rem;
+    background-color: rgba(149, 140, 140, 1);
+    color: #fff;
+  }
+  
