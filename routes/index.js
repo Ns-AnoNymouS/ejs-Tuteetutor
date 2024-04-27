@@ -147,7 +147,7 @@ router.get('/admin/collections/:option', async (req,res)=>{
     const option = req.params.option;
     switch(option){
         case 'student':
-            res.status(404).send('Page Not Found');
+            res.render("collections", { 'presentPage': option });
     }
 })
 

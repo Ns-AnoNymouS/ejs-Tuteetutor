@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="/stylesheets/collections.css">
+    <%- include("partials/header.ejs") %>
+</head>
+
+<body>
+    <%- include("partials/loading.ejs") %>
+        <header class="nav">
+            <div class="brand">TuteeTutor Administration</div>
+            <div class="nav-actions">
+                <span class="nav-action">Welcome Username</span>
+                <span class="nav-action"><a href="#">Change Password</a></span>
+                <span class="nav-action"><a href="#">Logout</a></span>
+            </div>
+        </header>
+        <div class="page-link">
+            <p><span><a href="#">Home</a></span>><span><a href="#">Collections</a></span>><span><a href="#">
+                        <%= presentPage %>
+                    </a></span></p>
+        </div>
+        <div class="body">
+            <div class="left">
+
+            </div>
+            <div class="right">
+                <div class="heading">
+                    <h2>Select <%= presentPage %> to change</h2>
+                    <button>Add question</button>
+                </div>
+            </div>
+        </div>
+</body>
+
+</html>
