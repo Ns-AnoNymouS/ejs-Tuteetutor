@@ -143,4 +143,12 @@ router.get('/admin', async (req,res)=>{
     res.render("admin",{ 'collections': collections})
 })
 
+router.get('/admin/collections/:option', async (req,res)=>{
+    const option = req.params.option;
+    switch(option){
+        case 'student':
+            res.status(404).send('Page Not Found');
+    }
+})
+
 module.exports = router;
