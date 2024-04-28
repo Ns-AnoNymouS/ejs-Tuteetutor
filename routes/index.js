@@ -145,6 +145,7 @@ router.get('/admin', async (req,res)=>{
 
 router.get('/admin/collections/:option', async (req,res)=>{
     const option = req.params.option;
+    // var keys = await AdminModel.fetchAttributes(option)
     switch(option){
         case 'student':
             res.render("collections", { 'presentPage': option });

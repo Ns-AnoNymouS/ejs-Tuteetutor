@@ -4,6 +4,7 @@ const db_name = "TuteeTutor";
 class Database {
     constructor(uri) {
         this.client = new MongoClient(uri);
+        this.database = null;
         this.student_collection = null;
         this.time_table = null;
         this.holidays = null;
@@ -171,9 +172,8 @@ class Database {
 
     async getCollections(){
         try {
-            await this.connect(); // Ensure the connection is established
-            const database = this.client.db(db_name);
-            const collections = await database.listCollections().toArray();
+            const collections = await this.database.listCollections().toArray();
+            console.log(await this.database['student'].findOne())
             return collections;
         } catch (error) {
             console.error(error);
@@ -181,18 +181,36 @@ class Database {
         }
     }
 
+    // async getAttributes(collection){
+    //     try {
+    //         await this.connect();
+    //         const database = this.client.db(db_name);
+    
+    //         // Access the collection and find documents
+    //         const firstDocument = await db.collection(collection).findOne();
+    
+    //         // Get the keys (field names) of the first document
+    //         const keys = Object.keys(firstDocument);
+    
+    //         return keys;
+    //     } catch (error) {
+    //         console.error('Error:', error);
+    //         throw error; // Rethrow the error for handling in the caller function
+    //     } 
+    // }
+
     async connect() {
         try {
             await this.client.connect();
-            const database = this.client.db(db_name);
-            this.student_collection = database.collection('student');
-            this.time_table = database.collection('timetable')
-            this.holidays = database.collection('holidays')
-            this.changes = database.collection('changes')
-            this.breaks = database.collection('breaks')
-            this.assignments = database.collection('assignments')
-            this.evaluation = database.collection('evaluation')
-            this.announcements = database.collection('announcements')
+            this.database = this.client.db(db_name);
+            this.student_collection = this.database.collection('student');
+            this.time_table = this.database.collection('timetable')
+            this.holidays = this.database.collection('holidays')
+            this.changes = this.database.collection('changes')
+            this.breaks = this.database.collection('breaks')
+            this.assignments = this.database.collection('assignments')
+            this.evaluation = this.database.collection('evaluation')
+            this.announcements = this.database.collection('announcements')
         } catch (error) {
             console.log(error);
         }

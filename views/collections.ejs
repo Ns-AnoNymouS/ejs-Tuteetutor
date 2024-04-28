@@ -30,6 +30,27 @@
                     <h2>Select <%= presentPage %> to change</h2>
                     <button>Add question</button>
                 </div>
+                <div class="options">
+                    <h2>Action:</h2>
+                    <select id="dropdown">
+                        <option value="--------">--------</option>
+                        <option value="Delete selected questions">Delete selected questions</option>
+                    </select>
+                    <button>Go</button>
+                    <div class="data">
+                        <input type="checkbox" id="collection">
+                        <%= presentPage %>
+                    </div>
+                    <div class="data">
+                        <table>
+                            <thead>
+                                <td><%= presentPage %></td>
+                                <td><%= presentPage %></td>
+                            </thead>
+                            
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
 </body>
