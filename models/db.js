@@ -173,7 +173,7 @@ class Database {
     async getCollections(){
         try {
             const collections = await this.database.listCollections().toArray();
-            console.log(await this.database['student'].findOne())
+            console.log(await this.database.collection('student').findOne())
             return collections;
         } catch (error) {
             console.error(error);
