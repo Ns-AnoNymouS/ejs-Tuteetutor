@@ -104,7 +104,7 @@ router.post("/otp", async (req, res) => {
 });
 
 router.get("/settings", authMiddleware, (req, res) => {
-    res.render("settings");
+    res.render("settings",  { 'username': req.session.username, 'email': req.session.email});
 });
 
 router.get('/courses', (req, res) => {
