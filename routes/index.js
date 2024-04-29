@@ -11,6 +11,10 @@ router.get("/", (req, res) => {
     res.render("about");
 });
 
+router.get("/faculty",isAdmin,(req,res)=>{
+    res.render("faculty");  
+})
+
 router.get('/login', function (req, res) {
     res.render('login', { 'error': '' });
 })
