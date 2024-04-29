@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const UserModel = require('../models/user')
+const authMiddleware = require('../middlewares/authMiddleware')
 const OtpModel = require('../models/sendOTP')
 const encrypt = require('../models/encryption')
 const AdminModel = require('../models/admin')
@@ -59,7 +60,7 @@ router.post('/signup', async function (req, res) {
     }
 })
 
-router.get("/home", async (req, res) => {
+router.get("/home", authMiddleware, async (req, res) => {
     var course = 'AI';
     var section = 2;
     const classes = await UserModel.fetchClasses()
@@ -70,11 +71,11 @@ router.get("/home", async (req, res) => {
     res.render('home', { 'username': req.session.username, 'email': req.session.email, 'classes': classes, 'holidays': holidays, 'assignments': assignments, 'evaluationPoints': evaluationPoints, 'announcements': announcements });
 });
 
-router.get("/almanac", (req, res) => {
+router.get("/almanac", authMiddleware, (req, res) => {
     res.render("almanac");
 });
 
-router.get("/timetable", (req, res) => {
+router.get("/timetable", authMiddleware, (req, res) => {
     res.render("timetable");
 });
 
@@ -102,7 +103,7 @@ router.post("/otp", async (req, res) => {
     }
 });
 
-router.get("/settings", (req, res) => {
+router.get("/settings", authMiddleware, (req, res) => {
     res.render("settings");
 });
 
