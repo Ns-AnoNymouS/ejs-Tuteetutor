@@ -12,7 +12,7 @@ class OtpModel {
         },
     });
 
-    async checkOTP(email, username, password, otp) {
+    async checkOTP(email, username, password, otp, type) {
         let sts = await UserModel.checkEmail(email)
         if (sts == 'Exists') {
             return 'User Already Exists'
@@ -22,7 +22,12 @@ class OtpModel {
                 return "Incorrect OTP"
             }
             else {
-                await db.insertData(email, username, password);
+                if (type == "faculty"){
+                    await db.faculty.updateOne({'email': email}, {'$set': {'username': username, 'password': password, 'status': "accepted"}});                    
+                }
+                else{
+                    await db.insertData(email, username, password);
+                }
                 return 'true'
             }
         }

@@ -2,8 +2,9 @@
 <html lang="en">
 
 <head>
-  <link rel="stylesheet" href="/stylesheets/addFaculty.css">
   <link rel="stylesheet" href="/stylesheets/home.css">
+  <link rel="stylesheet" href="/stylesheets/addFaculty.css">
+  <link rel="stylesheet" href="/stylesheets/facultyStatus.css">
   <%- include("partials/header.ejs") %>
 </head>
 
@@ -15,7 +16,9 @@
         Are you sure you wanna Logout?
       </div>
       <div class="buttons">
-        <div class="yes">Yes</div>
+        <a href="/logout">
+          <div class="yes">Yes</div>
+        </a>
         <div class="no">No</div>
       </div>
     </div>
@@ -109,28 +112,39 @@
       </div>
     </nav>
   </div>
+  <div class="page">
 
-  <div class="container">
-    <h2>Status Table with Delete Option</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Item</th>
-          <th>Status</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% items.forEach(function(item) { %>
-        <tr>
-          <td><%= item.name %></td>
-          <td><%= item.status %></td>
-          <td><button class="delete-btn">Delete</button></td>
-        </tr>
-        <% }); %>
-      </tbody>
-    </table>
+    <div class="statusContainer">
+      <a href="/addFaculty">
+        <button class="action-btn add-btn">Add</button>
+      </a>
+      <% if (items) { %>
+      <table>
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% items.forEach(function(item) { %>
+          <tr>
+            <td><%= item.email %></td>
+            <td><%= item.status %></td>
+            <td>
+              <button class="action-btn update-btn" data-id=<%= item.email %>>Update</button>
+              <button class="action-btn delete-btn" data-id=<%= item.email %>>Delete</button>
+            </td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+      <% }; %>
+    </div>
   </div>
   <script src="javascripts/home.js" type="module"></script>
+  <script src="javascripts/facultyStatus.js" type="module"></script>
 </body>
+
 </html>

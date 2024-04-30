@@ -5,8 +5,12 @@ body {
     background-color: #f4f4f4;
 }
 
-.container {
-    max-width: 800px;
+.statusContainer {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 800px;
     margin: 20px auto;
     padding: 20px;
     background-color: #fff;
@@ -21,9 +25,11 @@ h2 {
 table {
     width: 100%;
     border-collapse: collapse;
+    margin-top: 20px;
 }
 
 th, td {
+    text-align: center;
     padding: 10px;
     border: 1px solid #ddd;
 }
@@ -32,7 +38,7 @@ th {
     background-color: #f2f2f2;
 }
 
-.delete-btn {
+.action-btn {
     background-color: #f44336;
     color: #fff;
     border: none;
@@ -40,6 +46,27 @@ th {
     cursor: pointer;
     padding: 8px 12px;
     font-size: 14px;
+    width: 70px;
+}
+
+.add-btn {
+    background-color: #4caf50;
+}
+
+.add-btn:hover {
+    background-color: #45a049;
+}
+
+.update-btn {
+    background-color: #4e9cff;
+}
+
+.update-btn:hover {
+    background-color: #007bff;
+}
+
+.delete-btn {
+    background-color: #f44336;
 }
 
 .delete-btn:hover {

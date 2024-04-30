@@ -14,7 +14,9 @@
         Are you sure you wanna Logout?
       </div>
       <div class="buttons">
-        <div class="yes">Yes</div>
+        <a href="/logout">
+          <div class="yes">Yes</div>
+        </a>
         <div class="no">No</div>
       </div>
     </div>
@@ -48,9 +50,9 @@
             </a>
           </li>
           <li>
-            <a href="/addFaculty" target="_blank">
+            <a href="/facultyStatus">
               <i class="fa-solid fa-user-plus"></i>
-              <span class="nav-item" style="text-wrap: nowrap;">Add Faculty</span>
+              <span class="nav-item" style="text-wrap: nowrap;">Faculty</span>
             </a>
           </li>
         </div>
@@ -181,8 +183,7 @@
           <% id="upcomming-classes-card" %>
           <% } %>
           <div class="classes-card" id="<%= id %>" style="text-align: center; margin: 10px;">
-            <p style="font-size: larger;">Room no: <%=
-                                                                            classes[i].room %>
+            <p style="font-size: larger;">Room no: <%= classes[i].room %>
             </p>
             <h3 style="font-size: x-large; margin: 10px;">
               <%= classes[i].class %>

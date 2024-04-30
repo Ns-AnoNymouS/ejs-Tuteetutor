@@ -27,7 +27,15 @@ class User {
             return "Passwords doesn't match"
         }
 
-
+        let faculty = await db.faculty.findOne({'email': email});
+        if (faculty){
+            if (faculty.password){
+                return "Email already exists"
+            }
+            else {
+                return "faculty otp"
+            }
+        }
         let sts = await db.isEmailSignedIn(email)
         if (sts) {
             return "Email already signed in";
@@ -51,6 +59,15 @@ class User {
         email = email.toLowerCase();
         if (email == null || email.trim() === "") {
             return "Enter email";
+        }
+        let faculty = await db.faculty.findOne({email: email});
+        if (faculty){
+            if (faculty.password){
+                return "Exists"
+            }
+            else {
+                return "Doesn't Exists"
+            }
         }
         let sts = await db.isEmailSignedIn(email)
         if (sts) {
