@@ -142,7 +142,9 @@
                         <p class="content">Manage your enrolled courses:</p>
                         <div class="box1">
                             <div><img src="../images/Online-courses.jpg" alt="Edit courses" class="coursesimg"></div>
-                            <div class="btn-submit">Edit Courses<i class="fa-solid fa-diamond-turn-right"></i></div>
+                            <div class="btn-submit" id="editCoursesBtn">Edit Courses<i
+                                    class="fa-solid fa-diamond-turn-right"></i></div>
+
                         </div>
                     </div>
                     <div class="logout">
@@ -160,6 +162,9 @@
             </div>
         </div>
         <script>
+
+            
+
             document.getElementById("submitBtn").addEventListener("click", function () {
                 var username = document.getElementById("username").value;
                 var password = document.getElementById("password").value;
@@ -177,7 +182,7 @@
             });
 
             function uploadImage() {
-    
+
                 document.querySelector('input[type="file"]').click();
             }
 
