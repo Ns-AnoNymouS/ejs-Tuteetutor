@@ -1,0 +1,51 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 5rem;
+    background-color: rgba(37, 41, 143, 1);
+    color: #fff;
+    padding: 0 1.5rem;
+}
+
+.brand {
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+.nav-action {
+    margin-right: 0.3rem;
+    padding: 0.5rem 0.3rem;
+    color: #fff;
+    cursor: pointer;
+}
+
+.page-link{
+    background-color: rgb(57, 57, 178);
+}
+
+.page-link p{
+    padding: 0.5rem 2rem;
+    color: white;
+    font-size: 1.1rem;
+}

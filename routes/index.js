@@ -158,4 +158,18 @@ router.get('/admin/collections/:option', async (req,res)=>{
     }
 })
 
+// router.get('/admin/collections/:option/:action', async(req,res)=>{
+//     const option = req.params.option;
+//     console.log(option)
+//     const action = req.params.action;
+//     console.log(action)
+//     const presentPage = option + '/' + action
+//     console.log(presentPage)
+//     var keys = await AdminModel.fetchAttributes(option);
+//     switch(option){
+//         case 'add':
+//             res.render('add',{ 'presentPage': presentPage ,'keys': keys});
+//     }
+// })
+
 module.exports = router;
