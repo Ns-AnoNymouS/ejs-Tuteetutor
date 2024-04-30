@@ -165,12 +165,6 @@ router.get('/updatePassword', (req, res) => {
     res.render("updatePassword")
 })
 
-router.get('/admin', async (req,res)=>{
-    var collections = await AdminModel.fetchCollections();
-    console.log(collections)
-    res.render("admin",{ 'collections': collections})
-})
-
 router.get('/admin/collections/:option', async (req,res)=>{
     const option = req.params.option;
     var keys = await AdminModel.fetchAttributes(option);
@@ -189,8 +183,10 @@ router.get('/admin/collections/:option/:action', async(req,res)=>{
     switch(action){
         case 'add':
             res.render('add',{ 'presentPage': presentPage, 'option': option ,'keys': keys, 'error': ''});
-        case 'change':
-            res.render('change',{ 'presentPage': presentPage, 'option': option })
+            break
+        case 'update':
+            res.render('update',{ 'presentPage': presentPage, 'option': option })
+            break
     }
 })
 
