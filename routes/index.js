@@ -12,20 +12,6 @@ router.get("/", alreadyLoggedMiddleware, (req, res) => {
     res.render("about");
 });
 
-router.get("/faculty",(req,res)=>{
-    res.render("faculty");  
-})
-
-router.get("/hod", async (req,res)=>{
-    var course = 'AI';
-    var section = 2;
-    const classes = await UserModel.fetchClasses()
-    const holidays = await UserModel.fetchHolidays();
-    const assignments = await UserModel.fetchAssignments(course, section);
-    const evaluationPoints = await UserModel.fetchEvaluation(course);
-    const announcements = await UserModel.fetchAnnouncements(course, section);
-    res.render('hod', { 'username': req.session.username, 'email': req.session.email, 'classes': classes, 'holidays': holidays, 'assignments': assignments, 'evaluationPoints': evaluationPoints, 'announcements': announcements });
-});
 
 router.get("/addFaculty", async (req,res)=>{
     res.render('addFaculty', { 'username': req.session.username, 'email': req.session.email, 'error': ''});
