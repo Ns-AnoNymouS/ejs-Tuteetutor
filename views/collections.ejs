@@ -38,16 +38,34 @@
                     </select>
                     <button>Go</button>
                     <div class="data">
-                        <input type="checkbox" id="collection">
-                        <%= presentPage %>
-                    </div>
-                    <div class="data">
                         <table>
                             <thead>
-                                <td><%= presentPage %></td>
-                                <td><%= presentPage %></td>
+                                <tr>
+                                <td><input type="checkbox" id="collection"></td>
+                                <% for(var i=1; i< keys.length;i++) { %>
+                                    <% if(keys[i] !='password' ) {%>
+                                        <td>
+                                            <%= keys[i] %>
+                                        </td>
+                                        <% } %>
+                                            <% } %>
+                                </tr>
                             </thead>
-                            
+                            <tbody>
+                                <% for(var i=0;i< data.length; i++){ %>
+                                    <tr>
+                                        <td><input type="checkbox"></td>
+                                        <% for(var j=1; j< keys.length;j++) { %>
+                                            <% if(keys[j] !='password' ) {%>
+                                                <td>
+                                                    <%= data[i][keys[j]] %>
+                                                </td>
+                                                <% } %>
+                                                    <% } %>
+                                    </tr>
+                                    <% } %>
+                                <tr><td><%= data.length %> <%= presentPage %></td></tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>

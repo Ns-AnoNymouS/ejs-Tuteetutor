@@ -170,10 +170,9 @@ class Database {
         }
     }
 
-    async getCollections(){
+    async getCollections(collection){
         try {
             const collections = await this.database.listCollections().toArray();
-            console.log(await this.database.collection('student').findOne())
             return collections;
         } catch (error) {
             console.error(error);
@@ -181,23 +180,28 @@ class Database {
         }
     }
 
-    // async getAttributes(collection){
-    //     try {
-    //         await this.connect();
-    //         const database = this.client.db(db_name);
+    async getAttributes(collection){
+        try {
+            const firstDocument = await this.database.collection(collection).findOne();
+            const keys = Object.keys(firstDocument);
     
-    //         // Access the collection and find documents
-    //         const firstDocument = await db.collection(collection).findOne();
-    
-    //         // Get the keys (field names) of the first document
-    //         const keys = Object.keys(firstDocument);
-    
-    //         return keys;
-    //     } catch (error) {
-    //         console.error('Error:', error);
-    //         throw error; // Rethrow the error for handling in the caller function
-    //     } 
-    // }
+            return keys;
+        } catch (error) {
+            console.error('Error:', error);
+            throw error; 
+        } 
+    }
+
+    async getData(collection){
+        try{
+        const data = await this.database.collection(collection).find().toArray();
+        return data;
+        }
+        catch(err){
+            console.error(err)
+            throw err;
+        }
+    }
 
     async connect() {
         try {

@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
     res.render("about");
 });
 
-router.get("/faculty",isAdmin,(req,res)=>{
+router.get("/faculty",(req,res)=>{
     res.render("faculty");  
 })
 
@@ -150,10 +150,11 @@ router.get('/admin', async (req,res)=>{
 
 router.get('/admin/collections/:option', async (req,res)=>{
     const option = req.params.option;
-    // var keys = await AdminModel.fetchAttributes(option)
+    var keys = await AdminModel.fetchAttributes(option);
+    var data = await AdminModel.fetchData(option);
     switch(option){
         case 'student':
-            res.render("collections", { 'presentPage': option });
+            res.render("collections", { 'presentPage': option, 'keys': keys, 'data': data });
     }
 })
 
