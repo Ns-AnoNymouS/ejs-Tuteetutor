@@ -15,7 +15,7 @@
             <div class="right">
                 <div class="heading">
                     <h2>Select <%= presentPage %> to change</h2>
-                    <button><a href="/admin/collections/<%= presentPage%>/add">Add question</a></button>
+                    <button><a href="/admin/collections/<%=presentPage%>/add">Add <%= presentPage %></a></button>
                 </div>
                 <div class="options">
                     <h2>Action:</h2>
@@ -43,6 +43,7 @@
                                 <% for(var i=0;i< data.length; i++){ %>
                                     <tr>
                                         <td><input type="checkbox" class="selectRow"></td>
+                                        <td><button><a href="admin/collections/<%=presentPage%>/update">Edit</a></button></td>
                                         <% for(var j=1; j< keys.length;j++) { %>
                                             <% if(keys[j] !='password' ) {%>
                                                 <td>

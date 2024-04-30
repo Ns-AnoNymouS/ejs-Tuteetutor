@@ -65,11 +65,11 @@ router.get("/signup", alreadyLoggedMiddleware, (req, res) => {
 
 router.post('/signup', alreadyLoggedMiddleware, async function (req, res) {
     const { email, username, password, confirmPassword } = req.body;
-    const addUser = await UserModel.addUser(email, username, password, confirmPassword)
-    if (addUser == 'true') {
+    const addStudent = await UserModel.addStudent(email, username, password, confirmPassword)
+    if (addStudent == 'true') {
         res.redirect('home')
     }
-    else if (addUser == 'otp') {
+    else if (addStudent == 'otp') {
         req.session.email = email;
         req.session.username = username;
         req.session.password = encrypt(password);
@@ -77,7 +77,7 @@ router.post('/signup', alreadyLoggedMiddleware, async function (req, res) {
         res.redirect('otp');
     }
     else {
-        res.render('signup', { 'error': addUser })
+        res.render('signup', { 'error': addStudent })
     }
 })
 
@@ -183,15 +183,29 @@ router.get('/admin/collections/:option', async (req,res)=>{
 
 router.get('/admin/collections/:option/:action', async(req,res)=>{
     const option = req.params.option;
-    console.log(option)
     const action = req.params.action;
-    console.log(action)
-    const presentPage = option + '/' + action
-    console.log(presentPage)
+    const presentPage = option + '>' + action
     var keys = await AdminModel.fetchAttributes(option);
-    switch(option){
+    switch(action){
         case 'add':
-            res.render('add',{ 'presentPage': presentPage ,'keys': keys});
+            res.render('add',{ 'presentPage': presentPage, 'option': option ,'keys': keys, 'error': ''});
+        case 'change':
+            res.render('change',{ 'presentPage': presentPage, 'option': option })
+    }
+})
+
+router.post('/admin/collections/:option/:action', async(req,res) => {
+    const { email, username, password} = req.body;
+    const addStudent = await AdminModel.addStudent(email, username, password)
+    const option = req.params.option;
+    const action = req.params.action;
+    const presentPage = option + '>' + action
+    var keys = await AdminModel.fetchAttributes(option);
+    if (addStudent == 'added') {
+        res.redirect(`/admin/collections/${option}`)
+    }
+    else {
+        res.render('add',{ 'presentPage': presentPage, 'option': option ,'keys': keys, 'error': addStudent })
     }
 })
 
