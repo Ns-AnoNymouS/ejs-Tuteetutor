@@ -15,7 +15,9 @@
                     Are you sure you wanna Logout?
                 </div>
                 <div class="buttons">
-                    <div class="yes">Yes</div>
+                    <a href="/logout">
+                        <div class="yes">Yes</div>
+                      </a>
                     <div class="no">No</div>
                 </div>
             </div>
@@ -142,7 +144,7 @@
                     </div>
                     <div class="holidays-content">
                         <% if(typeof holidays==='string' ){ %>
-                            <h1>
+                            <h1 style="background-color:white; display: flex; justify-content: center; align-items: center; width: 90%; height: 90%; margin:1rem 0rem; border-radius: 1rem;">
                                 <%= holidays %>
                             </h1>
                             <% } else { %>
@@ -246,7 +248,9 @@
             <div class="hover-table" id="courses">
                 <h1>Course Evaluation Points</h1>
                 <% if(typeof evaluationPoints==='string' ){ %>
-                    <h1><%= evaluationPoints %></h1>
+                    <h1>
+                        <%= evaluationPoints %>
+                    </h1>
                     <% } else { %>
                         <div class="table">
                             <table>
@@ -279,21 +283,24 @@
                 <% if(typeof announcements==='string' ){ %>
                     <h1>No Announcements</h1>
                     <% } else { %>
-                <div class="block">
-                    <% for (var i=0; i < announcements.length; i++) { %>
-                    <div class="Heading">
-                        <h3><%= announcements[i].heading %></h3>
-                        <p><%= announcements[i].data %></p>
-                    </div>
-                    <% } %>
-                </div>
-                <% } %>
+                        <div class="block">
+                            <% for (var i=0; i < announcements.length; i++) { %>
+                                <div class="Heading">
+                                    <h3>
+                                        <%= announcements[i].heading %>
+                                    </h3>
+                                    <p>
+                                        <%= announcements[i].data %>
+                                    </p>
+                                </div>
+                                <% } %>
+                        </div>
+                        <% } %>
             </div>
         </div>
 
         <script>
             var xValues = ["AI", "CCN", "FFSD", "TOC"];
-            var yValues = [10, 85, 10, 80];
             var barColors = ["rgb(50,205,50,0.5)", "rgb(50,205,50,0.5)", "rgb(50,205,50,0.5)", "rgb(50,205,50,0.5)"];
 
             new Chart("myChart", {
@@ -311,7 +318,7 @@
                             'rgb(50,205,50,1)',
                         ],
                         borderWidth: 1,
-                        data: yValues
+                        data: [90, 75, 98, 78]
                     }, {
                         label: "absent",
                         borderRadius: 5,
@@ -323,7 +330,7 @@
                             'rgb(255,0,0)',
                         ],
                         borderWidth: 1,
-                        data: [10, 25, 0, 12]
+                        data: [10, 25, 2, 12]
                     }],
 
                 },

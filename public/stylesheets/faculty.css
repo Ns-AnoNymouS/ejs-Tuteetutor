@@ -24,48 +24,35 @@ body {
     position: absolute;
     height: 100vh;
     width: 100vw;
+    display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.5);
+    /* background-color: rgba(0,0,0,0.5); */
     /* backdrop-filter: blur(5px); */
     z-index: 3;
     left: 0px;
-    top: 0px;
+    top:0px;
 }
 
 .confirmation {
-    display: flex;
-    overflow: hidden;
-    transition: all 0.1s ease-in;
+    /* display: flex; */
+    display: none;
     flex-direction: column;
     justify-content: center;
     background-color: black;
     color: white;
     text-align: center;
-    width: 0;
-    height: 0;
-    border-radius: 5px;
+    width: 350px;
+    height: 300px;
+    border-radius: 20px;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-.buttons {
-    display: flex;
-    width: 100%;
-    height: 50px;
-    align-items: center;
-    justify-content: center;
-}
-
-.yes,
-.no {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.yes, .no {
     height: 30px;
     width: 50px;
-    margin: 0px 10px;
-    border-radius: 2px;
-    cursor: pointer;
+    border-radius: 10px;
+    margin: 50px;
 }
 
 .yes {
@@ -230,9 +217,14 @@ nav {
 .container-logo {
     display: flex;
     align-items: center;
+    width: 8rem;
+}
+
+.container-logo {
     width: 100%;
     height: 100%;
     padding: 0px 10px;
+    display: flex;
 }
 
 #logo-heading {
@@ -258,7 +250,7 @@ nav {
 }
 
 
-.user-profile:hover+#profile-menu {
+.user-profile:hover + #profile-menu {
     height: 130px;
     width: 250px;
     display: block;
@@ -283,7 +275,7 @@ nav {
     color: white;
     background-color: black;
     border-radius: 0px 0px 5px 5px;
-    transition: all 0.25s ease-in;
+    transition: all 0.5s ease-in;
     overflow: hidden;
 }
 
@@ -302,7 +294,6 @@ nav {
     text-decoration: none;
     color: white;
 }
-
 #profile-menu li span {
     margin: 0px 10px;
 }
@@ -350,56 +341,75 @@ nav {
 .item1 {
     grid-column: 1 / span 3;
     display: flex;
+    flex-direction: column;
     justify-content: space-around;
     align-items: center;
     margin-left: 0.7rem;
     background-color: white;
     border-radius: 10px;
+    height: 400px;
+}
+
+.gri{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 800px;
 }
 
 .small-card {
     color: white;
     padding: 0px;
-    width: 300px;
-    height: 150px;
+    width: 400px;
+    height: 175px;
     border-radius: 10px;
     transition: background-color 0.3s, box-shadow 0.3s;
 }
 
 .card1 {
-    background: linear-gradient(to bottom right, #FFC0CB, #8A2BE2);
+    background: white;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+    margin-right: 70px;
 }
 
 .card1:hover {
-    background: linear-gradient(to bottom right, #e9967a, #8a2be2);
+    background: white;
     box-shadow: rgba(0, 0, 0, 0.5) 0px 40px 80px -20px inset, rgba(0, 0, 0, 0.4) 0px 30px 60px -30px inset;
 }
 
 .card2 {
-    background: linear-gradient(to bottom right, #C9F6FF, #35D6ED);
+    background: white;
     margin-left: 0.5rem;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
     transition: background-color 0.3s, box-shadow 0.3s;
 }
 
 .card2:hover {
-    background: linear-gradient(to bottom right, #cadbf8, #5dc4e7 60%);
+    background: white;
     box-shadow: rgba(0, 0, 0, 0.5) 0px 40px 80px -20px inset, rgba(0, 0, 0, 0.4) 0px 30px 60px -30px inset;
 }
 
 .card3 {
-    color: white;
-    background: linear-gradient(to bottom right, #FEDE00, #FF5349);
+    background: white;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
     transition: box-shadow 0.3s;
 }
 
 .card3:hover {
-    background: linear-gradient(to bottom right, #FEDE00, #FF5349);
+    background: white;
     box-shadow: rgba(0, 0, 0, 0.5) 0px 40px 80px -20px inset, rgba(0, 0, 0, 0.4) 0px 30px 60px -30px inset;
 }
 
-
+.head{
+    border-bottom: 1px grey solid;
+    background-color: #3D3B40;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
 .item2 {
     grid-column: 1/ span 3;
     background-color: white;
@@ -431,7 +441,7 @@ nav {
     border-radius: 10px;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
     width: 96%;
-    height: 350px;
+    height: 432px;
     background-color: white;
 }
 
@@ -523,13 +533,11 @@ input[type="search"] {
     display: none;
 }
 
-.assignments-heading,
-.evaluation-heading,
-.announcement-heading {
+.tot-assignments-heading,
+.todolist-heading {
     font-size: 20px;
     font-family: "Ubuntu", sans-serif;
     text-align: center;
-    margin-top: 1rem;
 }
 
 .header {
@@ -593,7 +601,7 @@ input[type="search"] {
     background-color: #C7C8CC;
     overflow: scroll;
     width: 100%;
-    height: 300px;
+    height: 400px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -620,52 +628,3 @@ input[type="search"] {
     margin: 5px;
     padding: 5px;
 }
-
-.hover-cont {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    display: none;
-}
-
-.hover-table {
-    /* margin-top: 10%; */
-    background-color: whitesmoke;
-    border-radius: 20px;
-    color: rgb(0, 22, 69);
-    width: 75%;
-    height: 50vh;
-    margin: 10rem;
-    /* margin-bottom: 6rem; */
-    /* margin-right: 3rem; */
-    box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px;
-}
-
-a {
-    color: white;
-    text-decoration: none;
-}
-
-.hover-table h1 {
-    text-align: center;
-    font-size: 40px;
-    margin: 10px;
-    border-bottom: 2px solid rgb(0, 22, 69);
-}
-
-/* table {
-    border-collapse: collapse; 
-    width: 90%; 
-    margin-top: 1.5rem;
-    margin-left: 3.5rem;
-    font-size: 1.5rem;
-}
-th, td {
-    padding: 8px; 
-    text-align: left; 
-}
-
-table th:not(:last-child), table td:not(:last-child) {
-    border-right: 2px solid black;
-} */

@@ -5,18 +5,7 @@ const Time = require('./time')
 class User {
     async checkCredentials(username, password) {
         password = await encrypt(password);
-        const status = await db.student_collection.findOne({ username: username });
-        if (status) {
-            if (password == status.password) {
-                return 'true';
-            }
-            else {
-                return "Incorrect Password";
-            }
-        }
-        else {
-            return "User doesnot exists";
-        }
+        return await db.checkCredentials(username, password);
     }
 
     async addUser(email, username, password, confirmPassword) {
@@ -38,7 +27,15 @@ class User {
             return "Passwords doesn't match"
         }
 
-
+        let faculty = await db.faculty.findOne({'email': email});
+        if (faculty){
+            if (faculty.password){
+                return "Email already exists"
+            }
+            else {
+                return "faculty otp"
+            }
+        }
         let sts = await db.isEmailSignedIn(email)
         if (sts) {
             return "Email already signed in";
@@ -54,14 +51,23 @@ class User {
         }
     }
 
-    async getEmail(username) {
-        return await db.getEmail(username)
+    async getUser(username, type) {
+        return await db.getUser(username, type)
     }
 
     async checkEmail(email) {
         email = email.toLowerCase();
         if (email == null || email.trim() === "") {
             return "Enter email";
+        }
+        let faculty = await db.faculty.findOne({email: email});
+        if (faculty){
+            if (faculty.password){
+                return "Exists"
+            }
+            else {
+                return "Doesn't Exists"
+            }
         }
         let sts = await db.isEmailSignedIn(email)
         if (sts) {

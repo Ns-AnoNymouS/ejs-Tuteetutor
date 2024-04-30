@@ -2,64 +2,64 @@
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" href="/stylesheets/admin.css">
-    <%- include("partials/header.ejs") %>
+  <link rel="stylesheet" href="/stylesheets/admin.css">
+  <%- include("partials/header.ejs") %>
 </head>
 
 <body>
-    <%- include("partials/loading.ejs") %>
-        <header class="nav">
-            <div class="brand">TuteeTutor Administration</div>
-            <div class="nav-actions">
-                <span class="nav-action">Welcome Username</span>
-                <span class="nav-action"><a href="#">Change Password</a></span>
-                <span class="nav-action"><a href="#">Logout</a></span>
+  <%- include("partials/loading.ejs") %>
+  <header class="nav">
+    <div class="brand">TuteeTutor Administration</div>
+    <div class="nav-actions">
+      <span class="nav-action">Welcome Username</span>
+      <span class="nav-action"><a href="#">Change Password</a></span>
+      <span class="nav-action"><a href="#">Logout</a></span>
+    </div>
+  </header>
+  <main class="main">
+    <section class="administration">
+      <div class="heading">Site Administration</div>
+    </section>
+    <div class="layout">
+      <section class="management">
+        <div class="AA">Authentication and Authorization</div>
+        <div class="management-links">
+          <div class="links">
+            <div class="link"><a href="#">Groups</a></div>
+            <div class="actions">
+              <div class="action add-group"><a href="#">Add</a></div>
+              <div class="action change-group"><a href="#">Change</a></div>
             </div>
-        </header>
-        <main class="main">
-            <section class="administration">
-                <div class="heading">Site Administration</div>
-            </section>
-            <div class="layout">
-                <section class="management">
-                    <div class="AA">Authentication and Authorization</div>
-                    <div class="management-links">
-                        <div class="links">
-                            <div class="link"><a href="#">Groups</a></div>
-                            <div class="actions">
-                                <div class="action add-group"><a href="#">Add</a></div>
-                                <div class="action change-group"><a href="#">Change</a></div>
-                            </div>
-                        </div>
-                        <div class="links">
-                            <div class="link"><a href="#">Users</a></div>
-                            <div class="actions">
-                                <div class="action add-user"><a href="#">Add</a></div>
-                                <div class="action change-user"><a href="#">Change</a></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="AA">Collections</div>
-                    <section class="management-links">
-                            <% for(var i=0; i < collections.length; i++) { %>
-                                <div class="links">
-                                <div class="link"><a href="/admin/collections/<%= collections[i].name %>"><%= collections[i].name %></a></div>
-                                <div class="actions">
-                                    <div class="action add-group"><a href="#">Add</a></div>
-                                    <div class="action change-group"><a href="#">Change</a></div>
-                                </div>
-                            </div>
-                                <% } %>
-                    </section>
-                </section>
-                <section class="recent-actions">
-                    <h2>Recent Actions</h2>
-                    <hr>
-                    <div class="action-heading">My Actions</div>
-                    <div class="recent-action"> No recent actions</div>
-                </section>
+          </div>
+          <div class="links">
+            <div class="link"><a href="#">Users</a></div>
+            <div class="actions">
+              <div class="action add-user"><a href="#">Add</a></div>
+              <div class="action change-user"><a href="#">Change</a></div>
             </div>
-        </main>
+          </div>
+        </div>
+        <div class="AA">Collections</div>
+        <section class="management-links">
+          <% for(var i=0; i < collections.length; i++) { %>
+          <div class="links">
+            <div class="link"><a href="/admin/collections/<%= collections[i].name %>"><%= collections[i].name %></a></div>
+            <div class="actions">
+              <div class="action add-group"><a href="#">Add</a></div>
+              <div class="action change-group"><a href="#">Change</a></div>
+            </div>
+          </div>
+          <% } %>
+        </section>
+      </section>
+      <section class="recent-actions">
+        <h2>Recent Actions</h2>
+        <hr>
+        <div class="action-heading">My Actions</div>
+        <div class="recent-action"> No recent actions</div>
+      </section>
+    </div>
+  </main>
 </body>
 
 </html>

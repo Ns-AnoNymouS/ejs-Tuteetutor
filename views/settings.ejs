@@ -56,7 +56,7 @@
         <nav>
             <div class="rightnav">
                 <div class="container-logo">
-                    <img src="img/logo.png" alt="TuteeTutor" height="35px" width="35px" style="border-radius: 50%;">
+                    <img src="images/logo.png" alt="TuteeTutor" height="35px" width="35px" style="border-radius: 50%;">
                     <h2 id="logo-heading">TuteeTutor</h2>
                 </div>
             </div>
@@ -68,12 +68,16 @@
                     <input type="search" placeholder="Search">
                 </div>
                 <div class="user-profile"
-                    style="color: white; display: flex; align-items: center; justify-content: left; width: 200px; border-left: 1px solid grey;">
-                    <img src="img/profile-img.png" alt="profile-pic" height="50px" width="50px"
+                    style="color: white; display: flex; align-items: center; justify-content: left; width: 250px; border-left: 1px solid grey;">
+                    <img src="images/profile-img.png" alt="profile-pic" height="50px" width="50px"
                         style="padding: 0px; border: 1px white solid; border-radius: 10px; margin: 0px 10px;">
                     <div>
-                        <p id="profile-name"></p>
-                        <p style="font-family: Arial, Helvetica, sans-serif; font-size: .8rem;" id="profile-email"></p>
+                        <p id="profile-name">
+                            <%= username %>
+                        </p>
+                        <p style="font-family: Arial, Helvetica, sans-serif; font-size: .8rem;" id="profile-email">
+                            <%= email %>
+                        </p>
                     </div>
                 </div>
                 <div id="profile-menu">

@@ -1,4 +1,6 @@
-const db = require('./db')
+const db = require('./db');
+const user = require('./user');
+const encrypt = require('./encryption')
 
 class Admin{
     async fetchCollections(){
@@ -6,9 +8,47 @@ class Admin{
         return collections;
     }
 
-    // async fetchAttributes(collection){
-    //     const keys = await db.getAttributes(collection);
-    //     return keys;
-    // }
+    async fetchAttributes(collection){
+        const keys = await db.getAttributes(collection);
+        return keys;
+    }
+
+    async fetchData(collection){
+        const data = await db.getData(collection);
+        return data;
+    }
+
+    async addStudent(email, username, password) {
+        console.log(email)
+        email = email.toLowerCase();
+        username = username.toLowerCase();
+        if (email == null || email.trim() === "") {
+            return "Enter email";
+        }
+        else if (username == null || username.trim() === "") {
+            return "Enter username";
+        }
+        else if (password == null || password.trim() === "") {
+            return "Enter password";
+        }
+        else if (email.indexOf("@") === -1 || email.split("@")[1] != "iiits.in") {
+            return "Email Invalid";
+        }
+
+        let sts = await db.isEmailSignedIn(email)
+        if (sts) {
+            return "Email already signed in";
+        }
+        else {
+            let userSts = await db.isUsernameExist(username)
+            if (userSts) {
+                return "Username already exists";
+            }
+            else {
+                await db.insertData(email, username, encrypt(password));
+                return "added";
+            }
+        }
+    }
 }
 module.exports = new Admin()

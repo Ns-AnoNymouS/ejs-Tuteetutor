@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="/stylesheets/home.css">
+  <link rel="stylesheet" href="/stylesheets/addFaculty.css">
+  <link rel="stylesheet" href="/stylesheets/facultyStatus.css">
+  <%- include("partials/header.ejs") %>
+</head>
+
+<body>
+  <%- include("partials/loading.ejs") %>
+  <div class="full">
+    <div class="confirmation">
+      <div class="buttons">
+        Are you sure you wanna Logout?
+      </div>
+      <div class="buttons">
+        <a href="/logout">
+          <div class="yes">Yes</div>
+        </a>
+        <div class="no">No</div>
+      </div>
+    </div>
+  </div>
+  <div class="sidebar" id="side">
+    <div class="top">
+      <ul>
+        <div>
+          <li>
+            <a href="#">
+              <img src="images/user-profile.webp" alt="user" height="20px" width="20px" style="padding: 15px;">
+              <span class="nav-item">Username</span>
+            </a>
+          </li>
+          <li>
+            <a href="/home">
+              <i class="fa-regular fa-user icon"></i>
+              <span class="nav-item">Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a href="/timeTable" target="_blank">
+              <i class="fa-solid fa-list icon"></i>
+              <span class="nav-item">TimeTable</span>
+            </a>
+          </li>
+          <li>
+            <a href="/almanac" target="_blank">
+              <i class="fa-regular fa-calendar icon"></i>
+              <span class="nav-item">Almanac</span>
+            </a>
+          </li>
+        </div>
+        <div>
+          <li>
+            <a href="/settings">
+              <i class="fa-solid fa-gear icon"></i>
+              <span class="nav-item">Settings</span>
+            </a>
+          </li>
+        </div>
+      </ul>
+    </div>
+    <div class="user"></div>
+  </div>
+  <div class="main" id="main">
+    <nav>
+      <div class="rightnav">
+        <div class="container-logo">
+          <img src="images/logo.png" alt="TuteeTutor" height="35px" width="35px" style="border-radius: 50%;">
+          <h2 id="logo-heading">TuteeTutor</h2>
+        </div>
+      </div>
+      <div class="leftnav">
+        <div class="search-container">
+          <button class="icon-button">
+            <i class="fa-solid fa-magnifying-glass" style="color: #000000;"></i>
+          </button>
+          <input type="search" placeholder="Search">
+        </div>
+        <div class="user-profile" style="color: white; display: flex; align-items: center; justify-content: left; width: 200px; border-left: 1px solid grey;">
+          <img src="images/profile-img.png" alt="profile-pic" height="50px" width="50px" style="padding: 0px; border: 1px white solid; border-radius: 10px; margin: 0px 10px;">
+          <div>
+            <p id="profile-name">
+              <%= username %>
+            </p>
+            <p style="font-family: Arial, Helvetica, sans-serif; font-size: .8rem;" id="profile-email">
+              <%= email %>
+            </p>
+          </div>
+        </div>
+        <div id="profile-menu">
+          <ul>
+            <li>
+              <i class="fa-regular fa-circle-question"></i>
+              <span class="nav-item">Help</span>
+            </li>
+            <a href="/settings">
+              <li>
+                <i class="fa-solid fa-gear icon"></i>
+                <span class="nav-item">Settings</span>
+              </li>
+            </a>
+            <hr>
+            <li id="logout">
+              <i class="fa-solid fa-arrow-right-from-bracket"></i>
+              <span class="nav-item">Logout</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+  <div class="page">
+
+    <div class="statusContainer">
+      <a href="/addFaculty">
+        <button class="action-btn add-btn">Add</button>
+      </a>
+      <% if (items) { %>
+      <table>
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% items.forEach(function(item) { %>
+          <tr>
+            <td><%= item.email %></td>
+            <td><%= item.status %></td>
+            <td>
+              <button class="action-btn update-btn" data-id=<%= item.email %>>Update</button>
+              <button class="action-btn delete-btn" data-id=<%= item.email %>>Delete</button>
+            </td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+      <% }; %>
+    </div>
+  </div>
+  <script src="javascripts/home.js" type="module"></script>
+  <script src="javascripts/facultyStatus.js" type="module"></script>
+</body>
+
+</html>
