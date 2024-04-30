@@ -12,8 +12,11 @@ router.get("/", alreadyLoggedMiddleware, (req, res) => {
     res.render("about");
 });
 
-
 router.get("/addFaculty", async (req,res)=>{
+    res.render('addFaculty', { 'username': req.session.username, 'email': req.session.email, 'error': ''});
+});
+
+router.get("/", async (req,res)=>{
     res.render('addFaculty', { 'username': req.session.username, 'email': req.session.email, 'error': ''});
 });
 
