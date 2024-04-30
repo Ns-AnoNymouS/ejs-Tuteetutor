@@ -6,6 +6,9 @@ class Database {
         this.client = new MongoClient(uri);
         this.database = null;
         this.student_collection = null;
+        this.hod = null;
+        this.faculty = null;
+        this.admin = null;
         this.time_table = null;
         this.holidays = null;
         this.breaks = null;
@@ -35,8 +38,16 @@ class Database {
     }
 
     async isUsernameExist(username) {
-        const filteredDocs = await this.student_collection.findOne({ username: username });
-        if (filteredDocs) {
+        var student, hod;
+        if (username.includes('@')) {
+            student = await this.student_collection.findOne({ email: username });
+            hod = await this.hod.findOne({ email: username });
+        }
+        else {
+            student = await this.student_collection.findOne({ username: username });
+            hod = await this.hod.findOne({ username: username });
+        }
+        if (student || hod) {
             return true;
         } else {
             return false;
@@ -44,10 +55,25 @@ class Database {
     }
 
     async checkCredentials(username, password) {
-        const status = await this.student_collection.findOne({ username: username });
+        var status, type, key;
+        key = username.includes('@') ? 'email' : 'username';
+        status = await this.student_collection.findOne({ [key]: username });
+        type = 'student'
+        if (!status) {
+            status = await this.hod.findOne({ [key]: username })
+            type = 'hod'
+        }
+        if (!status) {
+            status = await this.faculty.findOne({ [key]: username })
+            type = 'faculty'
+        }
+        if (!status) {
+            status = await this.admin.findOne({ [key]: username })
+            type = 'admin'
+        }
         if (status) {
             if (password == status.password) {
-                return true;
+                return type;
             }
             else {
                 return "Incorrect Password";
@@ -83,14 +109,17 @@ class Database {
         return res
     }
 
-    async getEmail(username) {
+    async getUser(username, type) {
         try {
-            const user = await this.student_collection.findOne({ username: username });
+            var user, key, obj;
+            key = username.includes('@') ? 'email' : 'username';
+            obj = {'hod': this.hod, 'student': this.student_collection, 'faculty': this.faculty, "admin": this.admin}
+            user = await obj[type].findOne({ [key]: username });
             if (!user) {
                 return "User not Found"
             }
             else {
-                return user.email
+                return user
             }
         }
         catch (error) {
@@ -130,47 +159,47 @@ class Database {
         }
     }
 
-    async getAssignments(course, section){
+    async getAssignments(course, section) {
         const condition = {
             course: { course },
             section: { section }
         };
-        try{
+        try {
             const data = await this.assignments.find(condition).toArray();
             return data;
-        }catch(error){
+        } catch (error) {
             console.log(error);
         }
     }
 
-    async getEvaluation(course){
+    async getEvaluation(course) {
         const condition = {
-            course: {course}
+            course: { course }
         }
-        try{
+        try {
             const data = await this.evaluation.find(condition).toArray();
             return data;
         }
-        catch(error){
+        catch (error) {
             console.log(error)
         }
     }
 
-    async getAnnouncements(course, section){
+    async getAnnouncements(course, section) {
         const condition = {
             course: { course },
             section: { section }
         };
-        try{
+        try {
             const data = await this.announcements.find(condition).toArray();
             return data;
         }
-        catch(error){
+        catch (error) {
             console.log(error)
         }
     }
 
-    async getCollections(collection){
+    async getCollections(collection) {
         try {
             const collections = await this.database.listCollections().toArray();
             return collections;
@@ -180,24 +209,24 @@ class Database {
         }
     }
 
-    async getAttributes(collection){
+    async getAttributes(collection) {
         try {
             const firstDocument = await this.database.collection(collection).findOne();
             const keys = Object.keys(firstDocument);
-    
+
             return keys;
         } catch (error) {
             console.error('Error:', error);
-            throw error; 
-        } 
+            throw error;
+        }
     }
 
-    async getData(collection){
-        try{
-        const data = await this.database.collection(collection).find().toArray();
-        return data;
+    async getData(collection) {
+        try {
+            const data = await this.database.collection(collection).find().toArray();
+            return data;
         }
-        catch(err){
+        catch (err) {
             console.error(err)
             throw err;
         }
@@ -208,6 +237,9 @@ class Database {
             await this.client.connect();
             this.database = this.client.db(db_name);
             this.student_collection = this.database.collection('student');
+            this.hod = this.database.collection('hod');
+            this.faculty = this.database.collection('faculty');
+            this.admin = this.database.collection('admin');
             this.time_table = this.database.collection('timetable')
             this.holidays = this.database.collection('holidays')
             this.changes = this.database.collection('changes')

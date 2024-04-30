@@ -3,11 +3,12 @@ var router = express.Router();
 
 const UserModel = require('../models/user')
 const authMiddleware = require('../middlewares/authMiddleware')
+const alreadyLoggedMiddleware = require('../middlewares/alreadyLoggedMiddleware')
 const OtpModel = require('../models/sendOTP')
 const encrypt = require('../models/encryption')
 const AdminModel = require('../models/admin')
 
-router.get("/", (req, res) => {
+router.get("/", alreadyLoggedMiddleware, (req, res) => {
     res.render("about");
 });
 
@@ -15,7 +16,22 @@ router.get("/faculty",(req,res)=>{
     res.render("faculty");  
 })
 
-router.get('/login', function (req, res) {
+router.get("/hod", async (req,res)=>{
+    var course = 'AI';
+    var section = 2;
+    const classes = await UserModel.fetchClasses()
+    const holidays = await UserModel.fetchHolidays();
+    const assignments = await UserModel.fetchAssignments(course, section);
+    const evaluationPoints = await UserModel.fetchEvaluation(course);
+    const announcements = await UserModel.fetchAnnouncements(course, section);
+    res.render('hod', { 'username': req.session.username, 'email': req.session.email, 'classes': classes, 'holidays': holidays, 'assignments': assignments, 'evaluationPoints': evaluationPoints, 'announcements': announcements });
+});
+
+router.get("/addFaculty", async (req,res)=>{
+    res.render('addFaculty', { 'username': req.session.username, 'email': req.session.email, 'error': ''});
+});
+
+router.get('/login', alreadyLoggedMiddleware, function (req, res) {
     res.render('login', { 'error': '' });
 })
 
@@ -28,25 +44,26 @@ router.get('/logout', function (req, res) {
     });
 })
 
-router.post('/login', async function (req, res) {
+router.post('/login', alreadyLoggedMiddleware, async function (req, res) {
     const { username, password } = req.body;
-    const isValidCredentials = await UserModel.checkCredentials(username, password)
-    const email = await UserModel.getEmail(username)
-    if (isValidCredentials == 'true') {
-        req.session.username = username;
-        req.session.email = email;
+    const type = await UserModel.checkCredentials(username, password)
+    if (type != "Incorrect Password" && type != "User doesnot exists") {
+        const user = await UserModel.getUser(username, type)
+        req.session.username = user.username;
+        req.session.email = user.email;
+        req.session.type = type;
         res.redirect('home')
     }
     else {
-        res.render('login', { error: isValidCredentials })
+        res.render('login', { error: type })
     }
 })
 
-router.get("/signup", (req, res) => {
+router.get("/signup", alreadyLoggedMiddleware, (req, res) => {
     res.render('signup', { 'error': '' });
 });
 
-router.post('/signup', async function (req, res) {
+router.post('/signup', alreadyLoggedMiddleware, async function (req, res) {
     const { email, username, password, confirmPassword } = req.body;
     const addUser = await UserModel.addUser(email, username, password, confirmPassword)
     if (addUser == 'true') {
@@ -72,7 +89,13 @@ router.get("/home", authMiddleware, async (req, res) => {
     const assignments = await UserModel.fetchAssignments(course, section);
     const evaluationPoints = await UserModel.fetchEvaluation(course);
     const announcements = await UserModel.fetchAnnouncements(course, section);
-    res.render('home', { 'username': req.session.username, 'email': req.session.email, 'classes': classes, 'holidays': holidays, 'assignments': assignments, 'evaluationPoints': evaluationPoints, 'announcements': announcements });
+    var collections = await AdminModel.fetchCollections();
+    var type = req.session.type
+    let page = type;
+    if (type == 'student'){
+        page = 'home'
+    }
+    res.render(type, { 'username': req.session.username, 'email': req.session.email, 'classes': classes, 'holidays': holidays, 'assignments': assignments, 'evaluationPoints': evaluationPoints, 'announcements': announcements , 'collections': collections});
 });
 
 router.get("/almanac", authMiddleware, (req, res) => {
