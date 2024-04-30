@@ -34,9 +34,11 @@ class Database {
         hod = await this.hod.findOne({ [key]: email });
         faculty = await this.faculty.findOne({ [key]: email });
         admin = await this.admin.findOne({ [key]: email });
-        if (student || hod || faculty || admin) {
-            return true;
-        } else {
+        if(student) return student;
+        else if(hod) return hod;
+        else if(faculty) return faculty;
+        else if(admin) return admin;
+        else {
             return false;
         }
     }
@@ -265,6 +267,19 @@ class Database {
         }
     }
     
+    async insertFacultyData(email,course,section,department,year,statusFaculty,password,username){
+        let details = {
+            email: email,
+            course: course,
+            section: section,
+            department: department,
+            year: year,
+            status: statusFaculty,
+            password: password,
+            username: username
+        }
+        await this.faculty.insertOne({details})
+    }
 
     async connect() {
         try {

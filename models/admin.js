@@ -65,5 +65,36 @@ class Admin{
         let sts = await db.updateStudent(email,username,password);
         return sts;
     }
+
+    async addFaculty(email,course,section,department,year,status,password,username){
+        email = email.toLowerCase();
+        username = username.toLowerCase();
+        if (email == null || email.trim() === "") {
+            return "Enter email";
+        }
+        else if (username == null || username.trim() === "") {
+            return "Enter username";
+        }
+        else if (password == null || password.trim() === "") {
+            return "Enter password";
+        }
+        else if (email.indexOf("@") === -1 || email.split("@")[1] != "iiits.in") {
+            return "Email Invalid";
+        }
+        let sts = await db.isEmailSignedIn(email)
+        if (sts != false) {
+            return `Email already signed in as ${sts}`;
+        }
+        else {
+            let userSts = await db.isUsernameExist(username)
+            if (userSts) {
+                return userSts;
+            }
+            else {
+                await db.insertFacultyData(email,course,section,department,year,status,encrypt(password),username)
+                return true;
+            }
+        }
+    }
 }
 module.exports = new Admin()

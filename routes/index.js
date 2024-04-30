@@ -222,8 +222,8 @@ router.post('/admin/collections/:option/:action', async (req, res) => {
     var keys = await AdminModel.fetchAttributes(option);
     const { email, username, password } = req.body;
     var query = req.query;
-    switch (action) {
-        case 'add':
+    switch (presentPage) {
+        case 'student>add':
             const addStudent = await AdminModel.addStudent(email, username, password)
             if (addStudent == 'added') {
                 res.redirect(`/admin/collections/${option}`)
@@ -232,7 +232,7 @@ router.post('/admin/collections/:option/:action', async (req, res) => {
                 res.render('add', { 'presentPage': presentPage, 'option': option, 'keys': keys, 'error': addStudent })
             }
             break;
-        case 'update':
+        case 'student>update':
             const updateStudent = await AdminModel.updateStudent(query['email'], username, password)
             if (updateStudent == true) {
                 res.redirect(`/admin/collections/${option}`)
@@ -241,6 +241,11 @@ router.post('/admin/collections/:option/:action', async (req, res) => {
                 res.render('update', { 'presentPage': presentPage, 'option': option, 'keys': keys, 'error': updateStudent })
             }
             break;
+        case 'faculty>add':
+            const {email,course,section,department,year,status,password,username} = req.body;
+            const addFaculty = await AdminModel.addFaculty(email,course,section,department,year,status,password,username)
+            if(addFaculty == true) res.redirect(`/admin/collections/${option}`)
+            else res.render('add', { 'presentPage': presentPage, 'option': option, 'keys': keys, 'error': addFaculty })
     }
 })
 
