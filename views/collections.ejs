@@ -37,24 +37,25 @@
                         <option value="Delete selected questions">Delete selected questions</option>
                     </select>
                     <button>Go</button>
+                    <div id="selectedCount"></div>
                     <div class="data">
                         <table>
                             <thead>
                                 <tr>
-                                <td><input type="checkbox" id="collection"></td>
-                                <% for(var i=1; i< keys.length;i++) { %>
-                                    <% if(keys[i] !='password' ) {%>
-                                        <td>
-                                            <%= keys[i] %>
-                                        </td>
-                                        <% } %>
+                                    <td><input type="checkbox" id="selectAll"></td>
+                                    <% for(var i=1; i< keys.length;i++) { %>
+                                        <% if(keys[i] !='password' ) {%>
+                                            <td>
+                                                <%= keys[i] %>
+                                            </td>
                                             <% } %>
+                                                <% } %>
                                 </tr>
                             </thead>
                             <tbody>
                                 <% for(var i=0;i< data.length; i++){ %>
                                     <tr>
-                                        <td><input type="checkbox"></td>
+                                        <td><input type="checkbox" class="selectRow"></td>
                                         <% for(var j=1; j< keys.length;j++) { %>
                                             <% if(keys[j] !='password' ) {%>
                                                 <td>
@@ -64,13 +65,45 @@
                                                     <% } %>
                                     </tr>
                                     <% } %>
-                                <tr><td><%= data.length %> <%= presentPage %></td></tr>
+                                        <tr>
+                                            <td>
+                                                <%= data.length %>
+                                                    <%= presentPage %>
+                                            </td>
+                                        </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
+        <script>const selectAllCheckbox = document.getElementById('selectAll');
+            const selectRowCheckboxes = document.querySelectorAll('.selectRow');
+        
+            // Update selected count initially
+            updateSelectedCount();
+        
+            selectAllCheckbox.addEventListener('change', function() {
+                selectRowCheckboxes.forEach(function(checkbox) {
+                    checkbox.checked = selectAllCheckbox.checked;
+                });
+                updateSelectedCount();
+            });
+        
+            selectRowCheckboxes.forEach(function(checkbox) {
+                checkbox.addEventListener('change', function() {
+                    updateSelectedCount();
+                });
+            });
+        
+            function updateSelectedCount() {
+                const selectedCount = document.querySelectorAll('.selectRow:checked').length;
+                const totalCount = selectRowCheckboxes.length;
+                const selectedCountElement = document.getElementById('selectedCount');
+                selectedCountElement.textContent = selectedCount + ' of ' + totalCount + ' selected';
+            }
+        </script>
 </body>
+
 
 </html>
