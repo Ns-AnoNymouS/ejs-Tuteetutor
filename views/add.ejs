@@ -9,6 +9,32 @@
 
 <body>
     <%- include("partials/loading.ejs") %>
-    <%- include("partials/adminNav.ejs") %>
-    <%- include("partials/adminPageLink.ejs") %>
+        <%- include("partials/adminNav.ejs") %>
+            <%- include("partials/adminPageLink.ejs") %>
+                <h2>Add <%= option %>
+                </h2>
+                <% if (error) { %>
+                    <div class="messageBlock">
+                        <p id="message">
+                            <%= error %>
+                        </p>
+                    </div>
+                    <% } %>
+                <form method="post" id="addForm">
+                    <table>
+                        <thead>
+                            <% for(var i=1;i < keys.length;i++){%>
+                                <tr>
+                                    <td>
+                                        <%= keys[i] %>
+                                    </td>
+                                    <td><input type="text" name="<%= keys[i] %>" required></td>
+                                </tr>
+                                <%}%>
+                        </thead>
+                    </table>
+                    <button id="saveButton" type="submit">Save</button>
+                </form>
 </body>
+
+</html>
