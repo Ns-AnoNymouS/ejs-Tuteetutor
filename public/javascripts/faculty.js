@@ -1,5 +1,3 @@
-
-
 document.getElementById('side').addEventListener("mouseover", () => {
     let sidebar = document.querySelector('.sidebar');
     sidebar.classList.add('active');

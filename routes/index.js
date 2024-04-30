@@ -7,6 +7,7 @@ const alreadyLoggedMiddleware = require('../middlewares/alreadyLoggedMiddleware'
 const OtpModel = require('../models/sendOTP')
 const encrypt = require('../models/encryption')
 const AdminModel = require('../models/admin')
+const HODModel = require('../models/hod')
 
 router.get("/", alreadyLoggedMiddleware, (req, res) => {
     res.render("about");
@@ -16,9 +17,35 @@ router.get("/addFaculty", async (req,res)=>{
     res.render('addFaculty', { 'username': req.session.username, 'email': req.session.email, 'error': ''});
 });
 
-router.get("/", async (req,res)=>{
-    res.render('addFaculty', { 'username': req.session.username, 'email': req.session.email, 'error': ''});
+router.post("/addFaculty", async (req,res)=>{
+    if (!req.session.course){
+        const user = await UserModel.getUser(req.session.username, 'hod')
+        req.session.course = user.course   
+    }
+    const { email, department, section, year } = req.body;
+    let type = await HODModel.addFaculty(email, req.session.course, section, department, year);
+    if (type == 'true'){
+        return res.redirect('/facultyStatus');
+    }
+    res.render('addFaculty', { 'username': req.session.username, 'email': req.session.email, 'error': type});
 });
+
+router.get("/facultyStatus", async (req,res)=>{
+    if (!req.session.course){
+        const user = await UserModel.getUser(req.session.username, 'hod')
+        req.session.course = user.course
+    }
+    var items = await HODModel.getFaculty(req.session.course)
+    var count = await items.count()
+    items = count == 0? null : await items.toArray();
+    res.render('facultyStatus', {'items': items, 'username': req.session.username, 'email': req.session.email, 'error': ''});
+});
+
+router.delete("/facultyStatus/:email", async (req, res)=>{
+    const email = req.params.email;
+    console.log(await HODModel.deleteFaculty(email), email)
+    res.send("Sucess");
+})
 
 router.get('/login', alreadyLoggedMiddleware, function (req, res) {
     res.render('login', { 'error': '' });
@@ -31,12 +58,13 @@ router.get('/logout', function (req, res) {
             return res.status(500).send('Error destroying session');
         }
     });
+    res.redirect('/')
 })
 
 router.post('/login', alreadyLoggedMiddleware, async function (req, res) {
     const { username, password } = req.body;
     const type = await UserModel.checkCredentials(username, password)
-    if (type != "Incorrect Password" && type != "User doesnot exists") {
+    if (type != "Incorrect Password" && type != "User doesnot exists" && type != "Signup Required") {
         const user = await UserModel.getUser(username, type)
         req.session.username = user.username;
         req.session.email = user.email;
@@ -54,13 +82,22 @@ router.get("/signup", alreadyLoggedMiddleware, (req, res) => {
 
 router.post('/signup', alreadyLoggedMiddleware, async function (req, res) {
     const { email, username, password, confirmPassword } = req.body;
-    const addStudent = await UserModel.addStudent(email, username, password, confirmPassword)
+    const addStudent = await UserModel.addUser(email, username, password, confirmPassword)
     if (addStudent == 'true') {
         res.redirect('home')
+    }
+    else if (addStudent == 'faculty otp'){
+        req.session.email = email;
+        req.session.username = username;
+        req.session.type = 'faculty';
+        req.session.password = encrypt(password);
+        await OtpModel.sendOTP(email);
+        res.redirect('otp');
     }
     else if (addStudent == 'otp') {
         req.session.email = email;
         req.session.username = username;
+        req.session.type = 'student';
         req.session.password = encrypt(password);
         await OtpModel.sendOTP(email);
         res.redirect('otp');
@@ -80,10 +117,6 @@ router.get("/home", authMiddleware, async (req, res) => {
     const announcements = await UserModel.fetchAnnouncements(course, section);
     var collections = await AdminModel.fetchCollections();
     var type = req.session.type
-    let page = type;
-    if (type == 'student'){
-        page = 'home'
-    }
     res.render(type, { 'username': req.session.username, 'email': req.session.email, 'classes': classes, 'holidays': holidays, 'assignments': assignments, 'evaluationPoints': evaluationPoints, 'announcements': announcements , 'collections': collections});
 });
 
@@ -109,7 +142,7 @@ router.post("/otp", async (req, res) => {
     else {
         const { num1, num2, num3, num4 } = req.body;
         let otp = num1 + num2 + num3 + num4
-        sts = await OtpModel.checkOTP(email, username, password, otp)
+        sts = await OtpModel.checkOTP(email, username, password, otp, req.session.type)
         if (sts == 'true') {
             res.redirect("home");
         }

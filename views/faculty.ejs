@@ -2,164 +2,296 @@
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" href="/stylesheets/faculty.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <%- include("partials/header.ejs") %>
+  <link rel="stylesheet" href="/stylesheets/home.css">
+  <%- include("partials/header.ejs") %>
 </head>
 
 <body>
-    <%- include("partials/loading.ejs") %>
-        <div class="loader">
-            <div class="book">
-                <div class="book__pg-shadow"></div>
-                <div class="book__pg"></div>
-                <div class="book__pg book__pg--2"></div>
-                <div class="book__pg book__pg--3"></div>
-                <div class="book__pg book__pg--4"></div>
-                <div class="book__pg book__pg--5"></div>
-            </div>
+  <%- include("partials/loading.ejs") %>
+  <div class="full">
+    <div class="confirmation">
+      <div class="buttons">
+        Are you sure you wanna Logout?
+      </div>
+      <div class="buttons">
+        <a href="/logout">
+          <div class="yes">Yes</div>
+        </a>
+        <div class="no">No</div>
+      </div>
+    </div>
+  </div>
+  <div class="sidebar" id="side">
+    <div class="top">
+      <ul>
+        <div>
+          <li>
+            <a href="#">
+              <img src="images/user-profile.webp" alt="user" height="20px" width="20px" style="padding: 15px;">
+              <span class="nav-item">Username</span>
+            </a>
+          </li>
+          <li>
+            <a href="/home">
+              <i class="fa-regular fa-user icon"></i>
+              <span class="nav-item">Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a href="/timeTable" target="_blank">
+              <i class="fa-solid fa-list icon"></i>
+              <span class="nav-item">TimeTable</span>
+            </a>
+          </li>
+          <li>
+            <a href="/almanac" target="_blank">
+              <i class="fa-regular fa-calendar icon"></i>
+              <span class="nav-item">Almanac</span>
+            </a>
+          </li>
         </div>
-        <div class="sidebar" id="side">
-            <div class="top">
-                <ul>
-                    <div>
-                        <li>
-                            <a href="#">
-                                <img src="images/user-profile.webp" alt="user" height="20px" width="20px"
-                                    style="padding: 15px;">
-                                <span class="nav-item">Username</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/home">
-                                <i class="fa-regular fa-user icon"></i>
-                                <span class="nav-item">Dashboard</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/timeTable" target="_blank">
-                                <i class="fa-solid fa-list icon"></i>
-                                <span class="nav-item">TimeTable</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/almanac" target="_blank">
-                                <i class="fa-regular fa-calendar icon"></i>
-                                <span class="nav-item">Almanac</span>
-                            </a>
-                        </li>
-                    </div>
-                    <div>
-                        <li>
-                            <a href="/settings">
-                                <i class="fa-solid fa-gear icon"></i>
-                                <span class="nav-item">Settings</span>
-                            </a>
-                        </li>
-                    </div>
-                </ul>
-            </div>
-            <div class="user"></div>
+        <div>
+          <li>
+            <a href="/settings">
+              <i class="fa-solid fa-gear icon"></i>
+              <span class="nav-item">Settings</span>
+            </a>
+          </li>
         </div>
-        <div class="main">
-            <nav>
-                <div class="rightnav">
-                    <div class="container-logo">
-                        <img src="images/logo.png" alt="TuteeTutor" height="35px" width="35px" style="border-radius: 50%;">
-                        <h2 id="logo-heading">TuteeTutor</h2>
-                    </div>
-                </div>
-                <div class="leftnav">
-                    <div class="search-container">
-                        <button class="icon-button">
-                            <i class="fa-solid fa-magnifying-glass" style="color: #000000;"></i>
-                        </button>
-                        <input type="search" placeholder="Search">
-                    </div>
-                    <div class="user-profile"
-                        style="color: white; display: flex; align-items: center; justify-content: left; width: 200px; border-left: 1px solid grey;">
-                        <img src="images/profile-img.png" alt="profile-pic" height="50px" width="50px"
-                            style="padding: 0px; border: 1px white solid; border-radius: 10px; margin: 0px 10px;">
-                        <div>
-                            <p id="profile-name">
-                            </p>
-                            <p style="font-family: Arial, Helvetica, sans-serif; font-size: .8rem;" id="profile-email">
-                            </p>
-                        </div>
-                    </div>
-                    <div id="profile-menu">
-                        <ul>
-                            <li>
-                                <i class="fa-regular fa-circle-question"></i>
-                                <span class="nav-item">Help</span>
-                            </li>
-                            <a href="/settings">
-                                <li>
-                                    <i class="fa-solid fa-gear icon"></i>
-                                    <span class="nav-item">Settings</span>
-                                </li>
-                            </a>
-                            <hr>
-                            <li>
-                                <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                                <span class="nav-item">Logout</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-            <div class="grid-container">
-                <div class="grid-item item1">
-                    <div class="gri">
-                        <div class="small-card card1">
-                            <div class="head">
-                                <h3 class="tot-assignments-heading">
-                                    Total Assignments
-                                </h3>
-                            </div>
-                        </div>
-                        <div class="small-card grid-item card2">
-                            <div class="head">
-                                <h3 class="tot-assignments-heading">
-                                    Marks
-                                </h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="small-card grid-item card3">
-                        <div class="head">
-                            <h3 class="todolist-heading">
-                                To-do List
-                            </h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="grid-item item2">
-                    
-                </div>
-                <div class="grid-item item3">
-                    <div class="header">
-                        <h3 class="heading">
-                            Upcoming Holidays
-                        </h3>
-                    </div>
-                    <div class="holidays-content">
-                    </div>
-                </div>
-                <div class="grid-item item4">
-                    <div class="header">
-                        <h3 class="heading">
-                            Classes Schedule
-                        </h3>
-                    </div>
-                    <div class="classes-content">
-                        
-                    </div>
-                </div>
+      </ul>
+    </div>
+    <div class="user"></div>
+  </div>
+  <div class="main" id="main">
+    <nav>
+      <div class="rightnav">
+        <div class="container-logo">
+          <img src="images/logo.png" alt="TuteeTutor" height="35px" width="35px" style="border-radius: 50%;">
+          <h2 id="logo-heading">TuteeTutor</h2>
+        </div>
+      </div>
+      <div class="leftnav">
+        <div class="search-container">
+          <button class="icon-button">
+            <i class="fa-solid fa-magnifying-glass" style="color: #000000;"></i>
+          </button>
+          <input type="search" placeholder="Search">
+        </div>
+        <div class="user-profile" style="color: white; display: flex; align-items: center; justify-content: left; width: 200px; border-left: 1px solid grey;">
+          <img src="images/profile-img.png" alt="profile-pic" height="50px" width="50px" style="padding: 0px; border: 1px white solid; border-radius: 10px; margin: 0px 10px;">
+          <div>
+            <p id="profile-name">
+              <%= username %>
+            </p>
+            <p style="font-family: Arial, Helvetica, sans-serif; font-size: .8rem;" id="profile-email">
+              <%= email %>
+            </p>
+          </div>
+        </div>
+        <div id="profile-menu">
+          <ul>
+            <li>
+              <i class="fa-regular fa-circle-question"></i>
+              <span class="nav-item">Help</span>
+            </li>
+            <a href="/settings">
+              <li>
+                <i class="fa-solid fa-gear icon"></i>
+                <span class="nav-item">Settings</span>
+              </li>
+            </a>
+            <hr>
+            <li id="logout">
+              <i class="fa-solid fa-arrow-right-from-bracket"></i>
+              <span class="nav-item">Logout</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="grid-container">
+      <div class="grid-item item1">
+        <div class="small-card card1" id="card1">
+          <h3 class="assignments-heading">
+            Total Assignments
+          </h3>
+        </div>
+        <div class="small-card grid-item card2" id="card2">
+          <h3 class="evaluation-heading">
+            Evaluation Points
+          </h3>
+        </div>
+        <div class="small-card grid-item card3" id="card3">
+          <h3 class="announcement-heading">
+            Announcements
+          </h3>
+        </div>
+      </div>
+      <div class="grid-item item2">
+        <canvas id="myChart" style="width:100%;max-width:800px; height: 100%; max-height: 500px;"></canvas>
 
-            </div>
+      </div>
+      <div class="grid-item item3">
+        <div class="header">
+          <h3 class="heading">
+            Upcoming Holidays
+          </h3>
         </div>
-        <script src="javascripts/faculty.js" type="module"></script>
+        <div class="holidays-content">
+          <% if(typeof holidays==='string' ){ %>
+          <h1 style="background-color:white; display: flex; justify-content: center; align-items: center; width: 90%; height: 90%; margin:1rem 0rem; border-radius: 1rem;">
+            <%= holidays %>
+          </h1>
+          <% } else { %>
+          <% for (var i=0; i < holidays.length;i++) {%>
+          <div class="holiday-card" style="border-radius: 2vh;">
+            <h3 style="text-align: center; font-size: 3.5vh;">
+              <%= holidays[i].holiday %>
+            </h3>
+            <p style="text-align: center; margin-bottom: 10px; font-size: 1.2rem;">
+              <%= holidays[i].date + '-' + holidays[i].month + '-' + holidays[i].year %>
+            </p>
+          </div>
+          <% } %>
+          <% } %>
+        </div>
+      </div>
+      <div class="grid-item item4">
+        <div class="header">
+          <h3 class="heading">
+            Classes Schedule
+          </h3>
+        </div>
+        <div class="classes-content">
+          <% if(classes=="No Classes Today!!" ) { %>
+          <h1 style="background-color:white; display: flex; justify-content: center; align-items: center; width: 90%; height: 90%; margin:1rem 0rem; border-radius: 1rem;">
+            <%= classes %>
+          </h1>
+          <% } else { %>
+          <% for (var i=0; i < classes.length; i++) { %>
+          <% var id='' %>
+          <% if (classes[i].present) {%>
+          <% id="present-classes-card" %>
+          <% } %>
+          <% if (classes[i].upcoming) {%>
+          <% id="upcomming-classes-card" %>
+          <% } %>
+          <div class="classes-card" id="<%= id %>" style="text-align: center; margin: 10px;">
+            <p style="font-size: larger;">Room no: <%= classes[i].room %>
+            </p>
+            <h3 style="font-size: x-large; margin: 10px;">
+              <%= classes[i].class %>
+            </h3>
+            <p>
+              <%= classes[i].time %>
+            </p>
+          </div>
+          <% } %>
+          <% } %>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="hover-cont" id="assignments-cont">
+    <div class="hover-table" id="assignments">
+      <h1>Assignments</h1>
+      <% if(typeof assignments==='string' ){ %>
+      <h1>
+        <%= assignments %>
+      </h1>
+      <% } else { %>
+      <div class="table">
+        <table>
+          <thead>
+            <tr>
+              <th>Assignment</th>
+              <th>Course</th>
+              <th>Deadline</th>
+              <th>Grades</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for (var i=0; i < assignments.length; i++) { %>
+            <tr>
+              <td>
+                <%= assignments[i].name %>
+              </td>
+              <td>
+                <%= assignments[i].course %>
+              </td>
+              <td>
+                <%= assignments[i].deadline %>
+              </td>
+              <% if(assignments[i].graded==null) { %>
+              <td>Not graded</td>
+              <% }else { %>
+              <td>assignments[i].graded</td>
+              <% } %>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+      <% } %>
+    </div>
+  </div>
+  <div class="hover-cont" id="points-cont">
+    <div class="hover-table" id="courses">
+      <h1>Course Evaluation Points</h1>
+      <% if(typeof evaluationPoints==='string' ){ %>
+      <h1>
+        <%= evaluationPoints %>
+      </h1>
+      <% } else { %>
+      <div class="table">
+        <table>
+          <thead>
+            <tr>
+              <th>Course</th>
+              <th>Uploaded on</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for(var i=0;i<evaluationPoints.length;i++){ %>
+            <tr>
+              <td>
+                <%= evaluationPoints[i].course %>
+              </td>
+              <td>
+                <%= evaluationPoints[i].date %>
+              </td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+      <% } %>
+    </div>
+  </div>
+  <div class="hover-cont" id="announcements-cont">
+    <div class="hover-table" id="announcements">
+      <h1>Announcements</h1>
+      <% if(typeof announcements==='string' ){ %>
+      <h1>No Announcements</h1>
+      <% } else { %>
+      <div class="block">
+        <% for (var i=0; i < announcements.length; i++) { %>
+        <div class="Heading">
+          <h3>
+            <%= announcements[i].heading %>
+          </h3>
+          <p>
+            <%= announcements[i].data %>
+          </p>
+        </div>
+        <% } %>
+      </div>
+      <% } %>
+    </div>
+  </div>
+  <script src="javascripts/home.js" type="module"></script>
 </body>
 
 </html>
+</body>

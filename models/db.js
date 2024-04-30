@@ -28,26 +28,27 @@ class Database {
     }
 
     async isEmailSignedIn(email) {
-        const filteredDocs = await this.student_collection.findOne({ email: email });
-        if (filteredDocs) {
+        var student, hod, faculty, admin;
+        var key = 'email'
+        student = await this.student_collection.findOne({ [key]: email });
+        hod = await this.hod.findOne({ [key]: email });
+        faculty = await this.faculty.findOne({ [key]: email });
+        admin = await this.admin.findOne({ [key]: email });
+        if (student || hod || faculty || admin) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
 
     async isUsernameExist(username) {
-        var student, hod;
-        if (username.includes('@')) {
-            student = await this.student_collection.findOne({ email: username });
-            hod = await this.hod.findOne({ email: username });
-        }
-        else {
-            student = await this.student_collection.findOne({ username: username });
-            hod = await this.hod.findOne({ username: username });
-        }
-        if (student || hod) {
+        var student, hod, faculty, admin;
+        var key = 'username'
+        student = await this.student_collection.findOne({ [key]: username });
+        hod = await this.hod.findOne({ [key]: username });
+        faculty = await this.faculty.findOne({ [key]: username });
+        admin = await this.admin.findOne({ [key]: username });
+        if (student || hod || faculty || admin) {
             return true;
         } else {
             return false;
@@ -72,6 +73,9 @@ class Database {
             type = 'admin'
         }
         if (status) {
+            if (!status.password){
+                return "Signup Required"
+            }
             if (password == status.password) {
                 return type;
             }
@@ -113,7 +117,7 @@ class Database {
         try {
             var user, key, obj;
             key = username.includes('@') ? 'email' : 'username';
-            obj = {'hod': this.hod, 'student': this.student_collection, 'faculty': this.faculty, "admin": this.admin}
+            obj = { 'hod': this.hod, 'student': this.student_collection, 'faculty': this.faculty, "admin": this.admin }
             user = await obj[type].findOne({ [key]: username });
             if (!user) {
                 return "User not Found"

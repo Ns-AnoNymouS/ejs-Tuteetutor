@@ -46,11 +46,6 @@ function diableLogout(){
     }, 100)
 }
 
-document.querySelector(".yes").addEventListener('click', ()=> {
-    fetch("/logout")
-    window.location.href = '/login'
-})
-
 window.onload = () => {
     document.querySelector('.full').onclick = diableLogout;
     document.querySelector('.no').onclick = diableLogout;
