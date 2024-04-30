@@ -13,5 +13,35 @@
             <%- include("partials/adminPageLink.ejs") %>
             <h2>Change <%= option %>
             </h2>
+            <% if (error) { %>
+                <div class="messageBlock">
+                    <p id="message">
+                        <%= error %>
+                    </p>
+                </div>
+                <% } %>
+            <form method="post" id="addForm">
+                <table>
+                    <thead>
+                        <% for(var i=1;i < keys.length;i++){%>
+                            <tr>
+                                <td>
+                                    <%= keys[i] %>
+                                </td>
+                                <% if (keys[i] === 'email') { %> 
+                                    <td><%= typeof query[keys[i]] !== 'undefined' ? query[keys[i]] : '' %></td> <!-- Display the email as text -->
+                                <% } else { %> 
+                                    <% if (keys[i] !== 'password') { %> 
+                                            <td><input type="text" name="<%= keys[i] %>" value="<%= typeof query[keys[i]] !== 'undefined' ? query[keys[i]] : '' %>" required></td>
+                                    <% } else { %> <!-- For password field -->
+                                            <td><input type="password" name="<%= keys[i] %>" value="" required></td> 
+                                    <% } %>
+                                <% } %>
+                            </tr>
+                            <%}%>
+                    </thead>
+                </table>
+                <button id="saveButton" type="submit">Save</button>
+            </form>
 </body>
 </html>

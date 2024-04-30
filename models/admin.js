@@ -19,7 +19,6 @@ class Admin{
     }
 
     async addStudent(email, username, password) {
-        console.log(email)
         email = email.toLowerCase();
         username = username.toLowerCase();
         if (email == null || email.trim() === "") {
@@ -49,6 +48,22 @@ class Admin{
                 return "added";
             }
         }
+    }
+
+    async deleteStudent(emails){
+        let sts = await db.deleteStudent(emails);
+        return true;
+    }
+
+    async updateStudent(email, username, password){
+        if(password.trim() == ''){
+            password = '';
+        }
+        else{
+            password = encrypt(password);
+        }
+        let sts = await db.updateStudent(email,username,password);
+        return sts;
     }
 }
 module.exports = new Admin()

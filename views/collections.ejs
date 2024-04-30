@@ -9,88 +9,100 @@
 
 <body>
     <%- include("partials/loading.ejs") %>
-    <%- include("partials/adminNav.ejs") %>
-    <%- include("partials/adminPageLink.ejs") %>
-        <div class="body">
-            <div class="right">
-                <div class="heading">
-                    <h2>Select <%= presentPage %> to change</h2>
-                    <button><a href="/admin/collections/<%=presentPage%>/add">Add <%= presentPage %></a></button>
-                </div>
-                <div class="options">
-                    <h2>Action:</h2>
-                    <select id="dropdown">
-                        <option value="--------">--------</option>
-                        <option value="Delete selected questions">Delete selected questions</option>
-                    </select>
-                    <button>Go</button>
-                    <div id="selectedCount"></div>
-                    <div class="data">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <td><input type="checkbox" id="selectAll"></td>
-                                    <% for(var i=1; i< keys.length;i++) { %>
-                                        <% if(keys[i] !='password' ) {%>
-                                            <td>
-                                                <%= keys[i] %>
-                                            </td>
-                                            <% } %>
-                                                <% } %>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <% for(var i=0;i< data.length; i++){ %>
+        <%- include("partials/adminNav.ejs") %>
+            <%- include("partials/adminPageLink.ejs") %>
+                <div class="body">
+                    <div class="heading">
+                        <h2>Select <%= presentPage %> to change</h2>
+                        <button><a href="/admin/collections/<%=presentPage%>/add">Add <%= presentPage %></a></button>
+                    </div>
+                    <div class="options">
+                        <h2>Action:</h2>
+                        <form method="POST">
+                        <select id="dropdown" name="action" id="form">
+                            <option value="--------">--------</option>
+                            <option value="Delete" href="">Delete selected</option>
+                        </select>
+                        <button id="goButton">Go</button>
+                        <input type="hidden" id="selectedEmails" name="emails">
+                        </form>
+                        <div id="selectedCount"></div>
+                        <div class="data">
+                            <table>
+                                <thead>
                                     <tr>
-                                        <td><input type="checkbox" class="selectRow"></td>
-                                        <td><button><a href="/admin/collections/<%=presentPage%>/update">Edit</a></button></td>
-                                        <% for(var j=1; j< keys.length;j++) { %>
-                                            <% if(keys[j] !='password' ) {%>
+                                        <td><input type="checkbox" id="selectAll"></td>
+                                        <% for(var i=1; i< keys.length;i++) { %>
+                                            <% if(keys[i] !='password' ) {%>
                                                 <td>
-                                                    <%= data[i][keys[j]] %>
+                                                    <%= keys[i] %>
                                                 </td>
                                                 <% } %>
                                                     <% } %>
                                     </tr>
-                                    <% } %>
+                                </thead>
+                                <tbody>
+                                    <% for(var i=0;i< data.length; i++){ %>
                                         <tr>
-                                            <td>
-                                                <%= data.length %>
-                                                    <%= presentPage %>
+                                            <td><input type="checkbox" class="selectRow" data-email="<%= data[i].email %>"></td>
+                                            <td><button><a
+                                                        href="/admin/collections/<%=presentPage%>/update?<%= Object.entries(data[i]).filter(([key, value]) => key !== 'password').map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`).join('&') %>">Edit</a></button>
                                             </td>
+                                            <% for(var j=1; j< keys.length;j++) { %>
+                                                <% if(keys[j] !='password' ) {%>
+                                                    <td>
+                                                        <%= data[i][keys[j]] %>
+                                                    </td>
+                                                    <% } %>
+                                                        <% } %>
                                         </tr>
-                            </tbody>
-                        </table>
+                                        <% } %>
+                                            <tr>
+                                                <td>
+                                                    <%= data.length %>
+                                                        <%= presentPage %>
+                                                </td>
+                                            </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <script>
-            const selectAllCheckbox = document.getElementById('selectAll');
-            const selectRowCheckboxes = document.querySelectorAll('.selectRow');
-        
-            updateSelectedCount();
-        
-            selectAllCheckbox.addEventListener('change', function() {
-                selectRowCheckboxes.forEach(function(checkbox) {
-                    checkbox.checked = selectAllCheckbox.checked;
-                });
-                updateSelectedCount();
-            });
-        
-            selectRowCheckboxes.forEach(function(checkbox) {
-                checkbox.addEventListener('change', function() {
+                <script>
+                    const selectAllCheckbox = document.getElementById('selectAll');
+                    const selectRowCheckboxes = document.querySelectorAll('.selectRow');
+
                     updateSelectedCount();
-                });
-            });
-        
-            function updateSelectedCount() {
-                const selectedCount = document.querySelectorAll('.selectRow:checked').length;
-                const totalCount = selectRowCheckboxes.length;
-                const selectedCountElement = document.getElementById('selectedCount');
-                selectedCountElement.textContent = selectedCount + ' of ' + totalCount + ' selected';
-            }
-        </script>
+
+                    selectAllCheckbox.addEventListener('change', function () {
+                        selectRowCheckboxes.forEach(function (checkbox) {
+                            checkbox.checked = selectAllCheckbox.checked;
+                        });
+                        updateSelectedCount();
+                    });
+
+                    selectRowCheckboxes.forEach(function (checkbox) {
+                        checkbox.addEventListener('change', function () {
+                            updateSelectedCount();
+                        });
+                    });
+
+                    function updateSelectedCount() {
+                        const selectedCount = document.querySelectorAll('.selectRow:checked').length;
+                        const totalCount = selectRowCheckboxes.length;
+                        const selectedCountElement = document.getElementById('selectedCount');
+                        selectedCountElement.textContent = selectedCount + ' of ' + totalCount + ' selected';
+                    }
+
+                    document.getElementById('goButton').addEventListener('click', function() {
+                        const selectedEmails = [];
+                        document.querySelectorAll('.selectRow:checked').forEach(function(checkbox) {
+                            selectedEmails.push(checkbox.dataset.email);
+                        });
+                        document.getElementById('selectedEmails').value = selectedEmails.join(',');
+                        document.getElementById('form').submit();
+                    });
+                </script>
 </body>
 
 

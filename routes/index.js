@@ -13,32 +13,12 @@ router.get("/", alreadyLoggedMiddleware, (req, res) => {
     res.render("about");
 });
 
-router.get("/addFaculty", async (req,res)=>{
+router.get("/addFaculty", async (req, res) => {
+    res.render('addFaculty', { 'username': req.session.username, 'email': req.session.email, 'error': '' });
+});
+
+router.get("/", async (req,res)=>{
     res.render('addFaculty', { 'username': req.session.username, 'email': req.session.email, 'error': ''});
-});
-
-router.post("/addFaculty", async (req,res)=>{
-    if (!req.session.course){
-        const user = await UserModel.getUser(req.session.username, 'hod')
-        req.session.course = user.course   
-    }
-    const { email, department, section, year } = req.body;
-    let type = await HODModel.addFaculty(email, req.session.course, section, department, year);
-    if (type == 'true'){
-        return res.redirect('/facultyStatus');
-    }
-    res.render('addFaculty', { 'username': req.session.username, 'email': req.session.email, 'error': type});
-});
-
-router.get("/facultyStatus", async (req,res)=>{
-    if (!req.session.course){
-        const user = await UserModel.getUser(req.session.username, 'hod')
-        req.session.course = user.course
-    }
-    var items = await HODModel.getFaculty(req.session.course)
-    var count = await items.count()
-    items = count == 0? null : await items.toArray();
-    res.render('facultyStatus', {'items': items, 'username': req.session.username, 'email': req.session.email, 'error': ''});
 });
 
 router.delete("/facultyStatus/:email", async (req, res)=>{
@@ -117,6 +97,10 @@ router.get("/home", authMiddleware, async (req, res) => {
     const announcements = await UserModel.fetchAnnouncements(course, section);
     var collections = await AdminModel.fetchCollections();
     var type = req.session.type
+    let page = type;
+    if (type == 'student'){
+        page = 'home'
+    }
     res.render(type, { 'username': req.session.username, 'email': req.session.email, 'classes': classes, 'holidays': holidays, 'assignments': assignments, 'evaluationPoints': evaluationPoints, 'announcements': announcements , 'collections': collections});
 });
 
@@ -153,7 +137,7 @@ router.post("/otp", async (req, res) => {
 });
 
 router.get("/settings", authMiddleware, (req, res) => {
-    res.render("settings",  { 'username': req.session.username, 'email': req.session.email});
+    res.render("settings", { 'username': req.session.username, 'email': req.session.email });
 });
 
 router.get('/courses', (req, res) => {
@@ -187,43 +171,76 @@ router.get('/updatePassword', (req, res) => {
     res.render("updatePassword")
 })
 
-router.get('/admin/collections/:option', async (req,res)=>{
+router.get('/admin/collections/:option', async (req, res) => {
     const option = req.params.option;
     var keys = await AdminModel.fetchAttributes(option);
     var data = await AdminModel.fetchData(option);
-    switch(option){
-        case 'student':
-            res.render("collections", { 'presentPage': option, 'keys': keys, 'data': data });
-    }
+    res.render("collections", { 'presentPage': option, 'keys': keys, 'data': data });
 })
 
-router.get('/admin/collections/:option/:action', async(req,res)=>{
+router.post('/admin/collections/:option', async (req, res) => {
     const option = req.params.option;
-    const action = req.params.action;
-    const presentPage = option + '>' + action
-    var keys = await AdminModel.fetchAttributes(option);
-    switch(action){
-        case 'add':
-            res.render('add',{ 'presentPage': presentPage, 'option': option ,'keys': keys, 'error': ''});
-            break
-        case 'update':
-            res.render('update',{ 'presentPage': presentPage, 'option': option })
-            break
-    }
-})
-
-router.post('/admin/collections/:option/:action', async(req,res) => {
-    const { email, username, password} = req.body;
-    const addStudent = await AdminModel.addStudent(email, username, password)
-    const option = req.params.option;
-    const action = req.params.action;
-    const presentPage = option + '>' + action
-    var keys = await AdminModel.fetchAttributes(option);
-    if (addStudent == 'added') {
-        res.redirect(`/admin/collections/${option}`)
+    const { action, emails } = req.body;
+    if (action == 'Delete') {
+        const deleteStudent = await AdminModel.deleteStudent(emails);
+        if (deleteStudent) {
+            res.redirect(`/admin/collections/${option}`);
+        } else {
+            res.render('error', { message: 'Failed to delete students' });
+        }
     }
     else {
-        res.render('add',{ 'presentPage': presentPage, 'option': option ,'keys': keys, 'error': addStudent })
+        res.redirect(`/admin/collections/${option}`);
+    }
+})
+
+router.get('/admin/collections/:option/:action', async (req, res) => {
+    const option = req.params.option;
+    const action = req.params.action;
+    const presentPage = option + '>' + action
+    var keys = await AdminModel.fetchAttributes(option);
+    var data = await AdminModel.fetchData(option);
+    var query = req.query;
+    switch (action) {
+        case 'add':
+            res.render('add', { 'presentPage': presentPage, 'option': option, 'keys': keys, 'error': '' });
+            break
+        case 'update':
+            res.render('update', { 'presentPage': presentPage, 'option': option, 'keys': keys, 'query': query, 'error': '' })
+            break
+        case 'delete':
+            const deleteStudent = await AdminModel.deleteStudent(email);
+            res.redirect(`/admin/collections/${option}`);
+            break;
+    }
+})
+
+router.post('/admin/collections/:option/:action', async (req, res) => {
+    const option = req.params.option;
+    const action = req.params.action;
+    const presentPage = option + '>' + action
+    var keys = await AdminModel.fetchAttributes(option);
+    const { email, username, password } = req.body;
+    var query = req.query;
+    switch (action) {
+        case 'add':
+            const addStudent = await AdminModel.addStudent(email, username, password)
+            if (addStudent == 'added') {
+                res.redirect(`/admin/collections/${option}`)
+            }
+            else {
+                res.render('add', { 'presentPage': presentPage, 'option': option, 'keys': keys, 'error': addStudent })
+            }
+            break;
+        case 'update':
+            const updateStudent = await AdminModel.updateStudent(query['email'], username, password)
+            if (updateStudent == true) {
+                res.redirect(`/admin/collections/${option}`)
+            }
+            else {
+                res.render('update', { 'presentPage': presentPage, 'option': option, 'keys': keys, 'error': updateStudent })
+            }
+            break;
     }
 })
 
