@@ -391,7 +391,7 @@ input[type="search"] {
 }
 
 .profile-heading{
-    margin: 20px;
+    margin-bottom: 10px;
     font-size:x-large;
 }
 
@@ -402,14 +402,47 @@ input[type="search"] {
     flex-direction: column;
 }
 
-.pic{
-    background-color: rgba(5, 15, 47, 0.903);
+.profile-container {
+    position: relative;
     width: 130px;
     height:135px;
+    border: 2px solid rgba(5, 15, 47, 0.903);
     display: flex;
     justify-content: center;
+    align-items: center;
     margin-bottom: 5px;
-}
+    cursor: pointer;
+    overflow: hidden;
+  }
+
+  .profile-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("../images/profile-img.png");
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  input[type="file"] {
+    display: none;
+  }
 
 .update-container{
     margin-top:3rem;

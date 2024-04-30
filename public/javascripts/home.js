@@ -57,3 +57,4 @@ window.onload = () => {
     document.getElementById('logout').onclick = showLogout;
     scrollClasses();
 };
+

@@ -103,12 +103,17 @@
                 <div class="setting-option">
                     <h2 class="heading">Edit Profile</h2>
                     <p class="content">Update your personal information:</p>
+
                     <div class="profile">
                         <p class="profile-heading">Profile:</p>
-                        <div class="pic">.</div>
+                        <div class="profile-container" id="imageContainer">
+                            <img src="placeholder.jpg" alt="Image">
+                            <div class="overlay" onclick="uploadImage()"></div>
+                            <input type="file" accept="image/*" onchange="previewImage(event)">
+                        </div>
                         <p>Click on the image to update</p>
                     </div>
-                    <form id="update">
+                    <form action="" method="post" id="update">
                         <div class="update-container">
                             <div class="cont">
                                 <label for="Username">Username:</label>
@@ -120,11 +125,12 @@
                             </div>
                             <div class="cont1">
                                 <label for="confimpass">Confirm Password:</label>
-                                <input type="confimpass" id="confimpass" name="confimpass">
+                                <input type="password" id="confimpass" name="confimpass">
                             </div>
-                            <div class="btn-submit">Submit</div>
+                            <div class="btn-submit" id="submitBtn">Submit</div>
                         </div>
                     </form>
+
                 </div>
                 <div class="setting-option-2">
                     <div class="courses">
@@ -149,7 +155,42 @@
                 </div>
             </div>
         </div>
-        <script src="settings.js"></script>
+        <script>
+            document.getElementById("submitBtn").addEventListener("click", function () {
+                var username = document.getElementById("username").value;
+                var password = document.getElementById("password").value;
+                var confirmPassword = document.getElementById("confirmpass").value;
+
+                if (password !== confirmPassword) {
+                    alert("Passwords do not match!");
+                    return;
+                }
+
+                console.log("Username: " + username);
+                console.log("Password: " + password);
+
+                document.getElementById("update").submit();
+            });
+
+            function uploadImage() {
+    
+                document.querySelector('input[type="file"]').click();
+            }
+
+            function previewImage(event) {
+                const container = document.getElementById('imageContainer');
+                const file = event.target.files[0];
+                const reader = new FileReader();
+
+                reader.onload = function () {
+                    const img = container.querySelector('img');
+                    img.src = reader.result;
+                }
+
+                reader.readAsDataURL(file);
+
+            }
+        </script>
 </body>
 
 </html>
