@@ -232,6 +232,36 @@ class Database {
         }
     }
 
+    async deleteStudent(emails){
+        try{
+            const emailArray = emails.split(',');
+            await this.student_collection.deleteMany({ email: { $in: emailArray } })
+            return true;
+        }
+        catch(err){
+            console.error(err)
+            throw err;
+        }
+    }
+
+    async updateStudent(email, newUsername, newPassword) {
+        try {
+            const updateFields = {};
+            if (newUsername) {
+                updateFields.username = newUsername;
+            }
+            if (newPassword) {
+                updateFields.password = newPassword;
+            }
+            const result = await this.student_collection.updateOne({ 'email': email }, { $set: updateFields });
+            return true;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    }
+    
+
     async connect() {
         try {
             await this.client.connect();
