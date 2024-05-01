@@ -112,11 +112,13 @@
     </nav>
     <div class="grid-container">
       <div class="grid-item item1">
-        <div class="small-card card1" id="card1">
-          <h3 class="assignments-heading">
-            Total Assignments
-          </h3>
-        </div>
+        <a href="/assignments">
+          <div class="small-card card1" id="card1">
+            <h3 class="assignments-heading">
+              Total Assignments
+            </h3>
+          </div>
+        </a>
         <div class="small-card grid-item card2" id="card2">
           <h3 class="evaluation-heading">
             Evaluation Points
@@ -347,61 +349,6 @@
       }
     });
 
-    var side = document.getElementById('side')
-    var hoverTrigger1 = document.getElementById('card1');
-    var main = document.getElementById('main');
-    var assignments = document.getElementById('assignments-cont');
-    var hoverTrigger2 = document.getElementById('card2');
-    var evaluation = document.getElementById('points-cont');
-    var hoverTrigger3 = document.getElementById('card3');
-    var announcements = document.getElementById('announcements-cont');
-
-
-    hoverTrigger1.addEventListener('mouseover', () => {
-        assignments.style.display = 'block';
-        main.style.display = 'none';
-        document.body.style.backgroundImage = 'url("../images/assignment.jpg")';
-        document.body.style.background = 'cover';
-        side.style.display = 'none';
-    });
-
-    hoverOut.addEventListener('mouseout', () => {
-        main.style.display = 'block';
-        assignments.style.display = 'none';
-        document.body.style.backgroundImage = 'none';
-        side.style.display = 'block';
-    });
-
-
-    hoverTrigger2.addEventListener('mouseover', () => {
-        evaluation.style.display = 'block';
-        main.style.display = 'none';
-        document.body.style.backgroundImage = 'url("../images/evaluation1.jpg")';
-        document.body.style.background = 'cover';
-        side.style.display = 'none';
-    });
-
-    hoverOut.addEventListener('mouseout', () => {
-        main.style.display = 'block';
-        evaluation.style.display = 'none';
-        document.body.style.backgroundImage = 'none';
-        side.style.display = 'block';
-    });
-
-    hoverTrigger3.addEventListener('mouseover', () => {
-        announcements.style.display = 'block';
-        main.style.display = 'none';
-        document.body.style.backgroundImage = 'url("../images/announcement.jpg")';
-        document.body.style.background = 'cover';
-        side.style.display = 'none';
-    });
-
-    hoverOut.addEventListener('mouseout', () => {
-        main.style.display = 'block';
-        announcements.style.display = 'none';
-        document.body.style.backgroundImage = 'none';
-        side.style.display = 'block';
-    });
   </script>
   <script src="javascripts/home.js" type="module"></script>
 </body>

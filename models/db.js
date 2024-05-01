@@ -166,10 +166,13 @@ class Database {
     }
 
     async getAssignments(course, section) {
-        const condition = {
-            course: { course },
-            section: { section }
-        };
+        var condition = {};
+        if (course){
+            condition.course = course
+        }
+        if (section){
+            condition.section = section
+        }
         try {
             const data = await this.assignments.find(condition).toArray();
             return data;
