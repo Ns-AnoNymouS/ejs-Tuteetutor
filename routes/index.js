@@ -274,9 +274,25 @@ router.get('/admin/collections/:option', async (req, res) => {
 router.post('/admin/collections/:option', async (req, res) => {
     const option = req.params.option;
     const { action, emails } = req.body;
-    if (action == 'Delete') {
+    if (action == 'Delete' && option == 'student') {
         const deleteStudent = await AdminModel.deleteStudent(emails);
         if (deleteStudent) {
+            res.redirect(`/admin/collections/${option}`);
+        } else {
+            res.render('error', { message: 'Failed to delete students' });
+        }
+    }
+    else if (action == 'Delete' && option == 'faculty') {
+        const deleteFaculty = await AdminModel.deleteFaculty(emails);
+        if (deleteFaculty) {
+            res.redirect(`/admin/collections/${option}`);
+        } else {
+            res.render('error', { message: 'Failed to delete students' });
+        }
+    }
+    else if (action == 'Delete' && option == 'hod') {
+        const deleteHod = await AdminModel.deleteHod(emails);
+        if (deleteHod) {
             res.redirect(`/admin/collections/${option}`);
         } else {
             res.render('error', { message: 'Failed to delete students' });
@@ -304,6 +320,7 @@ router.get('/admin/collections/:option/:action', async (req, res) => {
             const deleteStudent = await AdminModel.deleteStudent(email);
             res.redirect(`/admin/collections/${option}`);
             break;
+            
     }
 })
 
@@ -356,6 +373,16 @@ router.post('/admin/collections/:option/:action', async (req, res) => {
             const addHod = await AdminModel.addHod(course,username,email,password,year)
             if(addHod == true) res.redirect(`/admin/collections/${option}`)
             else res.render('add', { 'presentPage': presentPage, 'option': option, 'keys': keys, 'error': addHod })
+            break;
+        case 'hod>update':
+            var {course,username,email,password,year} = req.body;
+            const updateHod = await AdminModel.updateHod(course,username,query['email'],password,year);
+            if (updateHod == true) {
+                res.redirect(`/admin/collections/${option}`)
+            }
+            else {
+                res.render('update', { 'option': option, 'action': action, 'keys': keys, 'error': updateHod })
+            }
             break;
     }
 })

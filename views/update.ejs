@@ -29,12 +29,12 @@
                                     <%= keys[i] %>
                                 </td>
                                 <% if (keys[i] === 'email') { %> 
-                                    <td><%= typeof query[keys[i]] !== 'undefined' ? query[keys[i]] : '' %></td> <!-- Display the email as text -->
+                                    <td><%= typeof query[keys[i]] !== 'undefined' ? query[keys[i]] : '' %></td> 
                                 <% } else { %> 
                                     <% if (keys[i] !== 'password') { %> 
                                             <td><input type="text" name="<%= keys[i] %>" value="<%= typeof query[keys[i]] !== 'undefined' ? query[keys[i]] : '' %>" required></td>
-                                    <% } else { %> <!-- For password field -->
-                                            <td><input type="password" name="<%= keys[i] %>" value="" required></td> 
+                                    <% } else { %> 
+                                            <td><input type="password" name="<%= keys[i] %>" value="" ></td> 
                                     <% } %>
                                 <% } %>
                             </tr>
