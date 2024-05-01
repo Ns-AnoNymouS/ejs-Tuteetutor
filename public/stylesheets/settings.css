@@ -432,17 +432,26 @@ input[type="search"] {
     height: 100%;
     background-image: url("../images/profile-img.png");
     background-size: cover;
+    background-position: center; 
+    background-repeat: no-repeat;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #fff;
-    font-size: 20px;
     cursor: pointer;
   }
 
   input[type="file"] {
     display: none;
   }
+
+  .pic {
+    width: 130px;
+    height: 135px;
+    border: 2px solid rgba(5, 15, 47, 0.903);
+    background-image: url("../images/profile-img.png");
+    background-size: cover;
+    background-position: center;
+}
 
 .update-container{
     margin-top:3rem;
