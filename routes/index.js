@@ -344,6 +344,16 @@ router.post('/admin/collections/:option/:action', async (req, res) => {
             if(addHod == true) res.redirect(`/admin/collections/${option}`)
             else res.render('add', { 'presentPage': presentPage, 'option': option, 'keys': keys, 'error': addHod })
             break;
+        case 'hod>update':
+            var {course,username,email,password,year} = req.body;
+            const updateHod = await AdminModel.updateFaculty(query['email'],course,section,department,year,statusFaculty,password,username);
+            if (updateHod == true) {
+                res.redirect(`/admin/collections/${option}`)
+            }
+            else {
+                res.render('update', { 'option': option, 'action': action, 'keys': keys, 'error': updateHod })
+            }
+            break;
     }
 })
 

@@ -328,6 +328,29 @@ class Database {
         await this.hod.insertOne(details)
     }
 
+    async updateHod(course,username,email,password,year){
+        try {
+            const updateFields = {};
+            if (course) {
+                updateFields.course = course;
+            }
+            if (year) {
+                updateFields.year = year;
+            }
+            if (password) {
+                updateFields.password = password;
+            }
+            if(username){
+                updateFields.username = username;
+            }
+            const result = await this.student_collection.updateOne({ 'email': email }, { $set: updateFields });
+            return true;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    }
+
     async insertAction(collection, actionType , timestamp){
             let details = {
                 collection: collection,

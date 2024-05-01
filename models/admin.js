@@ -145,6 +145,18 @@ class Admin{
         }
     }
 
+    async updateHod(course,username,email,password,year){
+        if(password.trim() == ''){
+            password = '';
+        }
+        else{
+            password = encrypt(password);
+        }
+        let sts = await db.updateStudent(course,username,email,password,year);
+        await this.logAction('hod','updated');
+        return sts;
+    }
+
     async logAction(collection, actionType) {
         try {
             const timestamp = new Date();
