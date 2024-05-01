@@ -101,6 +101,12 @@ class Admin{
         }
     }
 
+    async deleteFaculty(emails){
+        let sts = await db.deleteFaculty(emails);
+        await this.logAction('faculty','deleted');
+        return true;
+    }
+
     async updateFaculty(email,course,section,department,year,statusFaculty,password,username){
         if(password.trim() == ''){
             password = '';
@@ -138,11 +144,17 @@ class Admin{
                 return userSts;
             }
             else {
-                await db.insertHodData(course,username,email,password,year)
+                await db.insertHodData(course,username,email,encrypt(password),year)
                 await this.logAction('hod','added');
                 return true;
             }
         }
+    }
+
+    async deleteHod(emails){
+        let sts = await db.deleteHod(emails);
+        await this.logAction('hod','deleted');
+        return true;
     }
 
     async updateHod(course,username,email,password,year){

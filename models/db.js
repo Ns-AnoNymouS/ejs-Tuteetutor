@@ -285,6 +285,18 @@ class Database {
         await this.faculty.insertOne(details)
     }
 
+    async deleteFaculty(emails){
+        try{
+            const emailArray = emails.split(',');
+            await this.faculty.deleteMany({ email: { $in: emailArray } })
+            return true;
+        }
+        catch(err){
+            console.error(err)
+            throw err;
+        }
+    }
+
     async updateFaculty(email,course,section,department,year,statusFaculty,password,username) {
         try {
             const updateFields = {};
@@ -326,6 +338,18 @@ class Database {
             year: year
         }
         await this.hod.insertOne(details)
+    }
+
+    async deleteHod(emails){
+        try{
+            const emailArray = emails.split(',');
+            await this.hod.deleteMany({ email: { $in: emailArray } })
+            return true;
+        }
+        catch(err){
+            console.error(err)
+            throw err;
+        }
     }
 
     async updateHod(course,username,email,password,year){
