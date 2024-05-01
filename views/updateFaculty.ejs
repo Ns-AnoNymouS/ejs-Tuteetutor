@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="/stylesheets/addFaculty.css">
+  <link rel="stylesheet" href="/stylesheets/facultyStatus.css">
+  <link rel="stylesheet" href="/stylesheets/home.css">
+  <%- include("partials/header.ejs") %>
+</head>
+
+<body>
+  <%- include("partials/loading.ejs") %>
+  <div class="full">
+    <div class="confirmation">
+      <div class="buttons">
+        Are you sure you wanna Logout?
+      </div>
+      <div class="buttons">
+        <a href="/logout">
+          <div class="yes">Yes</div>
+        </a>
+        <div class="no">No</div>
+      </div>
+    </div>
+  </div>
+  <div class="sidebar" id="side">
+    <div class="top">
+      <ul>
+        <div>
+          <li>
+            <a href="#">
+              <img src="/images/user-profile.webp" alt="user" height="20px" width="20px" style="padding: 15px;">
+              <span class="nav-item">Username</span>
+            </a>
+          </li>
+          <li>
+            <a href="/home">
+              <i class="fa-regular fa-user icon"></i>
+              <span class="nav-item">Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a href="/timeTable" target="_blank">
+              <i class="fa-solid fa-list icon"></i>
+              <span class="nav-item">TimeTable</span>
+            </a>
+          </li>
+          <li>
+            <a href="/almanac" target="_blank">
+              <i class="fa-regular fa-calendar icon"></i>
+              <span class="nav-item">Almanac</span>
+            </a>
+          </li>
+        </div>
+        <div>
+          <li>
+            <a href="/settings">
+              <i class="fa-solid fa-gear icon"></i>
+              <span class="nav-item">Settings</span>
+            </a>
+          </li>
+        </div>
+      </ul>
+    </div>
+    <div class="user"></div>
+  </div>
+  <div class="main" id="main">
+    <nav>
+      <div class="rightnav">
+        <div class="container-logo">
+          <img src="/images/logo.png" alt="TuteeTutor" height="35px" width="35px" style="border-radius: 50%;">
+          <h2 id="logo-heading">TuteeTutor</h2>
+        </div>
+      </div>
+      <div class="leftnav">
+        <div class="search-container">
+          <button class="icon-button">
+            <i class="fa-solid fa-magnifying-glass" style="color: #000000;"></i>
+          </button>
+          <input type="search" placeholder="Search">
+        </div>
+        <div class="user-profile" style="color: white; display: flex; align-items: center; justify-content: left; width: 200px; border-left: 1px solid grey;">
+          <img src="/images/profile-img.png" alt="profile-pic" height="50px" width="50px" style="padding: 0px; border: 1px white solid; border-radius: 10px; margin: 0px 10px;">
+          <div>
+            <p id="profile-name">
+              <%= username %>
+            </p>
+            <p style="font-family: Arial, Helvetica, sans-serif; font-size: .8rem;" id="profile-email">
+              <%= email %>
+            </p>
+          </div>
+        </div>
+        <div id="profile-menu">
+          <ul>
+            <li>
+              <i class="fa-regular fa-circle-question"></i>
+              <span class="nav-item">Help</span>
+            </li>
+            <a href="/settings">
+              <li>
+                <i class="fa-solid fa-gear icon"></i>
+                <span class="nav-item">Settings</span>
+              </li>
+            </a>
+            <hr>
+            <li id="logout">
+              <i class="fa-solid fa-arrow-right-from-bracket"></i>
+              <span class="nav-item">Logout</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+  <div class="page">
+    <div class="container">
+      <% if (error) { %>
+      <div class="messageBlock">
+        <p id="message">
+          <%= error %>
+        </p>
+      </div>
+      <% } %>
+      <h2>Update Faculty Details</h2>
+      <form method="post">
+        <div style="width: 100%;">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" value="<%= item.email %>" required>
+          <label for="department">Department:</label>
+          <select id="department" name="department">
+              <option value="CSE" <%= item.department === "CSE" ? "selected" : "" %>>CSE</option>
+              <option value="ECE" <%= item.department === "ECE" ? "selected" : "" %>>ECE</option>
+          </select>
+          <label for="section">Section:</label>
+          <select id="section" name="section">
+            <% for (let i = 1; i <= 6; i++) { %>
+            <% if (i == item.section) { %>
+            <option value="<%= i %>" selected><%= i %></option>
+            <% } else { %>
+            <option value="<%= i %>"><%= i %></option>
+            <% } %>
+            <% } %>
+          </select>
+          <label for="year">Year:</label>
+          <select id="year" name="year">
+            <% for (let i = 1; i <= 4; i++) { %>
+            <% if (i == item.section) { %>
+            <option value="<%= i %>" selected>UG - <%= i %></option>
+            <% } else { %>
+            <option value="<%= i %>">UG - <%= i %></option>
+            <% } %>
+            <% } %>
+          </select>
+        </div>
+        <div class="buttons" style="display: flex; justify-content: space-around;">
+            <a href="/facultyStatus"><button class="action-btn delete-btn" style="height: 40px;">Cancel</button></a>
+            <input type="submit" value="Submit">
+        </div>
+      </form>
+    </div>
+  </div>
+  <script src="/javascripts/home.js" type="module"></script>
+</body>
+
+</html>
+</body>

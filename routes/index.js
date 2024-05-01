@@ -4,6 +4,7 @@ var router = express.Router();
 const UserModel = require('../models/user')
 const authMiddleware = require('../middlewares/authMiddleware')
 const alreadyLoggedMiddleware = require('../middlewares/alreadyLoggedMiddleware')
+const authorizedMiddleware = require('../middlewares/authorizedMiddleware')
 const OtpModel = require('../models/sendOTP')
 const encrypt = require('../models/encryption')
 const AdminModel = require('../models/admin')
@@ -13,11 +14,11 @@ router.get("/", alreadyLoggedMiddleware, (req, res) => {
     res.render("about");
 });
 
-router.get("/addFaculty", async (req,res)=>{
+router.get("/addFaculty", authMiddleware, authorizedMiddleware, async (req,res)=>{
     res.render('addFaculty', { 'username': req.session.username, 'email': req.session.email, 'error': ''});
 });
 
-router.post("/addFaculty", async (req,res)=>{
+router.post("/addFaculty", authMiddleware, authorizedMiddleware, async (req,res)=>{
     if (!req.session.course){
         const user = await UserModel.getUser(req.session.username, 'hod')
         req.session.course = user.course   
@@ -30,7 +31,28 @@ router.post("/addFaculty", async (req,res)=>{
     res.render('addFaculty', { 'username': req.session.username, 'email': req.session.email, 'error': type});
 });
 
-router.get("/facultyStatus", async (req,res)=>{
+router.get("/updateFaculty/:email", authMiddleware, authorizedMiddleware, async (req,res)=>{
+    let email = req.params.email;
+    let item = await UserModel.getUser(email, 'faculty')
+    res.render('updateFaculty', { 'username': req.session.username, 'email': req.session.email, 'item': item, 'error': ''});
+});
+
+router.post("/updateFaculty/:email", authMiddleware, authorizedMiddleware, async (req,res)=>{
+    if (!req.session.course){
+        const user = await UserModel.getUser(req.session.username, 'hod')
+        req.session.course = user.course   
+    }
+    let previous_email = req.params.email;
+    const { email, department, section, year } = req.body;
+    let type = await HODModel.updateFaculty(previous_email, email, req.session.course, section, department, year);
+    if (type == 'true'){
+        return res.redirect('/facultyStatus');
+    }
+    let item = await UserModel.getUser(previous_email, 'faculty')
+    res.render('updateFaculty', { 'username': req.session.username, 'email': req.session.email, 'item': item, 'error': type});
+});
+
+router.get("/facultyStatus", authMiddleware, authorizedMiddleware, async (req,res)=>{
     if (!req.session.course){
         const user = await UserModel.getUser(req.session.username, 'hod')
         req.session.course = user.course
@@ -41,7 +63,7 @@ router.get("/facultyStatus", async (req,res)=>{
     res.render('facultyStatus', {'items': items, 'username': req.session.username, 'email': req.session.email, 'error': ''});
 });
 
-router.delete("/facultyStatus/:email", async (req, res)=>{
+router.delete("/facultyStatus/:email", authMiddleware, authorizedMiddleware, async (req, res)=>{
     const email = req.params.email;
     console.log(await HODModel.deleteFaculty(email), email)
     res.send("Sucess");
