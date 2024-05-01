@@ -12,6 +12,20 @@ document.getElementById('side').addEventListener("mouseover", (event) => {
     });
 }) 
 
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById('update');
+    form.addEventListener('submit', function (event) {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confimpass').value;
+
+        if (!username || !password || password !== confirmPassword) {
+            alert("Please check your entries.");
+            event.preventDefault();
+        }
+    });
+});
+
 
 // document.addEventListener('DOMContentLoaded', function() {
 //     document.querySelector('.btn-submit').addEventListener('click', function() {
