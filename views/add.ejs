@@ -23,14 +23,16 @@
                         <% } %>
                             <table>
                                 <thead>
-                                    <% for(var i=1;i < keys.length;i++){%>
-                                        <tr>
-                                            <td>
-                                                <%= keys[i] %>:
-                                            </td>
-                                            <td><input type="text" name="<%= keys[i] %>" required></td>
-                                        </tr>
-                                        <%}%>
+                                    <% for(var i=1; i< keys.length; i++) { %>
+                                        <% if(keys[i] !== 'courses') { %>
+                                            <tr>
+                                                <td>
+                                                    <%= keys[i] %>:
+                                                </td>
+                                                <td><input type="text" name="<%= keys[i] %>" required></td>
+                                            </tr>
+                                        <% } %>
+                                    <% } %>
                                 </thead>
                             </table>
                             <button id="saveButton" type="submit">Save</button>

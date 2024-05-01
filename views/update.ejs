@@ -24,6 +24,7 @@
                 <table>
                     <thead>
                         <% for(var i=1;i < keys.length;i++){%>
+                            <% if(keys[i] !== 'courses') { %>
                             <tr>
                                 <td>
                                     <%= keys[i] %>
@@ -38,6 +39,7 @@
                                     <% } %>
                                 <% } %>
                             </tr>
+                            <%}%>
                             <%}%>
                     </thead>
                 </table>
