@@ -158,7 +158,7 @@ class OtpModel {
                   <li><strong>Year:</strong> UG-${year}</li>
                 </ul>
                 <p>Please click the following link to go to the signup page. You will be automatically signed up as a faculty member:</p>
-                <p><a href="https://tutee-tutor.vercel.app/signup">Sign Up Now</a></p>
+                <p><a href="https://ejs-tuteetutor.onrender.com/signup">Sign Up Now</a></p>
                 <p>If you have any questions or need assistance, please feel free to contact us.</p>
                 <div class="footer">
                   <p>Best regards,<br>Your TuteeTutor Team</p>
