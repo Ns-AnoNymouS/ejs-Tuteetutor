@@ -101,6 +101,50 @@ class Admin{
         }
     }
 
+    async updateFaculty(email,course,section,department,year,statusFaculty,password,username){
+        if(password.trim() == ''){
+            password = '';
+        }
+        else{
+            password = encrypt(password);
+        }
+        let sts = await db.updateStudent(email,course,section,department,year,statusFaculty,password,username);
+        await this.logAction('faculty','updated');
+        return sts;
+    }
+
+    async addHod(course,username,email,password,year){
+        email = email.toLowerCase();
+        username = username.toLowerCase();
+        if (email == null || email.trim() === "") {
+            return "Enter email";
+        }
+        else if (username == null || username.trim() === "") {
+            return "Enter username";
+        }
+        else if (password == null || password.trim() === "") {
+            return "Enter password";
+        }
+        else if (email.indexOf("@") === -1 || email.split("@")[1] != "iiits.in") {
+            return "Email Invalid";
+        }
+        let sts = await db.isEmailSignedIn(email)
+        if (sts != false) {
+            return `Email already signed in as ${sts}`;
+        }
+        else {
+            let userSts = await db.isUsernameExist(username)
+            if (userSts) {
+                return userSts;
+            }
+            else {
+                await db.insertHodData(course,username,email,password,year)
+                await this.logAction('hod','added');
+                return true;
+            }
+        }
+    }
+
     async logAction(collection, actionType) {
         try {
             const timestamp = new Date();

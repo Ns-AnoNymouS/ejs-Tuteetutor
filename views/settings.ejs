@@ -166,33 +166,10 @@
             </div>
         </div>
         <script>
-
-            document.getElementById('editCoursesBtn').addEventListener('click', function () {
-                window.location.href = '/courses';
-            });
-
-            document.getElementById('logout-button').addEventListener('click', function () {
-                window.location.href = '/logout';
-            });
-
-            document.addEventListener("DOMContentLoaded", function () {
-                const form = document.getElementById('update');
-                form.addEventListener('submit', function (event) {
-                    const username = document.getElementById('username').value;
-                    const password = document.getElementById('password').value;
-                    const confirmPassword = document.getElementById('confimpass').value;
-
-                    if (!username || !password || password !== confirmPassword) {
-                        alert("Please check your entries.");
-                        event.preventDefault();
-                    }
-                });
-            });
-
             function uploadImage() {
                 document.querySelector('input[type="file"]').click();
             }
-            
+
             function previewImage(event) {
                 const container = document.getElementById('imageContainer');
                 const file = event.target.files[0];
@@ -212,7 +189,14 @@
                 document.querySelector('.profile-container input[type="file"]').click();
             });
 
-
+            document.getElementById('editCoursesBtn').addEventListener('click', function () {
+                window.location.href = '/courses';
+            });
+            
+            document.getElementById('logout-button').addEventListener('click', function () {
+                window.location.href = '/logout';
+            });
+            
         </script>
         <script src="settings.js"></script>
         <script src="javascripts/home.js" type="module"></script>
