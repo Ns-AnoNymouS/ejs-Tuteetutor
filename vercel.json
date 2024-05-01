@@ -6,7 +6,7 @@
             "use": "@vercel/static"
         },
         {
-            "src": "controller.js",
+            "src": "bin/www",
             "use": "@vercel/node"
         }
     ],
