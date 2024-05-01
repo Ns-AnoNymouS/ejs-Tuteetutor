@@ -34,9 +34,11 @@ class Database {
         hod = await this.hod.findOne({ [key]: email });
         faculty = await this.faculty.findOne({ [key]: email });
         admin = await this.admin.findOne({ [key]: email });
-        if (student || hod || faculty || admin) {
-            return true;
-        } else {
+        if(student) return 'student';
+        else if(hod) return 'hod';
+        else if(faculty) return 'faculty';
+        else if(admin) return 'admin';
+        else {
             return false;
         }
     }
@@ -234,6 +236,49 @@ class Database {
             console.error(err)
             throw err;
         }
+    }
+
+    async deleteStudent(emails){
+        try{
+            const emailArray = emails.split(',');
+            await this.student_collection.deleteMany({ email: { $in: emailArray } })
+            return true;
+        }
+        catch(err){
+            console.error(err)
+            throw err;
+        }
+    }
+
+    async updateStudent(email, newUsername, newPassword) {
+        try {
+            const updateFields = {};
+            if (newUsername) {
+                updateFields.username = newUsername;
+            }
+            if (newPassword) {
+                updateFields.password = newPassword;
+            }
+            const result = await this.student_collection.updateOne({ 'email': email }, { $set: updateFields });
+            return true;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    }
+    
+    async insertFacultyData(email,course,section,department,year,statusFaculty,password,username){
+        let details = {
+            email: email,
+            course: course,
+            section: section,
+            department: department,
+            year: year,
+            status: statusFaculty,
+            password: password,
+            username: username
+        }
+        await this.faculty.insertOne(details)
     }
 
     async connect() {

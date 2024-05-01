@@ -45,8 +45,8 @@
           <div class="links">
             <div class="link"><a href="/admin/collections/<%= collections[i].name %>"><%= collections[i].name %></a></div>
             <div class="actions">
-              <div class="action add-group"><a href="#">Add</a></div>
-              <div class="action change-group"><a href="#">Change</a></div>
+              <div class="action add-group"><a href="/admin/collections/<%= collections[i].name %>/add">Add</a></div>
+              <div class="action change-group"><a href="/admin/collections/<%= collections[i].name %>/update">Change</a></div>
             </div>
           </div>
           <% } %>
