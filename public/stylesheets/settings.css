@@ -154,6 +154,68 @@ body {
     display: none;
 }
 
+.full {
+    display: none;
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* backdrop-filter: blur(5px); */
+    z-index: 3;
+    left: 0px;
+    top: 0px;
+}
+
+.confirmation {
+    display: flex;
+    overflow: hidden;
+    transition: all 0.1s ease-in;
+    flex-direction: column;
+    justify-content: center;
+    background-color: black;
+    color: white;
+    text-align: center;
+    width: 0;
+    height: 0;
+    border-radius: 5px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.buttons {
+    display: flex;
+    width: 100%;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+}
+
+.yes,
+.no {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    width: 50px;
+    margin: 0px 10px;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.yes {
+    background-color: red;
+    color: #fff;
+}
+
+a{
+    text-decoration: none;
+}
+
+.no {
+    background-color: green;
+}
+
 nav {
     position: fixed;
     left: 0px;
@@ -202,7 +264,6 @@ nav {
     font-family: sans-serif;
 }
 
-
 .user-profile:hover+#profile-menu {
     height: 130px;
     width: 300px;
@@ -211,7 +272,7 @@ nav {
 
 #profile-menu:hover {
     height: 130px;
-    width: 250px;
+    width: 300px;
     display: block;
 }
 

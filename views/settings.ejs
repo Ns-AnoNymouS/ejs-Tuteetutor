@@ -18,6 +18,19 @@
 </head>
 
 <body>
+    <div class="full">
+        <div class="confirmation">
+            <div class="buttons">
+                Are you sure you wanna Logout?
+            </div>
+            <div class="buttons">
+                <a href="/logout">
+                    <div class="yes">Yes</div>
+                </a>
+                <div class="no">No</div>
+            </div>
+        </div>
+    </div>
     <div class="sidebar" id="side">
         <div class="top">
             <ul>
@@ -93,7 +106,7 @@
                             </li>
                         </a>
                         <hr>
-                        <li>
+                        <li id="logout">
                             <i class="fa-solid fa-arrow-right-from-bracket"></i>
                             <span class="nav-item">Logout</span>
                         </li>
@@ -192,11 +205,11 @@
             document.getElementById('editCoursesBtn').addEventListener('click', function () {
                 window.location.href = '/courses';
             });
-            
+
             document.getElementById('logout-button').addEventListener('click', function () {
                 window.location.href = '/logout';
             });
-            
+
         </script>
         <script src="settings.js"></script>
         <script src="javascripts/home.js" type="module"></script>
