@@ -26,7 +26,8 @@ router.post("/addFaculty", authMiddleware, authorizedMiddleware, async (req,res)
     const { email, department, section, year } = req.body;
     let type = await HODModel.addFaculty(email, req.session.course, section, department, year);
     if (type == 'true'){
-        return res.redirect('/facultyStatus');
+        res.redirect('/facultyStatus');
+        return await OtpModel.sendSignupRequestMail(email, req.session.course, section, department, year);
     }
     res.render('addFaculty', { 'username': req.session.username, 'email': req.session.email, 'error': type});
 });
