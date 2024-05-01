@@ -133,7 +133,7 @@
             <td><%= item.email %></td>
             <td><%= item.status %></td>
             <td>
-              <button class="action-btn update-btn" data-id=<%= item.email %>>Update</button>
+              <a href="/updateFaculty/<%= item.email %>" style="text-decoration: none; color: white;"><button class="action-btn update-btn" data-id=<%= item.email %>>Update</button></a>
               <button class="action-btn delete-btn" data-id=<%= item.email %>>Delete</button>
             </td>
           </tr>

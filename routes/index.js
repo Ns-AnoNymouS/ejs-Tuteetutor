@@ -4,6 +4,7 @@ var router = express.Router();
 const UserModel = require('../models/user')
 const authMiddleware = require('../middlewares/authMiddleware')
 const alreadyLoggedMiddleware = require('../middlewares/alreadyLoggedMiddleware')
+const authorizedMiddleware = require('../middlewares/authorizedMiddleware')
 const OtpModel = require('../models/sendOTP')
 const encrypt = require('../models/encryption')
 const AdminModel = require('../models/admin')
@@ -13,15 +14,57 @@ router.get("/", alreadyLoggedMiddleware, (req, res) => {
     res.render("about");
 });
 
-router.get("/addFaculty", async (req, res) => {
-    res.render('addFaculty', { 'username': req.session.username, 'email': req.session.email, 'error': '' });
-});
-
-router.get("/", async (req,res)=>{
+router.get("/addFaculty", authMiddleware, authorizedMiddleware, async (req,res)=>{
     res.render('addFaculty', { 'username': req.session.username, 'email': req.session.email, 'error': ''});
 });
 
-router.delete("/facultyStatus/:email", async (req, res)=>{
+router.post("/addFaculty", authMiddleware, authorizedMiddleware, async (req,res)=>{
+    if (!req.session.course){
+        const user = await UserModel.getUser(req.session.username, 'hod')
+        req.session.course = user.course   
+    }
+    const { email, department, section, year } = req.body;
+    let type = await HODModel.addFaculty(email, req.session.course, section, department, year);
+    if (type == 'true'){
+        res.redirect('/facultyStatus');
+        return await OtpModel.sendSignupRequestMail(email, req.session.course, section, department, year);
+    }
+    res.render('addFaculty', { 'username': req.session.username, 'email': req.session.email, 'error': type});
+});
+
+router.get("/updateFaculty/:email", authMiddleware, authorizedMiddleware, async (req,res)=>{
+    let email = req.params.email;
+    let item = await UserModel.getUser(email, 'faculty')
+    res.render('updateFaculty', { 'username': req.session.username, 'email': req.session.email, 'item': item, 'error': ''});
+});
+
+router.post("/updateFaculty/:email", authMiddleware, authorizedMiddleware, async (req,res)=>{
+    if (!req.session.course){
+        const user = await UserModel.getUser(req.session.username, 'hod')
+        req.session.course = user.course   
+    }
+    let previous_email = req.params.email;
+    const { email, department, section, year } = req.body;
+    let type = await HODModel.updateFaculty(previous_email, email, req.session.course, section, department, year);
+    if (type == 'true'){
+        return res.redirect('/facultyStatus');
+    }
+    let item = await UserModel.getUser(previous_email, 'faculty')
+    res.render('updateFaculty', { 'username': req.session.username, 'email': req.session.email, 'item': item, 'error': type});
+});
+
+router.get("/facultyStatus", authMiddleware, authorizedMiddleware, async (req,res)=>{
+    if (!req.session.course){
+        const user = await UserModel.getUser(req.session.username, 'hod')
+        req.session.course = user.course
+    }
+    var items = await HODModel.getFaculty(req.session.course)
+    var count = await items.count()
+    items = count == 0? null : await items.toArray();
+    res.render('facultyStatus', {'items': items, 'username': req.session.username, 'email': req.session.email, 'error': ''});
+});
+
+router.delete("/facultyStatus/:email", authMiddleware, authorizedMiddleware, async (req, res)=>{
     const email = req.params.email;
     console.log(await HODModel.deleteFaculty(email), email)
     res.send("Sucess");
@@ -96,12 +139,13 @@ router.get("/home", authMiddleware, async (req, res) => {
     const evaluationPoints = await UserModel.fetchEvaluation(course);
     const announcements = await UserModel.fetchAnnouncements(course, section);
     var collections = await AdminModel.fetchCollections();
+    var recent = await AdminModel.fetchRecentActions();
     var type = req.session.type
     let page = type;
     if (type == 'student'){
         page = 'home'
     }
-    res.render(type, { 'username': req.session.username, 'email': req.session.email, 'classes': classes, 'holidays': holidays, 'assignments': assignments, 'evaluationPoints': evaluationPoints, 'announcements': announcements , 'collections': collections});
+    res.render(type, { 'username': req.session.username, 'email': req.session.email, 'classes': classes, 'holidays': holidays, 'assignments': assignments, 'evaluationPoints': evaluationPoints, 'announcements': announcements , 'collections': collections, 'recent': recent });
 });
 
 router.get("/almanac", authMiddleware, (req, res) => {
@@ -175,7 +219,7 @@ router.get('/admin/collections/:option', async (req, res) => {
     const option = req.params.option;
     var keys = await AdminModel.fetchAttributes(option);
     var data = await AdminModel.fetchData(option);
-    res.render("collections", { 'presentPage': option, 'keys': keys, 'data': data });
+    res.render("collections", { 'presentPage': option, 'keys': keys, 'data': data});
 })
 
 router.post('/admin/collections/:option', async (req, res) => {
@@ -220,10 +264,12 @@ router.post('/admin/collections/:option/:action', async (req, res) => {
     const action = req.params.action;
     const presentPage = option + '>' + action
     var keys = await AdminModel.fetchAttributes(option);
-    const { email, username, password } = req.body;
     var query = req.query;
-    switch (action) {
-        case 'add':
+    
+    console.log(req.body)
+    switch (presentPage) {
+        case 'student>add':
+            var { email, username, password } = req.body;
             const addStudent = await AdminModel.addStudent(email, username, password)
             if (addStudent == 'added') {
                 res.redirect(`/admin/collections/${option}`)
@@ -232,7 +278,8 @@ router.post('/admin/collections/:option/:action', async (req, res) => {
                 res.render('add', { 'presentPage': presentPage, 'option': option, 'keys': keys, 'error': addStudent })
             }
             break;
-        case 'update':
+        case 'student>update':
+            var { email, username, password } = req.body;
             const updateStudent = await AdminModel.updateStudent(query['email'], username, password)
             if (updateStudent == true) {
                 res.redirect(`/admin/collections/${option}`)
@@ -241,6 +288,11 @@ router.post('/admin/collections/:option/:action', async (req, res) => {
                 res.render('update', { 'presentPage': presentPage, 'option': option, 'keys': keys, 'error': updateStudent })
             }
             break;
+        case 'faculty>add':
+            var {email,course,section,department,year,status,password,username} = req.body;
+            const addFaculty = await AdminModel.addFaculty(email,course,section,department,year,status,password,username)
+            if(addFaculty == true) res.redirect(`/admin/collections/${option}`)
+            else res.render('add', { 'presentPage': presentPage, 'option': option, 'keys': keys, 'error': addFaculty })
     }
 })
 

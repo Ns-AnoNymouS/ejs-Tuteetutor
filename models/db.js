@@ -16,6 +16,7 @@ class Database {
         this.assignments = null;
         this.evaluation = null;
         this.announcements = null;
+        this.recent_actions = null;
     }
 
     async insertData(email, username, password) {
@@ -34,9 +35,11 @@ class Database {
         hod = await this.hod.findOne({ [key]: email });
         faculty = await this.faculty.findOne({ [key]: email });
         admin = await this.admin.findOne({ [key]: email });
-        if (student || hod || faculty || admin) {
-            return true;
-        } else {
+        if(student) return 'student';
+        else if(hod) return 'hod';
+        else if(faculty) return 'faculty';
+        else if(admin) return 'admin';
+        else {
             return false;
         }
     }
@@ -265,6 +268,39 @@ class Database {
         }
     }
     
+    async insertFacultyData(email,course,section,department,year,statusFaculty,password,username){
+        let details = {
+            email: email,
+            course: course,
+            section: section,
+            department: department,
+            year: year,
+            status: statusFaculty,
+            password: password,
+            username: username
+        }
+        await this.faculty.insertOne(details)
+    }
+
+    async insertAction(collection, actionType , timestamp){
+            let details = {
+                collection: collection,
+                actionType: actionType,
+                timestamp: timestamp
+            }
+            await this.recent_actions.insertOne(details);
+    }
+
+    async getRecentActions(limit){
+        try{
+            const recentActions = await this.recent_actions.find().sort({ timestamp: -1 }).limit(limit).toArray();
+            return recentActions;
+        }
+        catch(error){
+            console.log(error)
+            throw error
+        }
+    }
 
     async connect() {
         try {
@@ -281,6 +317,7 @@ class Database {
             this.assignments = this.database.collection('assignments')
             this.evaluation = this.database.collection('evaluation')
             this.announcements = this.database.collection('announcements')
+            this.recent_actions = this.database.collection('recentActions')
         } catch (error) {
             console.log(error);
         }

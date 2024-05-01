@@ -2,25 +2,25 @@
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" href="/stylesheets/adminNav.css">
-    <link rel="stylesheet" href="/stylesheets/add.css">
-    <%- include("partials/header.ejs") %>
+  <link rel="stylesheet" href="/stylesheets/adminNav.css">
+  <link rel="stylesheet" href="/stylesheets/add.css">
+  <%- include("partials/header.ejs") %>
 </head>
 
 <body>
     <%- include("partials/loading.ejs") %>
         <%- include("partials/adminNav.ejs") %>
             <%- include("partials/adminPageLink.ejs") %>
-            <h2>Change <%= option %>
-            </h2>
-            <% if (error) { %>
-                <div class="messageBlock">
-                    <p id="message">
-                        <%= error %>
-                    </p>
-                </div>
-                <% } %>
             <form method="post" id="addForm">
+                <h2>Change <%= option %>
+                </h2>
+                <% if (error) { %>
+                    <div class="messageBlock">
+                        <p id="message">
+                            <%= error %>
+                        </p>
+                    </div>
+                    <% } %>
                 <table>
                     <thead>
                         <% for(var i=1;i < keys.length;i++){%>
@@ -44,4 +44,5 @@
                 <button id="saveButton" type="submit">Save</button>
             </form>
 </body>
+
 </html>
