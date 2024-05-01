@@ -14,29 +14,31 @@
                 <div class="body">
                     <div class="heading">
                         <h2>Select <%= presentPage %> to change</h2>
-                        <button><a href="/admin/collections/<%=presentPage%>/add">Add <%= presentPage %></a></button>
+                        <button id="add"><a href="/admin/collections/<%=presentPage%>/add">Add <%= presentPage %>
+                                    </a></button>
                     </div>
                     <div class="options">
-                        <h2>Action:</h2>
-                        <form method="POST">
-                        <select id="dropdown" name="action" id="form">
-                            <option value="--------">--------</option>
-                            <option value="Delete" href="">Delete selected</option>
-                        </select>
-                        <button id="goButton">Go</button>
-                        <input type="hidden" id="selectedEmails" name="emails">
+                        <h3>Action:</h3>
+                        <form method="POST" id="formID">
+                            <select id="dropdown" name="action" id="form">
+                                <option value="--------">--------</option>
+                                <option value="Delete" href="">Delete selected</option>
+                            </select>
+                            <button id="goButton">Go</button>
+                            <input type="hidden" id="selectedEmails" name="emails">
                         </form>
                         <div id="selectedCount"></div>
                         <div class="data">
                             <table>
                                 <thead>
                                     <tr>
-                                        <td><input type="checkbox" id="selectAll"></td>
+                                        <th><input type="checkbox" id="selectAll"></th>
+                                        <th></th>
                                         <% for(var i=1; i< keys.length;i++) { %>
                                             <% if(keys[i] !='password' ) {%>
-                                                <td>
+                                                <th>
                                                     <%= keys[i] %>
-                                                </td>
+                                                </th>
                                                 <% } %>
                                                     <% } %>
                                     </tr>
@@ -44,7 +46,8 @@
                                 <tbody>
                                     <% for(var i=0;i< data.length; i++){ %>
                                         <tr>
-                                            <td><input type="checkbox" class="selectRow" data-email="<%= data[i].email %>"></td>
+                                            <td><input type="checkbox" class="selectRow"
+                                                    data-email="<%= data[i].email %>"></td>
                                             <td><button><a
                                                         href="/admin/collections/<%=presentPage%>/update?<%= Object.entries(data[i]).filter(([key, value]) => key !== 'password').map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`).join('&') %>">Edit</a></button>
                                             </td>
@@ -57,14 +60,12 @@
                                                         <% } %>
                                         </tr>
                                         <% } %>
-                                            <tr>
-                                                <td>
-                                                    <%= data.length %>
-                                                        <%= presentPage %>
-                                                </td>
-                                            </tr>
                                 </tbody>
                             </table>
+                            <div id="totalCount">
+                                <%= data.length %>
+                                    <%= presentPage %>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -94,9 +95,9 @@
                         selectedCountElement.textContent = selectedCount + ' of ' + totalCount + ' selected';
                     }
 
-                    document.getElementById('goButton').addEventListener('click', function() {
+                    document.getElementById('goButton').addEventListener('click', function () {
                         const selectedEmails = [];
-                        document.querySelectorAll('.selectRow:checked').forEach(function(checkbox) {
+                        document.querySelectorAll('.selectRow:checked').forEach(function (checkbox) {
                             selectedEmails.push(checkbox.dataset.email);
                         });
                         document.getElementById('selectedEmails').value = selectedEmails.join(',');
