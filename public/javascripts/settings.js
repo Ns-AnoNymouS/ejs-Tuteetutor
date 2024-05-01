@@ -1,35 +1,16 @@
-// document.getElementById('side').addEventListener("mouseover", (event) => {
-//     event.preventDefault();
-//     let btn = document.querySelector('#side');
-//     let sidebar = document.querySelector('.sidebar');
+document.getElementById('side').addEventListener("mouseover", (event) => {
+    event.preventDefault();
+    let btn = document.querySelector('#side');
+    let sidebar = document.querySelector('.sidebar');
 
-//     btn.onmouseover = function () {
-//         sidebar.classList.toggle('active')
-//     };
+    btn.onmouseover = function () {
+        sidebar.classList.toggle('active')
+    };
 
-//     btn.addEventListener("mouseout", () => {
-//         sidebar.classList.remove('active');
-//     });
-// }) 
-
-
-function uploadImage() {
-    document.querySelector('input[type="file"]').click();
-  }
-
-  function previewImage(event) {
-    const container = document.getElementById('imageContainer');
-    const file = event.target.files[0];
-    const reader = new FileReader();
-
-    reader.onload = function() {
-      const img = container.querySelector('img');
-      img.src = reader.result;
-    }
-
-    reader.readAsDataURL(file);
-  }
-
+    btn.addEventListener("mouseout", () => {
+        sidebar.classList.remove('active');
+    });
+}) 
 
 
 // document.addEventListener('DOMContentLoaded', function() {

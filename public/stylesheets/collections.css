@@ -1,0 +1,57 @@
+.body {
+    margin: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.heading {
+    display: flex;
+}
+
+button {
+    background-color: rgb(117, 117, 246);
+    color: white;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    margin: 1rem;
+    font-size: 1rem;
+}
+
+#add {
+    margin: 0;
+    margin-left: 1rem;
+}
+
+#dropdown {
+    width: 10rem;
+}
+
+#selectedCount{
+    margin-bottom: 1rem;
+}
+
+#totalCount {
+    margin-top: 1rem;
+}
+
+table {
+    border-collapse: separate;
+    width: 100%;
+    font-size: 1.2rem;
+}
+
+thead tr th{
+    padding: 10px;
+}
+
+th,
+td {
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+th {
+    background-color: #f2f2f2;
+}

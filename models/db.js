@@ -16,6 +16,7 @@ class Database {
         this.assignments = null;
         this.evaluation = null;
         this.announcements = null;
+        this.recent_actions = null;
     }
 
     async insertData(email, username, password) {
@@ -284,6 +285,26 @@ class Database {
         await this.faculty.insertOne(details)
     }
 
+    async insertAction(collection, actionType , timestamp){
+            let details = {
+                collection: collection,
+                actionType: actionType,
+                timestamp: timestamp
+            }
+            await this.recent_actions.insertOne(details);
+    }
+
+    async getRecentActions(limit){
+        try{
+            const recentActions = await this.recent_actions.find().sort({ timestamp: -1 }).limit(limit).toArray();
+            return recentActions;
+        }
+        catch(error){
+            console.log(error)
+            throw error
+        }
+    }
+
     async connect() {
         try {
             await this.client.connect();
@@ -299,6 +320,7 @@ class Database {
             this.assignments = this.database.collection('assignments')
             this.evaluation = this.database.collection('evaluation')
             this.announcements = this.database.collection('announcements')
+            this.recent_actions = this.database.collection('recentActions')
         } catch (error) {
             console.log(error);
         }

@@ -117,7 +117,7 @@
                         </div>
                         <p>Click on the image to update</p>
                     </div>
-                    <form action="" method="post" id="update">
+                    <form action="/path-to-your-handler" method="post" id="update">
                         <div class="update-container">
                             <div class="cont">
                                 <label for="Username">Username:</label>
@@ -131,7 +131,7 @@
                                 <label for="confimpass">Confirm Password:</label>
                                 <input type="password" id="confimpass" name="confimpass">
                             </div>
-                            <div class="btn-submit" id="submitBtn">Submit</div>
+                            <button type="submit" class="btn-submit" id="submitBtn">Submit</button>
                         </div>
                     </form>
 
@@ -141,7 +141,8 @@
                         <h2 class="heading">Edit Courses</h2>
                         <p class="content">Manage your enrolled courses:</p>
                         <div class="box1">
-                            <div><img src="../images/Online-courses.jpg" alt="Edit courses" class="coursesimg"></div>
+                            <div><img src="../images/Online-courses.jpg" alt="Edit courses" class="coursesimg">
+                            </div>
                             <div class="btn-submit" id="editCoursesBtn">Edit Courses<i
                                     class="fa-solid fa-diamond-turn-right"></i></div>
 
@@ -153,9 +154,12 @@
                         <div class="box2">
                             <div class="profile1">
                                 <div class="pic">.</div>
-                                <p>Username</p>
+                                <p>
+                                    <%= username %>
+                                </p>
                             </div>
-                            <div class="btn-submit">Logout<i class="fa-solid fa-right-from-bracket"></i></i></div>
+                            <div class="btn-submit" id="logout-button">Logout<i
+                                    class="fa-solid fa-right-from-bracket"></i></i></div>
                         </div>
                     </div>
                 </div>
@@ -163,23 +167,30 @@
         </div>
         <script>
 
-            
-
-            document.getElementById("submitBtn").addEventListener("click", function () {
-                var username = document.getElementById("username").value;
-                var password = document.getElementById("password").value;
-                var confirmPassword = document.getElementById("confirmpass").value;
-
-                if (password !== confirmPassword) {
-                    alert("Passwords do not match!");
-                    return;
-                }
-
-                console.log("Username: " + username);
-                console.log("Password: " + password);
-
-                document.getElementById("update").submit();
+            document.getElementById('editCoursesBtn').addEventListener('click', function () {
+                window.location.href = '/courses';
             });
+
+            document.getElementById('logout-button').addEventListener('click', function () {
+                window.location.href = '/logout';
+            });
+
+
+
+            document.addEventListener("DOMContentLoaded", function () {
+                const form = document.getElementById('update');
+                form.addEventListener('submit', function (event) {
+                    const username = document.getElementById('username').value;
+                    const password = document.getElementById('password').value;
+                    const confirmPassword = document.getElementById('confimpass').value;
+
+                    if (!username || !password || password !== confirmPassword) {
+                        alert("Please check your entries.");
+                        event.preventDefault();
+                    }
+                });
+            });
+
 
             function uploadImage() {
 
@@ -192,14 +203,22 @@
                 const reader = new FileReader();
 
                 reader.onload = function () {
-                    const img = container.querySelector('img');
-                    img.src = reader.result;
+                    const overlay = container.querySelector('.overlay');
+                    overlay.style.backgroundImage = 'url(' + reader.result + ')';
+
+                    const picDiv = document.querySelector('.profile1 .pic');
+                    picDiv.style.backgroundImage = 'url(' + reader.result + ')';
                 }
 
                 reader.readAsDataURL(file);
-
             }
+
+            document.querySelector('.overlay').addEventListener('click', function () {
+                document.querySelector('.profile-container input[type="file"]').click();
+            });
         </script>
+        <script src="settings.js"></script>
+        <script src="javascripts/home.js" type="module"></script>
 </body>
 
 </html>
