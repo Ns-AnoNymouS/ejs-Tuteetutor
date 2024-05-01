@@ -152,7 +152,7 @@ class Admin{
         else{
             password = encrypt(password);
         }
-        let sts = await db.updateStudent(course,username,email,password,year);
+        let sts = await db.updateHod(course,username,email,password,year);
         await this.logAction('hod','updated');
         return sts;
     }

@@ -346,7 +346,7 @@ router.post('/admin/collections/:option/:action', async (req, res) => {
             break;
         case 'hod>update':
             var {course,username,email,password,year} = req.body;
-            const updateHod = await AdminModel.updateFaculty(query['email'],course,section,department,year,statusFaculty,password,username);
+            const updateHod = await AdminModel.updateHod(course,username,query['email'],password,year);
             if (updateHod == true) {
                 res.redirect(`/admin/collections/${option}`)
             }

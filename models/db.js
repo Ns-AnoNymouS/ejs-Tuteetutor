@@ -309,7 +309,7 @@ class Database {
             if(username){
                 updateFields.username = username;
             }
-            const result = await this.student_collection.updateOne({ 'email': email }, { $set: updateFields });
+            const result = await this.faculty.updateOne({ 'email': email }, { $set: updateFields });
             return true;
         } catch (error) {
             console.log(error);
@@ -343,7 +343,7 @@ class Database {
             if(username){
                 updateFields.username = username;
             }
-            const result = await this.student_collection.updateOne({ 'email': email }, { $set: updateFields });
+            const result = await this.hod.updateOne({ 'email': email }, { $set: updateFields });
             return true;
         } catch (error) {
             console.log(error);
