@@ -139,7 +139,7 @@ class User {
 
     async fetchAssignments(course, section){
         var assignments = await db.getAssignments(course,section);
-        if(assignments.length == 0) return 'No Assignments';
+        // if(assignments.length == 0) return 'No Assignments';
         return assignments;
     }
 

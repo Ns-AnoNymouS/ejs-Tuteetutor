@@ -2,16 +2,52 @@ var express = require('express');
 var router = express.Router();
 
 const UserModel = require('../models/user')
+const FacultyModel = require('../models/faculty')
 const authMiddleware = require('../middlewares/authMiddleware')
 const alreadyLoggedMiddleware = require('../middlewares/alreadyLoggedMiddleware')
 const authorizedMiddleware = require('../middlewares/authorizedMiddleware')
+const facultyMiddleware = require('../middlewares/facultyMiddleware')
 const OtpModel = require('../models/sendOTP')
 const encrypt = require('../models/encryption')
 const AdminModel = require('../models/admin')
-const HODModel = require('../models/hod')
+const HODModel = require('../models/hod');
+const faculty = require('../models/faculty');
 
 router.get("/", alreadyLoggedMiddleware, (req, res) => {
     res.render("about");
+});
+
+router.get("/assignments", authMiddleware, async (req,res)=>{
+    let user = await UserModel.getUser(req.session.username, req.session.type)
+    let assignments = []
+    if (req.session.type == 'student'){
+        let courses = user.courses
+        for (const key in courses) {
+            let new_assignments = await UserModel.fetchAssignments(key, courses[key])
+            assignments = [...assignments, ...new_assignments]
+        }
+    }
+    else {
+        assignments = await UserModel.fetchAssignments(user.course, user.section)
+    }
+    res.render('assignment', { 'username': req.session.username, 'email': req.session.email, 'assignments': assignments, 'type': req.session.type, 'error': ''});
+});
+
+router.get("/addAssignment", authMiddleware, facultyMiddleware, async (req,res)=>{
+    res.render('addAssignment', { 'username': req.session.username, 'email': req.session.email, 'type': req.session.type, 'error': ''});
+});
+
+router.post("/addAssignment", authMiddleware, facultyMiddleware, async (req,res)=>{
+    var { description, marks, link, section, date} = req.body;
+    const user = await UserModel.getUser(req.session.username, req.session.type)
+    if (req.session.type != 'hod'){
+        section = user.section
+    }
+    
+
+    await FacultyModel.addAssignment(description, marks, user.course, section, link, date)
+    res.redirect("/home");
+    // res.render('addAssignment', { 'username': req.session.username, 'email': req.session.email, 'type': req.session.type, 'error': ''});
 });
 
 router.get("/addFaculty", authMiddleware, authorizedMiddleware, async (req,res)=>{

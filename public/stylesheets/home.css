@@ -359,7 +359,7 @@ nav {
 
 .small-card {
     color: white;
-    padding: 0px;
+    padding: 10px;
     width: 300px;
     height: 150px;
     border-radius: 10px;
@@ -529,7 +529,7 @@ input[type="search"] {
     font-size: 20px;
     font-family: "Ubuntu", sans-serif;
     text-align: center;
-    margin-top: 1rem;
+    /* margin-top: 1rem; */
 }
 
 .header {
