@@ -117,7 +117,7 @@
                         </div>
                         <p>Click on the image to update</p>
                     </div>
-                    <form action="/path-to-your-handler" method="post" id="update">
+                    <form action="/updatePassword" method="post" id="update">
                         <div class="update-container">
                             <div class="cont">
                                 <label for="Username">Username:</label>
@@ -175,8 +175,6 @@
                 window.location.href = '/logout';
             });
 
-
-
             document.addEventListener("DOMContentLoaded", function () {
                 const form = document.getElementById('update');
                 form.addEventListener('submit', function (event) {
@@ -191,12 +189,10 @@
                 });
             });
 
-
             function uploadImage() {
-
                 document.querySelector('input[type="file"]').click();
             }
-
+            
             function previewImage(event) {
                 const container = document.getElementById('imageContainer');
                 const file = event.target.files[0];
@@ -209,13 +205,14 @@
                     const picDiv = document.querySelector('.profile1 .pic');
                     picDiv.style.backgroundImage = 'url(' + reader.result + ')';
                 }
-
                 reader.readAsDataURL(file);
             }
 
             document.querySelector('.overlay').addEventListener('click', function () {
                 document.querySelector('.profile-container input[type="file"]').click();
             });
+
+
         </script>
         <script src="settings.js"></script>
         <script src="javascripts/home.js" type="module"></script>
