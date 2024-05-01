@@ -127,6 +127,7 @@
         <button class="action-btn add-btn">Add</button>
       </a>
       <% } %>
+      <% if (assignments.length != 0) {%>
       <table>
         <thead>
           <tr>
@@ -151,6 +152,9 @@
           <% }); %>
         </tbody>
       </table>
+      <% } else if (type == "student"){%>
+        <h2>No Assignments Available</h2>
+      <% }%>
       <script src="javascripts/home.js" type="module"></script>
     </div>
   </div>

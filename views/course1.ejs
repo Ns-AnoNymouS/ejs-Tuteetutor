@@ -1,98 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <link rel="stylesheet" href="/stylesheets/style.css">
-    <link rel="stylesheet" href="/stylesheets/course.css">
-    <%- include("partials/header.ejs") %>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <link rel="stylesheet" href="/stylesheets/course.css">
+  <%- include("partials/header.ejs") %>
 </head>
 
 <body>
-    <div class="box">
-        <div class="box2">
-            <div class="ibox11" id="div4">
-                <div class="ibox1">
-                    <img class="logo" src="images/logo.png">
-                    <h2 id="logo-heading">TuteeTutor</h2>
-                </div>
-                <h1 class="course-heading">Select your courses</h1>
-                <div class="container1">
-                    <div class="ccn">
-                        <div class="sub"><label><input type="checkbox">
-                                <a id="sub1">CCN1</a>
-                            </label>
-                        </div>
-                        <div class="sub"><label><input type="checkbox">
-                                <a id="sub2">CCN2</a>
-                            </label>
-                        </div>
-                        <div class="sub"><label><input type="checkbox">
-                                <a id="sub3">CCN3</a>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="ai">
-                        <div class="sub"><label><input type="checkbox">
-                                <a id="sub4">AI1</a>
-                            </label>
-                        </div>
-                        <div class="sub"><label><input type="checkbox">
-                                <a id="sub5">AI2</a>
-                            </label>
-                        </div>
-                        <div class="sub"><label><input type="checkbox">
-                                <a id="sub6">AI3</a>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="container2">
-                    <div class="toc">
-                        <div class="sub"><label><input type="checkbox">
-                                <a id="sub7">TOC1</a>
-                            </label>
-                        </div>
-                        <div class="sub"><label><input type="checkbox">
-                                <a id="sub8">TOC2</a>
-                            </label>
-                        </div>
-                        <div class="sub"><label><input type="checkbox">
-                                <a id="sub9">TOC3</a>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="acs">
-                        <div class="sub"><label><input type="checkbox">
-                                <a id="sub9">ACS1</a>
-                            </label>
-                        </div>
-                        <div class="sub"><label><input type="checkbox">
-                                <a id="sub10">ACS2</a>
-                            </label>
-                        </div>
-                        <div class="sub"><label><input type="checkbox">
-                                <a id="sub11">ACS3</a>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="extra">
-                    <div class="sub"><label><input type="checkbox">
-                            <a id="sub12">SE</a>
-                        </label>
-                    </div>
-                    <div class="sub"><label><input type="checkbox">
-                            <a id="sub13">QIC</a>
-                        </label>
-                    </div>
-                    <div class="sub"><label><input type="checkbox">
-                            <a id="sub8">IAE</a>
-                        </label>
-                    </div>
-                </div>
-                <div><button class="btn-5" onclick="submit()">Submit</button></div>
+  <div class="box">
+    <div class="box2">
+      <form method="get">
+        <div class="ibox11" id="div4">
+          <div class="ibox1">
+            <img class="logo" src="images/logo.png">
+            <h2 id="logo-heading">TuteeTutor</h2>
+          </div>
+          <h1 class="course-heading">Select your courses</h1>
+          <div class="container1">
+            <div class="ccn">
+              <div class="sub"><label><input type="checkbox" name="CCN" value="1">
+                  <a id="sub1">CCN - 1</a>
+                </label>
+              </div>
+              <div class="sub"><label><input type="checkbox" name="CCN" value="2">
+                  <a id="sub2">CCN - 2</a>
+                </label>
+              </div>
+              <div class="sub"><label><input type="checkbox" name="CCN" value="3">
+                  <a id="sub3">CCN - 3</a>
+                </label>
+              </div>
             </div>
+            <div class="ai">
+              <div class="sub"><label><input type="checkbox" name="AI" value="1">
+                  <a id="sub4">AI1</a>
+                </label>
+              </div>
+              <div class="sub"><label><input type="checkbox" name="AI" value="2">
+                  <a id="sub5">AI2</a>
+                </label>
+              </div>
+              <div class="sub"><label><input type="checkbox" name="AI" value="3">
+                  <a id="sub6">AI3</a>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="container2">
+            <div class="toc">
+              <div class="sub"><label><input type="checkbox" name="TOC" value="1">
+                  <a id="sub7">TOC1</a>
+                </label>
+              </div>
+              <div class="sub"><label><input type="checkbox" name="TOC" value="2">
+                  <a id="sub8">TOC2</a>
+                </label>
+              </div>
+              <div class="sub"><label><input type="checkbox" name="TOC" value="3">
+                  <a id="sub9">TOC3</a>
+                </label>
+              </div>
+            </div>
+            <div class="acs">
+              <div class="sub"><label><input type="checkbox" name="ACS" value="1">
+                  <a id="sub9">ACS1</a>
+                </label>
+              </div>
+              <div class="sub"><label><input type="checkbox" name="ACS" value="2">
+                  <a id="sub10">ACS2</a>
+                </label>
+              </div>
+              <div class="sub"><label><input type="checkbox" name="ACS" value="3">
+                  <a id="sub11">ACS3</a>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="extra">
+            <div class="sub"><label><input type="checkbox" name="SE" value="1">
+                <a id="sub12">SE</a>
+              </label>
+            </div>
+            <div class="sub"><label><input type="checkbox" name="QIC" value="1">
+                <a id="sub13">QIC</a>
+              </label>
+            </div>
+            <div class="sub"><label><input type="checkbox" name="IAE" value="1">
+                <a id="sub8">IAE</a>
+              </label>
+            </div>
+          </div>
+          <div><button class="btn-5" type="submit">Submit</button></div>
         </div>
+      </form>
     </div>
-    <script src="javascripts/course.js"></script>
+  </div>
+  </div>
+  <script src="javascripts/course.js"></script>
 </body>
+
 </html>

@@ -45,5 +45,5 @@ function f1(){
 }
 
 function submit(){
-    window.location.href = 'home';
+    // window.location.href = 'home';
 };

@@ -4,6 +4,8 @@ var router = express.Router();
 const UserModel = require('../models/user')
 const FacultyModel = require('../models/faculty')
 const authMiddleware = require('../middlewares/authMiddleware')
+const studentMiddleware = require('../middlewares/studentMiddleware')
+const courseMiddleware = require('../middlewares/courseMiddleware')
 const alreadyLoggedMiddleware = require('../middlewares/alreadyLoggedMiddleware')
 const authorizedMiddleware = require('../middlewares/authorizedMiddleware')
 const facultyMiddleware = require('../middlewares/facultyMiddleware')
@@ -17,7 +19,7 @@ router.get("/", alreadyLoggedMiddleware, (req, res) => {
     res.render("about");
 });
 
-router.get("/assignments", authMiddleware, async (req,res)=>{
+router.get("/assignments", authMiddleware, courseMiddleware, async (req,res)=>{
     let user = await UserModel.getUser(req.session.username, req.session.type)
     let assignments = []
     if (req.session.type == 'student'){
@@ -46,8 +48,7 @@ router.post("/addAssignment", authMiddleware, facultyMiddleware, async (req,res)
     
 
     await FacultyModel.addAssignment(description, marks, user.course, section, link, date)
-    res.redirect("/home");
-    // res.render('addAssignment', { 'username': req.session.username, 'email': req.session.email, 'type': req.session.type, 'error': ''});
+    res.redirect("/assignments");
 });
 
 router.get("/addFaculty", authMiddleware, authorizedMiddleware, async (req,res)=>{
@@ -166,7 +167,7 @@ router.post('/signup', alreadyLoggedMiddleware, async function (req, res) {
     }
 })
 
-router.get("/home", authMiddleware, async (req, res) => {
+router.get("/home", authMiddleware, courseMiddleware, async (req, res) => {
     var course = 'AI';
     var section = 2;
     const classes = await UserModel.fetchClasses()
@@ -220,16 +221,28 @@ router.get("/settings", authMiddleware, (req, res) => {
     res.render("settings", { 'username': req.session.username, 'email': req.session.email });
 });
 
-router.get('/courses', (req, res) => {
+router.get('/courses', authMiddleware, studentMiddleware, (req, res) => {
     res.render("course")
 })
 
-router.get('/coursesCSE', (req, res) => {
-    res.render("course1")
+router.get('/coursesCSE', authMiddleware, studentMiddleware, async (req, res) => {
+    if (Object.keys(req.query).length !== 0){
+        await UserModel.updateCourses(req.session.username, req.query)
+        res.redirect("/home")
+    }
+    else {
+        res.render("course1")
+    }
 })
 
-router.get('/coursesECE', (req, res) => {
-    res.render("course2")
+router.get('/coursesECE', authMiddleware, studentMiddleware, async (req, res) => {
+    if (Object.keys(req.query).length !== 0){
+        await UserModel.updateCourses(req.session.username, req.query)
+        res.redirect("/home")
+    }
+    else {
+        res.render("course2")
+    }
 })
 
 router.get('/forgotPassword', (req, res) => {
@@ -261,9 +274,25 @@ router.get('/admin/collections/:option', async (req, res) => {
 router.post('/admin/collections/:option', async (req, res) => {
     const option = req.params.option;
     const { action, emails } = req.body;
-    if (action == 'Delete') {
+    if (action == 'Delete' && option == 'student') {
         const deleteStudent = await AdminModel.deleteStudent(emails);
         if (deleteStudent) {
+            res.redirect(`/admin/collections/${option}`);
+        } else {
+            res.render('error', { message: 'Failed to delete students' });
+        }
+    }
+    else if (action == 'Delete' && option == 'faculty') {
+        const deleteFaculty = await AdminModel.deleteFaculty(emails);
+        if (deleteFaculty) {
+            res.redirect(`/admin/collections/${option}`);
+        } else {
+            res.render('error', { message: 'Failed to delete students' });
+        }
+    }
+    else if (action == 'Delete' && option == 'hod') {
+        const deleteHod = await AdminModel.deleteHod(emails);
+        if (deleteHod) {
             res.redirect(`/admin/collections/${option}`);
         } else {
             res.render('error', { message: 'Failed to delete students' });
@@ -291,6 +320,7 @@ router.get('/admin/collections/:option/:action', async (req, res) => {
             const deleteStudent = await AdminModel.deleteStudent(email);
             res.redirect(`/admin/collections/${option}`);
             break;
+            
     }
 })
 
@@ -327,6 +357,33 @@ router.post('/admin/collections/:option/:action', async (req, res) => {
             const addFaculty = await AdminModel.addFaculty(email,course,section,department,year,status,password,username)
             if(addFaculty == true) res.redirect(`/admin/collections/${option}`)
             else res.render('add', { 'presentPage': presentPage, 'option': option, 'keys': keys, 'error': addFaculty })
+            break;
+        case 'faculty>update':
+            var {email,course,section,department,year,statusFaculty,password,username} = req.body;
+            const updateFaculty = await AdminModel.updateFaculty(query['email'],course,section,department,year,statusFaculty,password,username);
+            if (updateFaculty == true) {
+                res.redirect(`/admin/collections/${option}`)
+            }
+            else {
+                res.render('update', { 'option': option, 'action': action, 'keys': keys, 'error': updateFaculty })
+            }
+            break;
+        case 'hod>add':
+            var {course,username,email,password,year} = req.body;
+            const addHod = await AdminModel.addHod(course,username,email,password,year)
+            if(addHod == true) res.redirect(`/admin/collections/${option}`)
+            else res.render('add', { 'presentPage': presentPage, 'option': option, 'keys': keys, 'error': addHod })
+            break;
+        case 'hod>update':
+            var {course,username,email,password,year} = req.body;
+            const updateHod = await AdminModel.updateHod(course,username,query['email'],password,year);
+            if (updateHod == true) {
+                res.redirect(`/admin/collections/${option}`)
+            }
+            else {
+                res.render('update', { 'option': option, 'action': action, 'keys': keys, 'error': updateHod })
+            }
+            break;
     }
 })
 

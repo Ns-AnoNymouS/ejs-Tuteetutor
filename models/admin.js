@@ -101,6 +101,74 @@ class Admin{
         }
     }
 
+    async deleteFaculty(emails){
+        let sts = await db.deleteFaculty(emails);
+        await this.logAction('faculty','deleted');
+        return true;
+    }
+
+    async updateFaculty(email,course,section,department,year,statusFaculty,password,username){
+        if(password.trim() == ''){
+            password = '';
+        }
+        else{
+            password = encrypt(password);
+        }
+        let sts = await db.updateStudent(email,course,section,department,year,statusFaculty,password,username);
+        await this.logAction('faculty','updated');
+        return sts;
+    }
+
+    async addHod(course,username,email,password,year){
+        email = email.toLowerCase();
+        username = username.toLowerCase();
+        if (email == null || email.trim() === "") {
+            return "Enter email";
+        }
+        else if (username == null || username.trim() === "") {
+            return "Enter username";
+        }
+        else if (password == null || password.trim() === "") {
+            return "Enter password";
+        }
+        else if (email.indexOf("@") === -1 || email.split("@")[1] != "iiits.in") {
+            return "Email Invalid";
+        }
+        let sts = await db.isEmailSignedIn(email)
+        if (sts != false) {
+            return `Email already signed in as ${sts}`;
+        }
+        else {
+            let userSts = await db.isUsernameExist(username)
+            if (userSts) {
+                return userSts;
+            }
+            else {
+                await db.insertHodData(course,username,email,encrypt(password),year)
+                await this.logAction('hod','added');
+                return true;
+            }
+        }
+    }
+
+    async deleteHod(emails){
+        let sts = await db.deleteHod(emails);
+        await this.logAction('hod','deleted');
+        return true;
+    }
+
+    async updateHod(course,username,email,password,year){
+        if(password.trim() == ''){
+            password = '';
+        }
+        else{
+            password = encrypt(password);
+        }
+        let sts = await db.updateHod(course,username,email,password,year);
+        await this.logAction('hod','updated');
+        return sts;
+    }
+
     async logAction(collection, actionType) {
         try {
             const timestamp = new Date();

@@ -90,6 +90,10 @@ class User {
         return `${hours}:${minutes} ${time.part}`;
     }
 
+    async updateCourses(username, courses) {
+        await db.student_collection.updateOne({'username': username}, {'$set': {'courses': courses}})
+    }
+
     async fetchClasses() {
         let date = new Date();
         let day = date.getDay();
