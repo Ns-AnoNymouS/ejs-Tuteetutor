@@ -1,3 +1,13 @@
 <div class="page-link">
-    <p><span><a href="/home">Home</a></span>><span><a href="#">Collections</a></span>><span><a href="/admin/collections/<%=presentPage%>"><%=presentPage%></a></span></p>
+    <p>
+        <span><a href="/home">Home</a></span>
+        <span>></span>
+        <span><a href="#">Collections</a></span>
+        <span>></span>
+        <span><a href="/admin/collections/<%=option%>"><%=option%></a></span>
+        <% if (typeof action !== 'undefined') { %>
+            <span>></span>
+            <a href="/admin/collections/<%=option%>/<%=action%>"><%=action%></a>
+        <% } %>
+    </p>
 </div>
