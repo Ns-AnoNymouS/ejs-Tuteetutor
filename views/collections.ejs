@@ -13,8 +13,8 @@
             <%- include("partials/adminPageLink.ejs") %>
                 <div class="body">
                     <div class="heading">
-                        <h2>Select <%= presentPage %> to change</h2>
-                        <button id="add"><a href="/admin/collections/<%=presentPage%>/add">Add <%= presentPage %>
+                        <h2>Select <%= option %> to change</h2>
+                        <button id="add"><a href="/admin/collections/<%=option%>/add">Add <%= option %>
                                     </a></button>
                     </div>
                     <div class="options">
@@ -49,7 +49,7 @@
                                             <td><input type="checkbox" class="selectRow"
                                                     data-email="<%= data[i].email %>"></td>
                                             <td><button><a
-                                                        href="/admin/collections/<%=presentPage%>/update?<%= Object.entries(data[i]).filter(([key, value]) => key !== 'password').map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`).join('&') %>">Edit</a></button>
+                                                        href="/admin/collections/<%=option%>/update?<%= Object.entries(data[i]).filter(([key, value]) => key !== 'password').map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`).join('&') %>">Edit</a></button>
                                             </td>
                                             <% for(var j=1; j< keys.length;j++) { %>
                                                 <% if(keys[j] !='password' ) {%>
@@ -64,7 +64,7 @@
                             </table>
                             <div id="totalCount">
                                 <%= data.length %>
-                                    <%= presentPage %>
+                                    <%= option %>
                             </div>
                         </div>
                     </div>

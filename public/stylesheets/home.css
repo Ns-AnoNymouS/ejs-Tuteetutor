@@ -317,6 +317,9 @@ nav {
 
 .item2 {
     grid-area: graph;
+    display: flex;
+    flex-direction: column;
+    /* overflow: hidden; */
 }
 
 .item3 {
@@ -403,7 +406,6 @@ nav {
 .item2 {
     grid-column: 1/ span 3;
     background-color: white;
-    display: flex;
     justify-content: center;
     margin-left: 0.7rem;
     border-radius: 10px;
@@ -561,6 +563,31 @@ input[type="search"] {
     text-align: center;
     margin-bottom: 10px;
     font-size: 1.2rem;
+}
+
+.attendance-details {
+    display: flex;
+    flex-direction: column;
+}
+
+iframe {
+    width: 100%;
+    border-bottom: 2px solid black;
+    margin: 0.7rem;
+}
+
+.attendance-heading {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between
+}
+
+.attendance-details button {
+    padding: 0.3rem 1rem;
+    background-color: rgb(248, 238, 219);
+    color: black;
+    font-size: 0.9rem;
+    border-radius: 0.4rem;
 }
 
 .holiday-1 {
