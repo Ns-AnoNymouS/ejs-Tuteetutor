@@ -36,7 +36,7 @@ class Admin{
 
         let sts = await db.isEmailSignedIn(email)
         if (sts) {
-            return "Email already signed in";
+            return `Email already signed in as ${sts}`;
         }
         else {
             let userSts = await db.isUsernameExist(username)
@@ -45,6 +45,7 @@ class Admin{
             }
             else {
                 await db.insertData(email, username, encrypt(password));
+                await this.logAction('student','added');
                 return "added";
             }
         }
@@ -52,6 +53,7 @@ class Admin{
 
     async deleteStudent(emails){
         let sts = await db.deleteStudent(emails);
+        await this.logAction('student','deleted');
         return true;
     }
 
@@ -63,6 +65,7 @@ class Admin{
             password = encrypt(password);
         }
         let sts = await db.updateStudent(email,username,password);
+        await this.logAction('student','updated');
         return sts;
     }
 
@@ -92,8 +95,28 @@ class Admin{
             }
             else {
                 await db.insertFacultyData(email,course,section,department,year,status,encrypt(password),username)
+                await this.logAction('faculty','added');
                 return true;
             }
+        }
+    }
+
+    async logAction(collection, actionType) {
+        try {
+            const timestamp = new Date();
+            await db.insertAction(collection, actionType, timestamp);
+        } catch (error) {
+            console.error('Error logging action:', error);
+        }
+    }
+
+    async fetchRecentActions() {
+        try {
+            const recentActions = await db.getRecentActions(7);
+            return recentActions;
+        } catch (error) {
+            console.error('Error fetching recent actions:', error);
+            return [];
         }
     }
 }

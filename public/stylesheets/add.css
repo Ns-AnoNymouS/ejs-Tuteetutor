@@ -1,13 +1,50 @@
+body{
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  font-size: 1.2rem;
+}
+
 .messageBlock {
-    height: 30px;
-    width: 250px;
-    background-color: rgb(255, 223, 223);
-    font-size: large;
-    border-radius: 5px;
-    text-align: center;
-    border: rgb(206, 2, 2) 1px solid;
-  }
-  
-  #message {
-    color: rgb(200, 2, 2);
-  }
+  height: 30px;
+  width: 250px;
+  background-color: rgb(255, 223, 223);
+  font-size: large;
+  border-radius: 5px;
+  text-align: center;
+  border: rgb(206, 2, 2) 1px solid;
+}
+
+#message {
+  color: rgb(200, 2, 2);
+}
+
+#addForm{
+  margin: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#addForm h2{
+  margin: 1rem;
+  font-size: 1.5rem;
+}
+
+td{
+  margin: 1rem;
+}
+
+input{
+  margin-left: 1rem;
+}
+
+button{
+  background-color: rgb(117, 117, 246);
+  color: white;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  margin: 1rem;
+  font-size: 1rem;
+}
