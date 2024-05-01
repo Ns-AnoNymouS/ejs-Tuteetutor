@@ -18,188 +18,220 @@
 </head>
 
 <body>
-    <div class="sidebar" id="side">
-        <div class="top">
-            <ul>
-                <div>
-                    <li>
-                        <a href="#">
-                            <img src="images/user-profile.webp" alt="user" height="20px" width="20px"
-                                style="padding: 15px;">
-                            <span class="nav-item">Username</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/home">
-                            <i class="fa-regular fa-user icon"></i>
-                            <span class="nav-item">Dashboard</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/timeTable" target="_blank">
-                            <i class="fa-solid fa-list icon"></i>
-                            <span class="nav-item">TimeTable</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/almanac" target="_blank">
-                            <i class="fa-regular fa-calendar icon"></i>
-                            <span class="nav-item">Almanac</span>
-                        </a>
-                    </li>
-                </div>
-            </ul>
-        </div>
-        <div class="user"></div>
-    </div>
-    <div class="main">
-        <nav>
-            <div class="rightnav">
-                <div class="container-logo">
-                    <img src="images/logo.png" alt="TuteeTutor" height="35px" width="35px" style="border-radius: 50%;">
-                    <h2 id="logo-heading">TuteeTutor</h2>
-                </div>
+    <div class="full">
+        <div class="confirmation">
+            <div class="buttons">
+                Are you sure you wanna Logout?
             </div>
-            <div class="leftnav">
-                <div class="search-container">
-                    <button class="icon-button">
-                        <i class="fa-solid fa-magnifying-glass" style="color: #000000;"></i>
-                    </button>
-                    <input type="search" placeholder="Search">
-                </div>
-                <div class="user-profile"
-                    style="color: white; display: flex; align-items: center; justify-content: left; width: 250px; border-left: 1px solid grey;">
-                    <img src="images/profile-img.png" alt="profile-pic" height="50px" width="50px"
-                        style="padding: 0px; border: 1px white solid; border-radius: 10px; margin: 0px 10px;">
+            <div class="buttons">
+                <a href="/logout">
+                    <div class="yes">Yes</div>
+                </a>
+                <div class="no">No</div>
+            </div>
+        </div>
+        <div class="sidebar" id="side">
+            <div class="top">
+                <ul>
                     <div>
-                        <p id="profile-name">
-                            <%= username %>
-                        </p>
-                        <p style="font-family: Arial, Helvetica, sans-serif; font-size: .8rem;" id="profile-email">
-                            <%= email %>
-                        </p>
-                    </div>
-                </div>
-                <div id="profile-menu">
-                    <ul>
                         <li>
-                            <i class="fa-regular fa-circle-question"></i>
-                            <span class="nav-item">Help</span>
+                            <a href="#">
+                                <img src="images/user-profile.webp" alt="user" height="20px" width="20px"
+                                    style="padding: 15px;">
+                                <span class="nav-item">Username</span>
+                            </a>
                         </li>
-                        <a href="/settings">
-                            <li>
-                                <i class="fa-solid fa-gear icon"></i>
-                                <span class="nav-item">Settings</span>
-                            </li>
-                        </a>
-                        <hr>
                         <li>
-                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                            <span class="nav-item">Logout</span>
+                            <a href="/home">
+                                <i class="fa-regular fa-user icon"></i>
+                                <span class="nav-item">Dashboard</span>
+                            </a>
                         </li>
-                    </ul>
-                </div>
+                        <li>
+                            <a href="/timeTable" target="_blank">
+                                <i class="fa-solid fa-list icon"></i>
+                                <span class="nav-item">TimeTable</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/almanac" target="_blank">
+                                <i class="fa-regular fa-calendar icon"></i>
+                                <span class="nav-item">Almanac</span>
+                            </a>
+                        </li>
+                    </div>
+                </ul>
             </div>
-        </nav>
-        <div class="box">
-            <h1 class="main-heading">Settings</h1>
-            <div class="main-container">
-                <div class="setting-option">
-                    <h2 class="heading">Edit Profile</h2>
-                    <p class="content">Update your personal information:</p>
-
-                    <div class="profile">
-                        <p class="profile-heading">Profile:</p>
-                        <div class="profile-container" id="imageContainer">
-                            <img src="placeholder.jpg" alt="Image">
-                            <div class="overlay" onclick="uploadImage()"></div>
-                            <input type="file" accept="image/*" onchange="previewImage(event)">
-                        </div>
-                        <p>Click on the image to update</p>
-                    </div>
-                    <form action="" method="post" id="update">
-                        <div class="update-container">
-                            <div class="cont">
-                                <label for="Username">Username:</label>
-                                <input type="text" id="username" name="username">
-                            </div>
-                            <div class="cont">
-                                <label for="password">Password:</label>
-                                <input type="password" id="password" name="password">
-                            </div>
-                            <div class="cont1">
-                                <label for="confimpass">Confirm Password:</label>
-                                <input type="password" id="confimpass" name="confimpass">
-                            </div>
-                            <div class="btn-submit" id="submitBtn">Submit</div>
-                        </div>
-                    </form>
-
-                </div>
-                <div class="setting-option-2">
-                    <div class="courses">
-                        <h2 class="heading">Edit Courses</h2>
-                        <p class="content">Manage your enrolled courses:</p>
-                        <div class="box1">
-                            <div><img src="../images/Online-courses.jpg" alt="Edit courses" class="coursesimg"></div>
-                            <div class="btn-submit" id="editCoursesBtn">Edit Courses<i
-                                    class="fa-solid fa-diamond-turn-right"></i></div>
-
-                        </div>
-                    </div>
-                    <div class="logout">
-                        <h2 class="heading">Logout</h2>
-                        <p class="content">Sign out of your account:</p>
-                        <div class="box2">
-                            <div class="profile1">
-                                <div class="pic">.</div>
-                                <p>Username</p>
-                            </div>
-                            <div class="btn-submit">Logout<i class="fa-solid fa-right-from-bracket"></i></i></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div class="user"></div>
         </div>
-        <script>
+        <div class="main">
+            <nav>
+                <div class="rightnav">
+                    <div class="container-logo">
+                        <img src="images/logo.png" alt="TuteeTutor" height="35px" width="35px"
+                            style="border-radius: 50%;">
+                        <h2 id="logo-heading">TuteeTutor</h2>
+                    </div>
+                </div>
+                <div class="leftnav">
+                    <div class="search-container">
+                        <button class="icon-button">
+                            <i class="fa-solid fa-magnifying-glass" style="color: #000000;"></i>
+                        </button>
+                        <input type="search" placeholder="Search">
+                    </div>
+                    <div class="user-profile"
+                        style="color: white; display: flex; align-items: center; justify-content: left; width: 250px; border-left: 1px solid grey;">
+                        <img src="images/profile-img.png" alt="profile-pic" height="50px" width="50px"
+                            style="padding: 0px; border: 1px white solid; border-radius: 10px; margin: 0px 10px;">
+                        <div>
+                            <p id="profile-name">
+                                <%= username %>
+                            </p>
+                            <p style="font-family: Arial, Helvetica, sans-serif; font-size: .8rem;" id="profile-email">
+                                <%= email %>
+                            </p>
+                        </div>
+                    </div>
+                    <div id="profile-menu">
+                        <ul>
+                            <li>
+                                <i class="fa-regular fa-circle-question"></i>
+                                <span class="nav-item">Help</span>
+                            </li>
+                            <a href="/settings">
+                                <li>
+                                    <i class="fa-solid fa-gear icon"></i>
+                                    <span class="nav-item">Settings</span>
+                                </li>
+                            </a>
+                            <hr>
+                            <li>
+                                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                                <span class="nav-item">Logout</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="box">
+                <h1 class="main-heading">Settings</h1>
+                <div class="main-container">
+                    <div class="setting-option">
+                        <h2 class="heading">Edit Profile</h2>
+                        <p class="content">Update your personal information:</p>
 
-            
+                        <div class="profile">
+                            <p class="profile-heading">Profile:</p>
+                            <div class="profile-container" id="imageContainer">
+                                <img src="placeholder.jpg" alt="Image">
+                                <div class="overlay" onclick="uploadImage()"></div>
+                                <input type="file" accept="image/*" onchange="previewImage(event)">
+                            </div>
+                            <p>Click on the image to update</p>
+                        </div>
+                        <form action="" method="post" id="update">
+                            <div class="update-container">
+                                <div class="cont">
+                                    <label for="Username">Username:</label>
+                                    <input type="text" id="username" name="username">
+                                </div>
+                                <div class="cont">
+                                    <label for="password">Password:</label>
+                                    <input type="password" id="password" name="password">
+                                </div>
+                                <div class="cont1">
+                                    <label for="confimpass">Confirm Password:</label>
+                                    <input type="password" id="confimpass" name="confimpass">
+                                </div>
+                                <div class="btn-submit" id="submitBtn">Submit</div>
+                            </div>
+                        </form>
 
-            document.getElementById("submitBtn").addEventListener("click", function () {
-                var username = document.getElementById("username").value;
-                var password = document.getElementById("password").value;
-                var confirmPassword = document.getElementById("confirmpass").value;
+                    </div>
+                    <div class="setting-option-2">
+                        <div class="courses">
+                            <h2 class="heading">Edit Courses</h2>
+                            <p class="content">Manage your enrolled courses:</p>
+                            <div class="box1">
+                                <div><img src="../images/Online-courses.jpg" alt="Edit courses" class="coursesimg">
+                                </div>
+                                <div class="btn-submit" id="editCoursesBtn">Edit Courses<i
+                                        class="fa-solid fa-diamond-turn-right"></i></div>
 
-                if (password !== confirmPassword) {
-                    alert("Passwords do not match!");
-                    return;
+                            </div>
+                        </div>
+                        <div class="logout">
+                            <h2 class="heading">Logout</h2>
+                            <p class="content">Sign out of your account:</p>
+                            <div class="box2">
+                                <div class="profile1">
+                                    <div class="pic">.</div>
+                                    <p>
+                                        <%= username %>
+                                    </p>
+                                </div>
+                                <div class="btn-submit" id="logout-button">Logout<i class="fa-solid fa-right-from-bracket"></i></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+
+                document.getElementById('editCoursesBtn').addEventListener('click', function () {
+                    window.location.href = '/courses';
+                });
+
+                document.getElementById('logout-button').addEventListener('click', function() {
+                    window.location.href = '/logout';
+                });
+                
+
+
+
+                document.getElementById("submitBtn").addEventListener("click", function () {
+                    var username = document.getElementById("username").value;
+                    var password = document.getElementById("password").value;
+                    var confirmPassword = document.getElementById("confirmpass").value;
+
+                    if (password !== confirmPassword) {
+                        alert("Passwords do not match!");
+                        return;
+                    }
+
+                    console.log("Username: " + username);
+                    console.log("Password: " + password);
+
+                    document.getElementById("update").submit();
+                });
+
+                function uploadImage() {
+
+                    document.querySelector('input[type="file"]').click();
                 }
 
-                console.log("Username: " + username);
-                console.log("Password: " + password);
+                function previewImage(event) {
+                    const container = document.getElementById('imageContainer');
+                    const file = event.target.files[0];
+                    const reader = new FileReader();
 
-                document.getElementById("update").submit();
-            });
+                    reader.onload = function () {
+                        const overlay = container.querySelector('.overlay');
+                        overlay.style.backgroundImage = 'url(' + reader.result + ')';
 
-            function uploadImage() {
+                        const picDiv = document.querySelector('.profile1 .pic');
+                        picDiv.style.backgroundImage = 'url(' + reader.result + ')';
+                    }
 
-                document.querySelector('input[type="file"]').click();
-            }
-
-            function previewImage(event) {
-                const container = document.getElementById('imageContainer');
-                const file = event.target.files[0];
-                const reader = new FileReader();
-
-                reader.onload = function () {
-                    const img = container.querySelector('img');
-                    img.src = reader.result;
+                    reader.readAsDataURL(file);
                 }
 
-                reader.readAsDataURL(file);
-
-            }
-        </script>
+                document.querySelector('.overlay').addEventListener('click', function () {
+                    document.querySelector('.profile-container input[type="file"]').click();
+                });
+            </script>
+            <script src="settings.js"></script>
 </body>
 
 </html>

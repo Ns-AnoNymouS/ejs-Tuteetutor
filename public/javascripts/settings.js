@@ -1,34 +1,47 @@
-// document.getElementById('side').addEventListener("mouseover", (event) => {
-//     event.preventDefault();
-//     let btn = document.querySelector('#side');
-//     let sidebar = document.querySelector('.sidebar');
+document.getElementById('side').addEventListener("mouseover", (event) => {
+    event.preventDefault();
+    let btn = document.querySelector('#side');
+    let sidebar = document.querySelector('.sidebar');
 
-//     btn.onmouseover = function () {
-//         sidebar.classList.toggle('active')
-//     };
+    btn.onmouseover = function () {
+        sidebar.classList.toggle('active')
+    };
 
-//     btn.addEventListener("mouseout", () => {
-//         sidebar.classList.remove('active');
-//     });
-// }) 
+    btn.addEventListener("mouseout", () => {
+        sidebar.classList.remove('active');
+    });
+}) 
 
 
-function uploadImage() {
-    document.querySelector('input[type="file"]').click();
-  }
+var blurContainer = document.querySelector('.full')
+var container = document.querySelector('.confirmation')
+var buttons = document.querySelector('.buttons')
 
-  function previewImage(event) {
-    const container = document.getElementById('imageContainer');
-    const file = event.target.files[0];
-    const reader = new FileReader();
+function showLogout(){
+    blurContainer.style.display = 'flex';
+    setTimeout(()=> {
+        container.style.height = '150px';
+        container.style.width = '350px';
+    }, 0)
+    setTimeout(()=>{
+        buttons.style.display = 'flex';
+    }, 100)
+}
 
-    reader.onload = function() {
-      const img = container.querySelector('img');
-      img.src = reader.result;
-    }
+function diableLogout(){
+    container.style.height = '0';
+    container.style.width = '0';
+    buttons.style.display = 'none';
+    setTimeout(()=> {
+        blurContainer.style.display = 'none'
+    }, 100)
+}
 
-    reader.readAsDataURL(file);
-  }
+window.onload = () => {
+    document.querySelector('.full').onclick = diableLogout;
+    document.querySelector('.no').onclick = diableLogout;
+    document.getElementById('logout').onclick = showLogout; 
+};
 
 
 

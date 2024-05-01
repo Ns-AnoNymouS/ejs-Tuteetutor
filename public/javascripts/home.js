@@ -1,7 +1,7 @@
 document.getElementById('side').addEventListener("mouseover", () => {
     let sidebar = document.querySelector('.sidebar');
     sidebar.classList.add('active');
-});
+}); 
 
 document.getElementById('side').addEventListener("mouseout", () => {
     let sidebar = document.querySelector('.sidebar');
