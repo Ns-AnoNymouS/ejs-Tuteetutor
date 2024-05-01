@@ -285,6 +285,49 @@ class Database {
         await this.faculty.insertOne(details)
     }
 
+    async updateFaculty(email,course,section,department,year,statusFaculty,password,username) {
+        try {
+            const updateFields = {};
+            if (course) {
+                updateFields.course = course;
+            }
+            if (section) {
+                updateFields.section = section;
+            }
+            if (department) {
+                updateFields.department = department;
+            }
+            if (year) {
+                updateFields.year = year;
+            }
+            if (statusFaculty) {
+                updateFields.status = statusFaculty;
+            }
+            if (password) {
+                updateFields.password = password;
+            }
+            if(username){
+                updateFields.username = username;
+            }
+            const result = await this.student_collection.updateOne({ 'email': email }, { $set: updateFields });
+            return true;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    }
+
+    async insertHodData(course,username,email,password,year){
+        let details = {
+            course: course,
+            username: username,
+            email: email,
+            password: password,
+            year: year
+        }
+        await this.hod.insertOne(details)
+    }
+
     async insertAction(collection, actionType , timestamp){
             let details = {
                 collection: collection,
